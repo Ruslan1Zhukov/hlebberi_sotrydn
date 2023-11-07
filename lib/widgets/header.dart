@@ -80,10 +80,14 @@ class _ButtonOut extends StatelessWidget {
           vertical: 8,
           horizontal: 20,
         ),
-        child: const Text("Выйти"),
+        child: const Icon(
+          Icons.settings,
+          size: 24.0,
+        ),
       ),
     );
   }
+
 }
 
 class _Dialog extends StatelessWidget {
@@ -96,18 +100,18 @@ class _Dialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title: Text("Внимание!"),
-      content: Text("Вы уверены, что хотите выйти из аккаунта?"),
+      title: const Text("Внимание!"),
+      content: const Text("Вы уверены, что хотите выйти из аккаунта?"),
       actions: [
         CupertinoDialogAction(
-          child: Text("Отмена"),
           onPressed: () => Navigator.of(context).pop(),
           isDefaultAction: true,
+          child: const Text("Отмена"),
         ),
         CupertinoDialogAction(
-          child: Text("Выйти"),
           onPressed: () => _logout(context),
           isDestructiveAction: true,
+          child: const Text("Выйти"),
         ),
       ],
     );

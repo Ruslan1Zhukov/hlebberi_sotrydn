@@ -83,19 +83,15 @@ class FullScreenImageScreen extends StatelessWidget {
                                         style: TextStyle(
                                             color: CupertinoColors.systemRed)),
                                     onPressed: () async {
-                                      // Здесь вы должны добавить код для удаления изображения
+                                      // добавить код для удаления изображения
                                       try {
-                                        // Пример: удаление изображения по URL (здесь необходимо заменить на вашу логику)
-                                        // await MyImageStorageService.deleteImage(imageUrl);
                                         Navigator.of(context).pop();
                                       } catch (error) {
-                                        print(
-                                            "Ошибка при удалении изображения: $error");
                                       }
                                     },
                                   );
                                   Navigator.of(context)
-                                      .pop(); // Закрыть диалоговое окно
+                                      .pop();
                                 },
                               ),
                             ],
