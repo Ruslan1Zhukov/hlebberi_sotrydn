@@ -56,8 +56,9 @@ class _SliderWidgetState extends State<SliderWidget> {
               index,
               reason,
             ) {
-              if (reason == CarouselPageChangedReason.manual)
+              if (reason == CarouselPageChangedReason.manual) {
                 _changeMonth(index);
+              }
             },
           ),
           itemBuilder: (

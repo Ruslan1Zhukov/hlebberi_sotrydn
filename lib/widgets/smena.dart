@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/smena.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/widgets/avatar.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class SmenaWidget extends StatelessWidget {
   const SmenaWidget({
     Key? key,
     required this.smena,
   }) : super(key: key);
-
-  final Smena smena;
+  final Smena? smena;
 
   @override
   Widget build(BuildContext context) {
+    var smena = this.smena;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20.0),
@@ -39,7 +40,7 @@ class SmenaWidget extends StatelessWidget {
             children: [
               const Icon(
                 Icons.access_time_filled,
-                color: ColorProject.orange,
+                color: ColorProject.grey,
               ),
               const SizedBox(width: 6),
               Text(
@@ -52,7 +53,7 @@ class SmenaWidget extends StatelessWidget {
               const Spacer(),
               const Icon(
                 Icons.access_time_filled,
-                color: ColorProject.grey,
+                color: ColorProject.orange,
               ),
               const SizedBox(width: 6),
               Text(
@@ -71,15 +72,17 @@ class SmenaWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Wrap(
-            spacing: 17,
-            runSpacing: 4,
-            children: [
-              for (var user in smena.users)
-                _SmenaAvatarWidget(
-                  user: user,
-                ),
-            ],
+          Skeletonizer(
+            child: Wrap(
+              spacing: 17,
+              runSpacing: 4,
+              children: [
+                for (var user in smena.users)
+                  _SmenaAvatarWidget(
+                    user: user,
+                  ),
+              ],
+            ),
           ),
         ],
       ),

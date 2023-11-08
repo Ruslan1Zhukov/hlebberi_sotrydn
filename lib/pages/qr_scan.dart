@@ -47,12 +47,13 @@ class _QRScannerPageState extends State<QRScannerPage> {
                   ),
                 ),
                 if (result != null)
-                  Expanded(
+                  const Expanded(
                     flex: 1,
                     child: Center(
-                      child: Text(
-                        'Результат: ${result!.code}',
-                        style: const TextStyle(fontSize: 20),
+                      child: Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.green,
+                        size: 24.0,
                       ),
                     ),
                   ),

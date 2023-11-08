@@ -20,7 +20,7 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFFFC107)),
+          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFFFC107)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
@@ -29,7 +29,7 @@ class CustomButton extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
           ),
         ),

@@ -8,6 +8,7 @@ class Smena {
     required this.timeFact,
     required this.users,
   });
+
 }
 
 class UserSmena {

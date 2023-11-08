@@ -26,15 +26,22 @@ class ScaffoldProject extends StatelessWidget {
     return Scaffold(
       backgroundColor: ColorProject.dark_white,
       floatingActionButton: isQRScan
-          ? FloatingActionButton(
-              onPressed: () => openScan(context),
-              backgroundColor: ColorProject.orange,
-              child: const Icon(Icons.qr_code_scanner),
-            )
+          ? SizedBox(
+        width: 100.0,
+        height: 100.0,
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: () => openScan(context),
+            backgroundColor: ColorProject.orange,
+            child: const Icon(Icons.qr_code_2_sharp, size: 40),
+          ),
+        ),
+      )
           : null,
       body: SafeArea(
         child: child,
       ),
     );
   }
+
 }

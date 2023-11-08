@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/user.dart';
+import 'package:shimmer/shimmer.dart';
 
 const double _size = 65;
 
@@ -31,6 +32,18 @@ class AvatarWidget extends StatelessWidget {
             fit: BoxFit.cover,
             width: _size,
             height: _size,
+            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  width: _size,
+                  height: _size,
+                  color: Colors.white,
+                ),
+              );
+            },
           ),
         ),
       ),
