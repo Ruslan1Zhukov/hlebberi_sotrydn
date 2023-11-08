@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/test_data.dart';
 import 'package:hlebberi_sotrydn/theme/scaffold.dart';
 import 'package:hlebberi_sotrydn/widgets/header.dart';
 import 'package:hlebberi_sotrydn/widgets/slider.dart';
@@ -10,19 +9,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldProject(
+    return const ScaffoldProject(
       isQRScan: true,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
+          padding: EdgeInsets.symmetric(vertical: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HeaderWidget(),
-              const SizedBox(height: 32),
-              SmenaWidget(smena: testSmena,),
-              const SizedBox(height: 32),
-              const SliderWidget(),
+              HeaderWidget(),
+              SizedBox(height: 32),
+              SmenaWidget(),
+              SizedBox(height: 32),
+              SliderWidget(),
             ],
           ),
         ),

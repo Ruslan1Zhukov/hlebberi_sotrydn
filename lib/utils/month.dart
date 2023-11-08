@@ -15,6 +15,11 @@ const mapMonths = {
 };
 
 extension IntExtension on int {
+  DateTime get toDateTime {
+    var now = DateTime.now();
+    return DateTime.utc(now.year, this + 1, 1);
+  }
+
   String get toMonthString {
     return mapMonths[this] ?? "";
   }

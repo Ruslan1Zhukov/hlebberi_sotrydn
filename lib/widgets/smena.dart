@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/smena.dart';
+import 'package:hlebberi_sotrydn/test_data.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/widgets/avatar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class SmenaWidget extends StatelessWidget {
+class SmenaWidget extends StatefulWidget {
   const SmenaWidget({
     Key? key,
-    required this.smena,
   }) : super(key: key);
-  final Smena? smena;
+
+  @override
+  State<SmenaWidget> createState() => _SmenaWidgetState();
+}
+
+class _SmenaWidgetState extends State<SmenaWidget> {
+  Smena? smena;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(const Duration(seconds: 10));
+      setState(() {
+        smena = testSmena;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var smena = this.smena;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20.0),
@@ -43,11 +59,14 @@ class SmenaWidget extends StatelessWidget {
                 color: ColorProject.grey,
               ),
               const SizedBox(width: 6),
-              Text(
-                smena.timePlan,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
+              Skeletonizer(
+                enabled: smena == null,
+                child: Text(
+                  smena?.timePlan ?? "-----------------------",
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
               const Spacer(),
@@ -56,10 +75,12 @@ class SmenaWidget extends StatelessWidget {
                 color: ColorProject.orange,
               ),
               const SizedBox(width: 6),
-              Text(
-                smena.timeFact,
+              Skeletonizer(
+                enabled: smena == null,
+                child: Text(
+                  smena?.timeFact ?? "-----------------------",
+                ),
               ),
-              const Text("-открыта"),
             ],
           ),
           const SizedBox(height: 14.5),
@@ -73,11 +94,12 @@ class SmenaWidget extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Skeletonizer(
+            enabled: smena == null,
             child: Wrap(
               spacing: 17,
               runSpacing: 4,
               children: [
-                for (var user in smena.users)
+                for (var user in smena?.users ?? skeletonUsers)
                   _SmenaAvatarWidget(
                     user: user,
                   ),

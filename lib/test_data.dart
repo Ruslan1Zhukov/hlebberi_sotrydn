@@ -10,18 +10,33 @@ import 'package:hlebberi_sotrydn/model/zp.dart';
 
 final Smena testSmena = Smena(
   timePlan: '10:00-20:00',
-  timeFact: '10:05',
+  timeFact: '10:05-открыта',
   users: [
     UserSmena(
       avatarUrl: "https://media.nazaccent.ru/cache/eb/ae/ebae27a26c6d994b8f36c9699c9bfac8.jpg",
-      fio: "Изя",
+      fio: "Иван Иванович",
     ),
     UserSmena(
       avatarUrl: "https://static.mk.ru/upload/iblock_mk/475/6a/47/43/DETAIL_PICTURE_568571.jpg",
-      fio: "Фюрер",
+      fio: "Алла Геннадьевна",
     ),
   ],
 );
+
+List<UserSmena> skeletonUsers = [
+  UserSmena(
+    avatarUrl: "",
+    fio: "Имя Фамилия",
+  ),
+  UserSmena(
+    avatarUrl: "",
+    fio: "Имя Фамилия",
+  ),
+  UserSmena(
+    avatarUrl: "",
+    fio: "Имя Фамилия",
+  ),
+];
 
 final User testUser = User(
   id: 0,
