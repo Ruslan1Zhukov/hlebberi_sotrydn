@@ -52,7 +52,7 @@ class SalaryWidget extends StatelessWidget {
     var isCurrentMonth = current.month == month;
     String formattedDate;
     if (isCurrentMonth) {
-      formattedDate = "на ${DateFormat('dd.MM').format(current)}";
+      formattedDate = "на ${DateFormat('d MMMM', 'ru_RU').format(current)}";
     } else {
       formattedDate = "";
     }

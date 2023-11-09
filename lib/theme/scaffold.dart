@@ -9,6 +9,7 @@ class ScaffoldProject extends StatelessWidget {
     this.isQRScan = false,
   }) : super(key: key);
 
+
   final Widget child;
   final bool isQRScan;
 
