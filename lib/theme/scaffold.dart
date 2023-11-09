@@ -33,7 +33,7 @@ class ScaffoldProject extends StatelessWidget {
               child: FloatingActionButton(
                 onPressed: () => openScan(context),
                 backgroundColor: ColorProject.orange,
-                child: SvgPicture.asset("assets/icons/icon_qr.svg"),
+                child: Image.asset("assets/icons/icon_qr.png"),
               ),
             )
           : null,
