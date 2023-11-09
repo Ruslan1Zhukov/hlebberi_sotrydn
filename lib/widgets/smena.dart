@@ -20,7 +20,7 @@ class _SmenaWidgetState extends State<SmenaWidget> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(const Duration(seconds: 10));
+      await Future.delayed(const Duration(seconds: 3));
       setState(() {
         smena = testSmena;
       });

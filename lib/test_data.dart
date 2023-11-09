@@ -25,15 +25,15 @@ final Smena testSmena = Smena(
 
 List<UserSmena> skeletonUsers = [
   UserSmena(
-    avatarUrl: "",
+    avatarUrl: "https://media.nazaccent.ru/cache/eb/ae/ebae27a26c6d994b8f36c9699c9bfac8.jpg",
     fio: "Имя Фамилия",
   ),
   UserSmena(
-    avatarUrl: "",
+    avatarUrl: "https://static.mk.ru/upload/iblock_mk/475/6a/47/43/DETAIL_PICTURE_568571.jpg",
     fio: "Имя Фамилия",
   ),
   UserSmena(
-    avatarUrl: "",
+    avatarUrl: "https://static.mk.ru/upload/iblock_mk/475/6a/47/43/DETAIL_PICTURE_568571.jpg",
     fio: "Имя Фамилия",
   ),
 ];

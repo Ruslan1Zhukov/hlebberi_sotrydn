@@ -14,11 +14,6 @@ class SalaryWidget extends StatelessWidget {
     required this.zp,
   });
 
-  const SalaryWidget.skeleton({
-    super.key,
-    required this.month,
-  }) : zp = null;
-
   final int month;
   final Zp? zp;
 

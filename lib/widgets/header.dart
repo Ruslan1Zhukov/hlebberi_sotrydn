@@ -6,6 +6,7 @@ import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/account.dart';
 import 'package:hlebberi_sotrydn/widgets/avatar.dart';
 import 'package:hlebberi_sotrydn/widgets/location.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({super.key});
@@ -15,9 +16,6 @@ class HeaderWidget extends StatelessWidget {
     return StoreConnector<AppState, User?>(
       converter: (store) => store.state.account.user,
       builder: (BuildContext context, User? user) {
-        if (user == null) {
-          return const Text("Не найден пользователь");
-        }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,19 +36,22 @@ class HeaderWidget extends StatelessWidget {
     );
   }
 
-  Column _buildTitle(User user) {
+  Column _buildTitle(User? user) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          user.fio.fullFio(),
-          style: const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 18,
+        Skeletonizer(
+          enabled: user == null,
+          child: Text(
+            user?.fio.fullFio() ?? "-------",
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+            ),
           ),
         ),
         Text(
-          user.jobTitle,
+          user?.jobTitle?? "-----",
           style: const TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 12,
@@ -87,7 +88,6 @@ class _ButtonOut extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class _Dialog extends StatelessWidget {

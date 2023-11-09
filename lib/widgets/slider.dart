@@ -151,34 +151,23 @@ class _SlideWidget extends StatelessWidget {
       builder: (context, dataMonth) {
         if (dataMonth == null) {
           store.dispatch(setMonthData(month));
-          return Skeletonizer(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SalaryWidget.skeleton(
-                  month: month,
-                ),
-                const SizedBox(height: 15),
-                CalendarWidget.skeleton(
-                  month: month.toDateTime,
-                ),
-              ],
-            ),
-          );
         }
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SalaryWidget(
-              zp: dataMonth.zp,
-              month: month,
-            ),
-            const SizedBox(height: 15),
-            CalendarWidget(
-              month: dataMonth.date,
-              data: dataMonth.calendar.data,
-            ),
-          ],
+        return Skeletonizer(
+          enabled: dataMonth == null,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SalaryWidget(
+                zp: dataMonth?.zp,
+                month: month,
+              ),
+              const SizedBox(height: 15),
+              CalendarWidget(
+                month: month.toDateTime,
+                data: dataMonth?.calendar.data ?? {},
+              ),
+            ],
+          ),
         );
       },
     );

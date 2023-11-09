@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/user.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 const double _size = 65;
 
@@ -11,39 +11,38 @@ class AvatarWidget extends StatelessWidget {
     required this.user,
   }) : super(key: key);
 
-  final User user;
+  final User? user;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        if (user == null) {
+          return;
+        }
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) {
-            return FullScreenImageScreen(imageUrl: user.avatarUrl);
+            return FullScreenImageScreen(imageUrl: user!.avatarUrl);
           },
         ));
       },
       child: Hero(
-        tag: user.avatarUrl,
+        tag: user?.avatarUrl ?? "avatar",
         child: ClipRRect(
           borderRadius: BorderRadius.circular(_size),
-          child: Image.network(
-            user.avatarUrl,
-            fit: BoxFit.cover,
-            width: _size,
-            height: _size,
-            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                child: Container(
-                  width: _size,
-                  height: _size,
-                  color: Colors.white,
-                ),
-              );
-            },
+          child: Skeletonizer(
+            enabled: user == null,
+            child: (user != null)
+                ? Image.network(
+                    user!.avatarUrl,
+                    fit: BoxFit.cover,
+                    width: _size,
+                    height: _size,
+                  )
+                : const SizedBox(
+                    width: _size,
+                    height: _size,
+                  ),
           ),
         ),
       ),
@@ -96,15 +95,12 @@ class FullScreenImageScreen extends StatelessWidget {
                                         style: TextStyle(
                                             color: CupertinoColors.systemRed)),
                                     onPressed: () async {
-                                      // добавить код для удаления изображения
                                       try {
                                         Navigator.of(context).pop();
-                                      } catch (error) {
-                                      }
+                                      } catch (error) {}
                                     },
                                   );
-                                  Navigator.of(context)
-                                      .pop();
+                                  Navigator.of(context).pop();
                                 },
                               ),
                             ],

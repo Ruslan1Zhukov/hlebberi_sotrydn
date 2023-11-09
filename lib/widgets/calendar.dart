@@ -22,11 +22,6 @@ class CalendarWidget extends StatelessWidget {
     required this.data,
   });
 
-  const CalendarWidget.skeleton({
-    super.key,
-    required this.month,
-  }) : data = const {};
-
   final DateTime month;
   final Map<DateTime, CalendarDay> data;
 

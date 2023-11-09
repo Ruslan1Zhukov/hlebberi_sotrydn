@@ -9,10 +9,10 @@ class LocationWidget extends StatelessWidget {
     required this.user,
   }) : super(key: key);
 
-  final User user;
+  final User? user;
 
   void _openMap(BuildContext context) async {
-    final mapUrl = 'https://www.google.com/maps/place/${user.location}';
+    final mapUrl = 'https://www.google.com/maps/place/${user?.location}';
     final uri = Uri.parse(mapUrl);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
@@ -45,7 +45,7 @@ class LocationWidget extends StatelessWidget {
                   color: ColorProject.orange,
                 ),
                 const SizedBox(width: 6),
-                Expanded(child: Text(user.location)),
+                Expanded(child: Text(user!.location)),
               ],
             ),
           ),

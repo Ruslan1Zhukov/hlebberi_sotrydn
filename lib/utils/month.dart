@@ -1,4 +1,3 @@
-/// int to String from map
 const mapMonths = {
   0: "Январь",
   1: "Февраль",
