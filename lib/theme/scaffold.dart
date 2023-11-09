@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hlebberi_sotrydn/pages/qr_scan.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 
@@ -28,12 +27,18 @@ class ScaffoldProject extends StatelessWidget {
       backgroundColor: ColorProject.dark_white,
       floatingActionButton: (isQRScan)
           ? SizedBox(
-              width: 100.0,
-              height: 100.0,
+              width: 80,
+              height: 80,
               child: FloatingActionButton(
                 onPressed: () => openScan(context),
                 backgroundColor: ColorProject.orange,
-                child: Image.asset("assets/icons/icon_qr.png"),
+                child: Padding(
+                  padding: const EdgeInsets.all(19),
+                  child: Image.asset(
+                    "assets/icons/icon_qr.png",
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             )
           : null,
