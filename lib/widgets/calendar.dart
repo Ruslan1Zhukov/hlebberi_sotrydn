@@ -3,6 +3,8 @@ import 'package:hlebberi_sotrydn/enums/day_mode.dart';
 import 'package:hlebberi_sotrydn/model/calendar_data.dart';
 import 'package:hlebberi_sotrydn/pages/day.dart';
 import 'package:hlebberi_sotrydn/test_data.dart';
+import 'package:hlebberi_sotrydn/theme/fil_color.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 const Map<int, String> _mapDayOfWeek = {
@@ -23,7 +25,7 @@ class CalendarWidget extends StatelessWidget {
   });
 
   final DateTime month;
-  final Map<DateTime, CalendarDay> data;
+  final Map<DateTime, CalendarDay>? data;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,6 @@ class CalendarWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           TableCalendar(
-            key: Key(month.toString()),
             headerVisible: false,
             rowHeight: 72,
             firstDay: DateTime.utc(2010, 10, 16),
@@ -54,23 +55,41 @@ class CalendarWidget extends StatelessWidget {
   }
 
   Widget _buildDay(_, day, focus) {
-    CalendarDay calendarDay = data[day] ?? CalendarDay.empty();
     var currentDay = DateTime.now();
     DayMode mode = (currentDay.isAfter(day)) ? DayMode.last : DayMode.future;
-    return _Day(
-      dateTime: day,
-      dayData: calendarDay,
-      mode: mode,
-    );
+    if (data != null) {
+      CalendarDay calendarDay = data![day] ?? CalendarDay.empty();
+      return _Day(
+        dateTime: day,
+        dayData: calendarDay,
+        mode: mode,
+      );
+    } else {
+      CalendarDay? calendarDay = data?[day];
+      return _Day(
+        dateTime: day,
+        dayData: calendarDay,
+        mode: mode,
+      );
+    }
   }
 
   Widget _buildToday(_, day, focus) {
-    CalendarDay calendarDay = data[day] ?? CalendarDay.empty();
-    return _Day(
-      dateTime: day,
-      dayData: calendarDay,
-      mode: DayMode.current,
-    );
+    if (data != null) {
+      CalendarDay calendarDay = data![day] ?? CalendarDay.empty();
+      return _Day(
+        dateTime: day,
+        dayData: calendarDay,
+        mode: DayMode.current,
+      );
+    } else {
+      CalendarDay? calendarDay = data?[day];
+      return _Day(
+        dateTime: day,
+        dayData: calendarDay,
+        mode: DayMode.current,
+      );
+    }
   }
 }
 
@@ -104,7 +123,7 @@ class _Day extends StatelessWidget {
   });
 
   final DateTime dateTime;
-  final CalendarDay dayData;
+  final CalendarDay? dayData;
   final DayMode mode;
 
   _openDay(BuildContext context) {
@@ -137,24 +156,44 @@ class _Day extends StatelessWidget {
       onTap: () => _openDay(context),
       child: Opacity(
         opacity: mode.getOpacity(),
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          margin: const EdgeInsets.all(3.5),
-          padding: const EdgeInsets.all(4),
-          decoration: BoxDecoration(
-            color: dayData.type.getColor(),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: const Color(0xFFD9D9D9)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              dayData.type.getLabelWidget(),
-              const Spacer(),
-              Text(dateTime.day.toString()),
-            ],
-          ),
+        child: Stack(
+          children: [
+            if (dayData == null) Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Skeletonizer(
+                  enabled: true,
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    margin: const EdgeInsets.all(3.5),
+                    color: ColorProject.white,
+                  ),
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                margin: const EdgeInsets.all(3.5),
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: dayData?.type.getColor(),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: const Color(0xFFD9D9D9)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    dayData?.type.getLabelWidget() ?? const SizedBox.shrink(),
+                    const Spacer(),
+                    Text(dateTime.day.toString()),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

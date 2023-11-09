@@ -25,15 +25,15 @@ final Smena testSmena = Smena(
 
 List<UserSmena> skeletonUsers = [
   UserSmena(
-    avatarUrl: "https://media.nazaccent.ru/cache/eb/ae/ebae27a26c6d994b8f36c9699c9bfac8.jpg",
+    avatarUrl: "1",
     fio: "Имя Фамилия",
   ),
   UserSmena(
-    avatarUrl: "https://static.mk.ru/upload/iblock_mk/475/6a/47/43/DETAIL_PICTURE_568571.jpg",
+    avatarUrl: "2",
     fio: "Имя Фамилия",
   ),
   UserSmena(
-    avatarUrl: "https://static.mk.ru/upload/iblock_mk/475/6a/47/43/DETAIL_PICTURE_568571.jpg",
+    avatarUrl: "3",
     fio: "Имя Фамилия",
   ),
 ];
@@ -51,11 +51,44 @@ final User testUser = User(
 );
 
 final Map<DateTime, CalendarDay> _calendarData9 = {
-  DateTime.utc(2023, 9, 1): CalendarDay(type: DayType.k5),
-  DateTime.utc(2023, 9, 2): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 9, 30): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 9, 31): CalendarDay(type: DayType.k5),
 };
 
 final Map<DateTime, CalendarDay> _calendarData10 = {
+  DateTime.utc(2023, 10, 1): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 2): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 3): CalendarDay(type: DayType.p),
+  DateTime.utc(2023, 10, 4): CalendarDay(type: DayType.night),
+  DateTime.utc(2023, 10, 5): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 6): CalendarDay(type: DayType.p),
+  DateTime.utc(2023, 10, 7): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 8): CalendarDay(type: DayType.p),
+  DateTime.utc(2023, 10, 9): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 10): CalendarDay(type: DayType.p),
+  DateTime.utc(2023, 10, 11): CalendarDay(type: DayType.o),
+  DateTime.utc(2023, 10, 12): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 13): CalendarDay(type: DayType.o),
+  DateTime.utc(2023, 10, 14): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 15): CalendarDay(type: DayType.o),
+  DateTime.utc(2023, 10, 16): CalendarDay(type: DayType.night),
+  DateTime.utc(2023, 10, 17): CalendarDay(type: DayType.night),
+  DateTime.utc(2023, 10, 18): CalendarDay(type: DayType.o),
+  DateTime.utc(2023, 10, 19): CalendarDay(type: DayType.o),
+  DateTime.utc(2023, 10, 20): CalendarDay(type: DayType.night),
+  DateTime.utc(2023, 10, 21): CalendarDay(type: DayType.o),
+  DateTime.utc(2023, 10, 22): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 23): CalendarDay(type: DayType.night),
+  DateTime.utc(2023, 10, 24): CalendarDay(type: DayType.o),
+  DateTime.utc(2023, 10, 25): CalendarDay(type: DayType.o),
+  DateTime.utc(2023, 10, 26): CalendarDay(type: DayType.night),
+  DateTime.utc(2023, 10, 27): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 28): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 29): CalendarDay(type: DayType.k5),
+  DateTime.utc(2023, 10, 30): CalendarDay(type: DayType.o),
+};
+
+final Map<DateTime, CalendarDay> _calendarData11 = {
   DateTime.utc(2023, 11, 1): CalendarDay(type: DayType.k5),
   DateTime.utc(2023, 11, 2): CalendarDay(type: DayType.k5),
   DateTime.utc(2023, 11, 3): CalendarDay(type: DayType.p),
@@ -86,18 +119,19 @@ final Map<DateTime, CalendarDay> _calendarData10 = {
   DateTime.utc(2023, 11, 28): CalendarDay(type: DayType.k5),
   DateTime.utc(2023, 11, 29): CalendarDay(type: DayType.k5),
   DateTime.utc(2023, 11, 30): CalendarDay(type: DayType.o),
-  DateTime.utc(2023, 11, 31): CalendarDay(type: DayType.k5),
 };
 
 final Map<int, CalendarData> testCalendarData = {
   9: CalendarData(data: _calendarData9),
   10: CalendarData(data: _calendarData10),
+  11: CalendarData(data: _calendarData11),
 };
 
 final Map<int, Zp> testPlotData = {
   8: _generateZpMonth(),
   9: _generateZpMonth(),
   10: _generateZpMonth(),
+  11: _generateZpMonth(),
 };
 
 OneDay testOneDay(DateTime dateTime) => OneDay(

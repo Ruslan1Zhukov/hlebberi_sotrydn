@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeaderWidget(),
+              HeaderWidget(isNeedSettings: true),
               SizedBox(height: 32),
               SmenaWidget(),
               SizedBox(height: 32),

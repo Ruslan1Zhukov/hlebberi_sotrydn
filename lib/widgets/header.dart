@@ -4,12 +4,18 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/model/user.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/account.dart';
+import 'package:hlebberi_sotrydn/utils/skeleton.dart';
 import 'package:hlebberi_sotrydn/widgets/avatar.dart';
 import 'package:hlebberi_sotrydn/widgets/location.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({super.key});
+  const HeaderWidget({
+    super.key,
+    required this.isNeedSettings,
+  });
+
+  final bool isNeedSettings;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,7 @@ class HeaderWidget extends StatelessWidget {
                 AvatarWidget(user: user),
                 const SizedBox(width: 14),
                 Expanded(child: _buildTitle(user)),
-                const _ButtonOut(),
+                if (isNeedSettings) const _ButtonOut(),
               ],
             ),
             const SizedBox(height: 12),
@@ -36,28 +42,28 @@ class HeaderWidget extends StatelessWidget {
     );
   }
 
-  Column _buildTitle(User? user) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Skeletonizer(
-          enabled: user == null,
-          child: Text(
-            user?.fio.fullFio() ?? "-------",
+  Widget _buildTitle(User? user) {
+    return Skeletonizer(
+      enabled: user == null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            user?.fio.fullFio() ?? skeletonText,
             style: const TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 18,
             ),
           ),
-        ),
-        Text(
-          user?.jobTitle?? "-----",
-          style: const TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
+          Text(
+            user?.jobTitle ?? skeletonText,
+            style: const TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

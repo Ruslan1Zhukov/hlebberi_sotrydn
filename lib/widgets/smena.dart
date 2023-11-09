@@ -145,6 +145,26 @@ class _SmenaAvatarWidget extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: _size,
                 height: _size,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: _size,
+                    height: _size,
+                    color: ColorProject.white,
+                  );
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Skeletonizer(
+                    enabled: true,
+                    child: Container(
+                      width: _size,
+                      height: _size,
+                      color: ColorProject.white,
+                    ),
+                  );
+                },
               ),
             ),
           ),

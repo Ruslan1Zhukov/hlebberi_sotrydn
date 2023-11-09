@@ -9,7 +9,6 @@ import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/month.dart';
 import 'package:hlebberi_sotrydn/widgets/calendar.dart';
 import 'package:hlebberi_sotrydn/widgets/salary.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class SliderWidget extends StatefulWidget {
   const SliderWidget({super.key});
@@ -152,22 +151,21 @@ class _SlideWidget extends StatelessWidget {
         if (dataMonth == null) {
           store.dispatch(setMonthData(month));
         }
-        return Skeletonizer(
-          enabled: dataMonth == null,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SalaryWidget(
-                zp: dataMonth?.zp,
-                month: month,
-              ),
-              const SizedBox(height: 15),
-              CalendarWidget(
-                month: month.toDateTime,
-                data: dataMonth?.calendar.data ?? {},
-              ),
-            ],
-          ),
+        var monthDateTime = month.toDateTime;
+        print(monthDateTime);
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SalaryWidget(
+              zp: dataMonth?.zp,
+              month: (dataMonth == null) ? null : month,
+            ),
+            const SizedBox(height: 15),
+            CalendarWidget(
+              month: monthDateTime,
+              data: dataMonth?.calendar.data,
+            ),
+          ],
         );
       },
     );

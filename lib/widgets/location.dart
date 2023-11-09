@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/user.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
+import 'package:hlebberi_sotrydn/utils/skeleton.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LocationWidget extends StatelessWidget {
@@ -45,7 +47,10 @@ class LocationWidget extends StatelessWidget {
                   color: ColorProject.orange,
                 ),
                 const SizedBox(width: 6),
-                Expanded(child: Text(user!.location)),
+                Skeletonizer(
+                  enabled: user == null,
+                  child: Expanded(child: Text(user?.location ?? skeletonText)),
+                ),
               ],
             ),
           ),
