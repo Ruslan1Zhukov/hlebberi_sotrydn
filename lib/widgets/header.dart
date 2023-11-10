@@ -72,12 +72,6 @@ class HeaderWidget extends StatelessWidget {
 class _ButtonOut extends StatelessWidget {
   const _ButtonOut();
 
-  _showDialog(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) => const _Dialog(),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,9 +96,6 @@ class _ButtonOut extends StatelessWidget {
   }
 }
 
-class _Dialog extends StatelessWidget {
-  const _Dialog();
-
   _logout(BuildContext context) async {
     await store.dispatch(logout(context));
   }
@@ -128,4 +119,3 @@ class _Dialog extends StatelessWidget {
       ],
     );
   }
-}
