@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/model/user.dart';
+import 'package:hlebberi_sotrydn/pages/setings.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/account.dart';
 import 'package:hlebberi_sotrydn/utils/skeleton.dart';
@@ -81,7 +82,12 @@ class _ButtonOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => _showDialog(context),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SetingsPage()),
+        );
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 8,
