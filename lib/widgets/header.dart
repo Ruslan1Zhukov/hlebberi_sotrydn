@@ -96,26 +96,3 @@ class _ButtonOut extends StatelessWidget {
   }
 }
 
-  _logout(BuildContext context) async {
-    await store.dispatch(logout(context));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoAlertDialog(
-      title: const Text("Внимание!"),
-      content: const Text("Вы уверены, что хотите выйти из аккаунта?"),
-      actions: [
-        CupertinoDialogAction(
-          onPressed: () => Navigator.of(context).pop(),
-          isDefaultAction: true,
-          child: const Text("Отмена"),
-        ),
-        CupertinoDialogAction(
-          onPressed: () => _logout(context),
-          isDestructiveAction: true,
-          child: const Text("Выйти"),
-        ),
-      ],
-    );
-  }

@@ -100,7 +100,13 @@ class DayPage extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        SvgPicture.asset("assets/icons/icon_clock.svg"),
+        ColorFiltered(
+          colorFilter: const ColorFilter.mode(
+            Colors.orangeAccent,
+            BlendMode.srcIn,
+          ),
+          child: SvgPicture.asset("assets/icons/icon_clock.svg"),
+        ),
         const SizedBox(width: 4),
         Text(
           oneDay.time,

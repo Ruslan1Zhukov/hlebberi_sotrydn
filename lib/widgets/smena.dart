@@ -112,7 +112,7 @@ class _SmenaWidgetState extends State<SmenaWidget> {
   }
 }
 
-const double _size = 65;
+const double _size = 55;
 
 class _SmenaAvatarWidget extends StatelessWidget {
   const _SmenaAvatarWidget({

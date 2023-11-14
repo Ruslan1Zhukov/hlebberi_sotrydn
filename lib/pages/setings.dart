@@ -15,7 +15,9 @@ class SetingsPage extends StatelessWidget {
       isQRScan: true,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, ),
+          padding: const EdgeInsets.symmetric(
+            vertical: 20,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -41,53 +43,94 @@ class SetingsPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  const Text(
-                    "Информация",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      "Информация",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 32),
               const HeaderWidget(isNeedSettings: false),
+              const SizedBox(height: 25),
+              ListTile(
+                title: const Text('Изменить/добавить фотографию'),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => _showActionSheet(context),
+              ),
               const SizedBox(height: 40),
               ListTile(
-                leading: const Icon(Icons.account_circle),
                 title: const Text('Пользовательское соглашение'),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                },
+                onTap: () {},
               ),
               ListTile(
-                leading: const Icon(Icons.gavel),
                 title: const Text('Правовые документы'),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                },
+                onTap: () {},
               ),
               ListTile(
-                leading: const Icon(Icons.feedback),
                 title: const Text('Обратная связь'),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                },
+                onTap: () {},
               ),
               ListTile(
-                leading: const Icon(Icons.exit_to_app),
-                title: const Text('Выйти из аккаунта',
-                style: TextStyle(color: ColorProject.orange),),
+                title: const Text('Соц сети'),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const _Dialog()),
-                  );
-                },
+                onTap: () {},
+              ),
+              const SizedBox(height: 40),
+              Center(
+                child: ListTile(
+                  title: const Text(
+                    'Выйти из аккаунта',
+                    style: TextStyle(color: ColorProject.black),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const _Dialog()),
+                    );
+                  },
+                ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void _showActionSheet(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        actions: <Widget>[
+          CupertinoActionSheetAction(
+            child: const Text('Открыть галерею'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          CupertinoActionSheetAction(
+            child:
+                const Text('Удалить фото', style: TextStyle(color: Colors.red)),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          isDefaultAction: true,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Отмена'),
         ),
       ),
     );
@@ -96,13 +139,6 @@ class SetingsPage extends StatelessWidget {
 
 class _Dialog extends StatelessWidget {
   const _Dialog();
-
-  _showDialog(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) => const _Dialog(),
-    );
-  }
 
   _logout(BuildContext context) async {
     await store.dispatch(logout(context));
