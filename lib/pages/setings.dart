@@ -16,8 +16,7 @@ class SetingsPage extends StatelessWidget {
       isQRScan: true,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20
-          ),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -55,7 +54,7 @@ class SetingsPage extends StatelessWidget {
               const HeaderWidget(isNeedSettings: false),
               const SizedBox(height: 25),
               ListTile(
-                leading:SvgPicture.asset("assets/icons/icon_izmena.svg"),
+                leading: SvgPicture.asset("assets/icons/icon_izmena.svg"),
                 title: const Text('Изменить/добавить фотографию'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => _showActionSheet(context),
@@ -88,10 +87,10 @@ class SetingsPage extends StatelessWidget {
                     'Выйти из аккаунта',
                     style: TextStyle(color: ColorProject.black),
                   ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const _Dialog()),
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) => const _Dialog(),
                     );
                   },
                 ),

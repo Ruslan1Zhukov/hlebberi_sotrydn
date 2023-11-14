@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/zp.dart';
+import 'package:hlebberi_sotrydn/utils/price.dart';
 
 const double _radius = 27;
 
@@ -59,7 +60,7 @@ class DiagramWidget extends StatelessWidget {
         alignment: Alignment.center,
         color: plotItem.color,
         child: Text(
-          plotItem.value.toString(),
+          plotItem.value.toPriceString(),
           maxLines: 1,
         ),
       ),

@@ -83,51 +83,10 @@ class FullScreenImageScreen extends StatelessWidget {
               child: Center(
                 child: Hero(
                   tag: imageUrl,
-                  child: GestureDetector(
-                    onLongPress: () {
-                      showCupertinoDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CupertinoAlertDialog(
-                            content: const Text(
-                                "Вы действительно хотите удалить фотографию? Отменить это действие невозможно."),
-                            actions: <Widget>[
-                              CupertinoDialogAction(
-                                child: const Text("Отмена",
-                                    style: TextStyle(
-                                        color: CupertinoColors.black)),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                              CupertinoDialogAction(
-                                child: const Text("Удалить",
-                                    style: TextStyle(
-                                        color: CupertinoColors.systemRed)),
-                                onPressed: () {
-                                  CupertinoDialogAction(
-                                    child: const Text("Удалить",
-                                        style: TextStyle(
-                                            color: CupertinoColors.systemRed)),
-                                    onPressed: () async {
-                                      try {
-                                        Navigator.of(context).pop();
-                                      } catch (error) {}
-                                    },
-                                  );
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
                     child: Image.network(imageUrl),
                   ),
                 ),
               ),
-            ),
             Positioned(
               top: 20,
               right: 20,

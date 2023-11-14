@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/zp.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
+import 'package:hlebberi_sotrydn/utils/price.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
 import 'package:hlebberi_sotrydn/widgets/legend.dart';
 import 'package:intl/intl.dart';
@@ -58,11 +59,7 @@ class SalaryWidget extends StatelessWidget {
     }
 
     final zpSum = zp?.sum ?? 0;
-    String formattedSum;
-
-    final numberFormat = NumberFormat('#,###', 'ru_RU');
-
-    formattedSum = numberFormat.format(zpSum);
+    var formattedSum = zpSum.toPriceString();
 
     return Row(
       mainAxisSize: MainAxisSize.min,
