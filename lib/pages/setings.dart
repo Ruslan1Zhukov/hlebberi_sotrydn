@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/account.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
@@ -15,8 +16,7 @@ class SetingsPage extends StatelessWidget {
       isQRScan: true,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 20,
+          padding: const EdgeInsets.all(20
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,20 +26,16 @@ class SetingsPage extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Positioned(
-                    top: 20,
-                    right: 20,
-                    child: InkWell(
-                      onTap: () => Navigator.pop(context),
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: ColorProject.orange,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: const Icon(Icons.keyboard_arrow_left),
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: ColorProject.orange,
+                        borderRadius: BorderRadius.circular(15),
                       ),
+                      child: const Icon(Icons.keyboard_arrow_left),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -59,6 +55,7 @@ class SetingsPage extends StatelessWidget {
               const HeaderWidget(isNeedSettings: false),
               const SizedBox(height: 25),
               ListTile(
+                leading:SvgPicture.asset("assets/icons/icon_izmena.svg"),
                 title: const Text('Изменить/добавить фотографию'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => _showActionSheet(context),

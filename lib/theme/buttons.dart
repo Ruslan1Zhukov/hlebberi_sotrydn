@@ -6,11 +6,13 @@ class CustomButton extends StatelessWidget {
     required this.onTap,
     required this.label,
     this.isActive = true,
+    this.isLoading = false,
   }) : super(key: key);
 
   final Function() onTap;
   final String label;
   final bool isActive;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +22,33 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFFFFC107)),
+          backgroundColor:
+              MaterialStateProperty.all<Color>(const Color(0xFFFFC107)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
             ),
           ),
         ),
-        child: Text(
-          label,
-          style: const TextStyle(
-            color: Colors.black,
-          ),
+        child: Row(
+          children: [
+            if (isLoading) const SizedBox(width: 20),
+            Expanded(
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            if (isLoading)
+              const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(),
+              ),
+          ],
         ),
       ),
     );

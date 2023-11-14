@@ -30,6 +30,7 @@ ThunkAction<AppState> login({
   required String password,
 }) {
   return (Store<AppState> store) async {
+    await Future.delayed(const Duration(milliseconds: 300));
     if (login == "login" && password == "1234") {
       await setAuth(true);
       Navigator.pushReplacementNamed(context, '/');

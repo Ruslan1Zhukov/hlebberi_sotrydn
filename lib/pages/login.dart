@@ -17,15 +17,26 @@ class _LoginPageState extends State<LoginPage> {
   final _controllerLogin = TextEditingController();
   final _controllerPassword = TextEditingController();
 
+  bool isLoading = false;
+
   _onTapButton() async {
+    setState(() {
+      isLoading = true;
+    });
     var textLogin = _controllerLogin.text;
     var textPassword = _controllerPassword.text;
     if (textLogin.isEmpty) {
       _snack("Введите логин");
+      setState(() {
+        isLoading = false;
+      });
       return;
     }
     if (textPassword.isEmpty) {
       _snack("Введите пароль");
+      setState(() {
+        isLoading = false;
+      });
       return;
     }
     await store.dispatch(login(
@@ -33,6 +44,9 @@ class _LoginPageState extends State<LoginPage> {
       login: textLogin,
       password: textPassword,
     ));
+    setState(() {
+      isLoading = false;
+    });
   }
 
   _snack(String text) {
@@ -103,6 +117,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildButton() {
     return CustomButton(
+      isLoading: isLoading,
       onTap: _onTapButton,
       label: "Войти",
     );
