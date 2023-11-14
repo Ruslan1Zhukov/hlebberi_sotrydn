@@ -7,8 +7,8 @@ import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/theme/scaffold.dart';
 import 'package:hlebberi_sotrydn/widgets/header.dart';
 
-class SetingsPage extends StatelessWidget {
-  const SetingsPage({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +54,13 @@ class SetingsPage extends StatelessWidget {
               const HeaderWidget(isNeedSettings: false),
               const SizedBox(height: 25),
               ListTile(
-                leading: SvgPicture.asset("assets/icons/icon_izmena.svg"),
-                title: const Text('Изменить/добавить фотографию'),
+                title: Row(
+                  children: [
+                    SvgPicture.asset("assets/icons/icon_izmena.svg"),
+                    const SizedBox(width: 9),
+                    const Expanded(child: Text('Изменить/добавить фотографию')),
+                  ],
+                ),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => _showActionSheet(context),
               ),

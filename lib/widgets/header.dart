@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/model/user.dart';
-import 'package:hlebberi_sotrydn/pages/setings.dart';
+import 'package:hlebberi_sotrydn/pages/settings.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
-import 'package:hlebberi_sotrydn/redux/thunk/account.dart';
 import 'package:hlebberi_sotrydn/utils/skeleton.dart';
 import 'package:hlebberi_sotrydn/widgets/avatar.dart';
 import 'package:hlebberi_sotrydn/widgets/location.dart';
@@ -79,7 +77,7 @@ class _ButtonOut extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SetingsPage()),
+          MaterialPageRoute(builder: (context) => const SettingsPage()),
         );
       },
       child: Container(

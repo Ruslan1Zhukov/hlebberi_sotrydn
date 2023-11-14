@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hlebberi_sotrydn/model/one_day.dart';
+import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/widgets/salary_day.dart';
 
@@ -78,7 +79,7 @@ class DayPage extends StatelessWidget {
   }
 }
 
-  class _DateTime extends StatelessWidget {
+class _DateTime extends StatelessWidget {
   const _DateTime({
     required this.dateMonth,
     required this.oneDay,
@@ -102,7 +103,7 @@ class DayPage extends StatelessWidget {
         const Spacer(),
         ColorFiltered(
           colorFilter: const ColorFilter.mode(
-            Colors.orangeAccent,
+            ColorProject.orange,
             BlendMode.srcIn,
           ),
           child: SvgPicture.asset("assets/icons/icon_clock.svg"),
