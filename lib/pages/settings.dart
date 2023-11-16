@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
       isQRScan: true,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -119,8 +119,10 @@ class SettingsPage extends StatelessWidget {
             },
           ),
           CupertinoActionSheetAction(
-            child:
-                const Text('Удалить фото', style: TextStyle(color: Colors.red)),
+            child: const Text(
+              'Удалить фото',
+              style: TextStyle(color: Colors.red),
+            ),
             onPressed: () {
               Navigator.pop(context);
             },
