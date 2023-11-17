@@ -17,7 +17,10 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              HeaderWidget(isNeedSettings: true),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: HeaderWidget(isNeedSettings: true),
+              ),
               SizedBox(height: 32),
               SmenaWidget(),
               SizedBox(height: 32),

@@ -26,7 +26,6 @@ class HeaderWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                const SizedBox(width: 20),
                 AvatarWidget(user: user),
                 const SizedBox(width: 14),
                 Expanded(child: _buildTitle(user)),

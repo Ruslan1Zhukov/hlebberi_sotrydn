@@ -16,7 +16,7 @@ class SettingsPage extends StatelessWidget {
       isQRScan: true,
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,6 +54,7 @@ class SettingsPage extends StatelessWidget {
               const HeaderWidget(isNeedSettings: false),
               const SizedBox(height: 25),
               ListTile(
+                contentPadding:EdgeInsets.zero,
                 title: Row(
                   children: [
                     SvgPicture.asset("assets/icons/icon_izmena.svg"),
@@ -66,31 +67,42 @@ class SettingsPage extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               ListTile(
+                contentPadding:EdgeInsets.zero,
                 title: const Text('Пользовательское соглашение'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),
               ListTile(
+                contentPadding:EdgeInsets.zero,
                 title: const Text('Правовые документы'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),
               ListTile(
+                contentPadding:EdgeInsets.zero,
                 title: const Text('Обратная связь'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),
-              ListTile(
-                title: const Text('Соц сети'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
+              const SizedBox(height: 35),
+              Row(
+                children: [
+                  SvgPicture.asset("assets/icons/icon_vk.svg"),
+                  const SizedBox(width: 20),
+                  SvgPicture.asset("assets/icons/icon_telegram.svg"),
+                ],
               ),
               const SizedBox(height: 40),
               Center(
                 child: ListTile(
+                  contentPadding:EdgeInsets.zero,
                   title: const Text(
                     'Выйти из аккаунта',
-                    style: TextStyle(color: ColorProject.black),
+                    style: TextStyle(
+                      color: ColorProject.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                   onTap: () async {
                     await showDialog(

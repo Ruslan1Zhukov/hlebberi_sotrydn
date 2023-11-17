@@ -29,30 +29,27 @@ class LocationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var radius = BorderRadius.circular(100);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: ClipRRect(
-        borderRadius: radius,
-        child: InkWell(
-          onTap: () => _openMap(context),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: radius,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.location_on,
-                  color: ColorProject.orange,
-                ),
-                const SizedBox(width: 6),
-                Skeletonizer(
-                  enabled: user == null,
-                  child: Expanded(child: Text(user?.location ?? skeletonText)),
-                ),
-              ],
-            ),
+    return ClipRRect(
+      borderRadius: radius,
+      child: InkWell(
+        onTap: () => _openMap(context),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: radius,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.location_on,
+                color: ColorProject.orange,
+              ),
+              const SizedBox(width: 6),
+              Skeletonizer(
+                enabled: user == null,
+                child: Expanded(child: Text(user?.location ?? skeletonText)),
+              ),
+            ],
           ),
         ),
       ),
