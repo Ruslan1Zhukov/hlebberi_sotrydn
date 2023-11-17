@@ -84,12 +84,19 @@ class SettingsPage extends StatelessWidget {
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),
-              const SizedBox(height: 35),
               Row(
                 children: [
-                  SvgPicture.asset("assets/icons/icon_vk.svg"),
+                  IconButton(
+                    icon: SvgPicture.asset("assets/icons/icon_vk.svg"),
+                    onPressed: () {
+                    },
+                  ),
                   const SizedBox(width: 20),
-                  SvgPicture.asset("assets/icons/icon_telegram.svg"),
+                  IconButton(
+                    icon: SvgPicture.asset("assets/icons/icon_telegram.svg"),
+                    onPressed: () {
+                    },
+                  ),
                 ],
               ),
               const SizedBox(height: 40),
