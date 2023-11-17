@@ -19,7 +19,7 @@ class LegendWidget extends StatelessWidget {
           title: 'Премия (месяц)',
         ),
         _Item(
-          color: ColorProject.light_blue,
+          color: ColorProject.lightBlue,
           title: 'Премия (день)',
         ),
         _Item(

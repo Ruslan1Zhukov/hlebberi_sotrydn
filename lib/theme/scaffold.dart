@@ -25,7 +25,7 @@ class ScaffoldProject extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorProject.dark_white,
+      backgroundColor: ColorProject.darkWhite,
       floatingActionButton: (isQRScan)
           ? SizedBox(
               width: 80,

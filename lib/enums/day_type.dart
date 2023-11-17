@@ -29,13 +29,13 @@ enum DayType {
       case DayType.p:
         return ColorProject.orange;
       case DayType.night:
-        return ColorProject.beige;
+        return ColorProject.lightBlue;
       case DayType.k5:
         return ColorProject.orange;
       case DayType.o:
-        return ColorProject.light_green;
+        return ColorProject.lightGreen;
       case DayType.plus:
-        return ColorProject.beige;
+        return ColorProject.lightBlue;
     }
   }
 

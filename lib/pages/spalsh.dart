@@ -35,7 +35,7 @@ class _SplashPageState extends State<SplashPage> {
               children: <Widget>[
                 Center(
                   child: Image.asset(
-                    "assets/images/sloi1.png",
+                    "assets/images/sloi1x4.png",
                     width: 180.84,
                     height: 208.9,
                   ),
