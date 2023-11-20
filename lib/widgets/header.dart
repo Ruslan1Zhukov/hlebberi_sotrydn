@@ -33,8 +33,13 @@ class HeaderWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            Hero(tag: "null",
-            child: LocationWidget(user: user)),
+            Hero(
+              tag: "unique-tag",
+              child: Material(
+                type: MaterialType.transparency,
+                child: LocationWidget(user: user),
+              ),
+            )
           ],
         );
       },
@@ -47,18 +52,31 @@ class HeaderWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            user?.fio.fullFio() ?? skeletonText,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 18,
+          Hero(
+            tag: "Fio",
+            child: Material(
+              type: MaterialType.transparency,
+              child: Text(
+                user?.fio.fullFio() ?? skeletonText,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                ),
+              ),
             ),
           ),
-          Text(
-            user?.jobTitle ?? skeletonText,
-            style: const TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 12,
+          const SizedBox(height: 4),
+          Hero(
+            tag: "Job",
+            child: Material(
+              type: MaterialType.transparency,
+              child: Text(
+                user?.jobTitle ?? skeletonText,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                ),
+              ),
             ),
           ),
         ],
