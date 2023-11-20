@@ -33,7 +33,8 @@ class HeaderWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            LocationWidget(user: user),
+            Hero(tag: "null",
+            child: LocationWidget(user: user)),
           ],
         );
       },
