@@ -139,7 +139,7 @@ class _Day extends StatelessWidget {
       ),
       builder: (BuildContext context) {
         double screenHeight = MediaQuery.of(context).size.height;
-        double contentHeight = screenHeight - 100;
+        double contentHeight = screenHeight - 400;
         return SizedBox(
           height: contentHeight,
           child: DayPage(

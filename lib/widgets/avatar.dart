@@ -1,8 +1,10 @@
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/user.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import "package:photo_view/photo_view.dart";
 
 const double _size = 65;
 
@@ -80,13 +82,22 @@ class FullScreenImageScreen extends StatelessWidget {
         child: Stack(
           children: [
             Positioned.fill(
-              child: Center(
-                child: Hero(
-                  tag: imageUrl,
-                    child: Image.network(imageUrl),
-                  ),
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Image.network(imageUrl, fit: BoxFit.cover),
+              ),
+            ),
+            Positioned.fill(
+              child: PhotoView(
+                imageProvider: NetworkImage(imageUrl),
+                heroAttributes: PhotoViewHeroAttributes(tag: imageUrl),
+                maxScale: PhotoViewComputedScale.covered * 3,
+                minScale: PhotoViewComputedScale.contained,
+                backgroundDecoration: const BoxDecoration(
+                  color: Colors.transparent,
                 ),
               ),
+            ),
             Positioned(
               top: 20,
               right: 20,
@@ -94,7 +105,17 @@ class FullScreenImageScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: const Icon(CupertinoIcons.clear_circled),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.yellow,
+                    shape: BoxShape.circle,
+                  ),
+                  padding: const EdgeInsets.all(8),
+                  child: const Icon(
+                    CupertinoIcons.clear,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ),
           ],
@@ -103,3 +124,4 @@ class FullScreenImageScreen extends StatelessWidget {
     );
   }
 }
+

@@ -152,7 +152,6 @@ class _SlideWidget extends StatelessWidget {
           store.dispatch(setMonthData(month));
         }
         var monthDateTime = month.toDateTime;
-        print(monthDateTime);
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [

@@ -19,34 +19,6 @@ class DayPage extends StatelessWidget {
       builder: (context, orientation) {
         return Stack(
           children: [
-            Positioned(
-              left: -30,
-              bottom: 100,
-              child: Image.asset(
-                "assets/images/left_logo_day.png",
-                width: 270.8,
-                height: 213.26,
-              ),
-            ),
-            Positioned(
-              right: -60,
-              bottom: 100,
-              child: Image.asset(
-                "assets/images/pravo_logo_day.png",
-                width: 270.8,
-                height: 213.26,
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: -60,
-              child: Image.asset(
-                "assets/images/niz_logo_day.png",
-                width: 270.8,
-                height: 213.26,
-              ),
-            ),
             Positioned.fill(
               child: SingleChildScrollView(
                 child: Padding(
