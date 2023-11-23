@@ -1,15 +1,51 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/account.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/theme/scaffold.dart';
 import 'package:hlebberi_sotrydn/widgets/header.dart';
+import 'package:image_picker/image_picker.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+void pickImage() async {
+  final ImagePicker picker = ImagePicker();
+  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+  if (image != null) {
+    File file = File(image.path);
+    int sizeInBytes = file.lengthSync();
+    double sizeInMb = sizeInBytes / (1024 * 1024);
+
+    if (sizeInMb > 5) {
+    } else {
+    }
+  }
+}
+
+Future<XFile?> compressFile(File file) async {
+  final filePath = file.absolute.path;
+  final lastIndex = filePath.lastIndexOf(RegExp(r'\.(jpg|jpeg|png)'));
+  final outPath = "${filePath.substring(0, lastIndex)}_compressed.jpg";
+
+  return await FlutterImageCompress.compressAndGetFile(
+    filePath,
+    outPath,
+    quality: 85,
+  );
+}
+
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldProject(
@@ -134,7 +170,8 @@ class SettingsPage extends StatelessWidget {
           CupertinoActionSheetAction(
             child: const Text('Открыть галерею'),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context); 
+              pickImage();
             },
           ),
           CupertinoActionSheetAction(
@@ -158,6 +195,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
+
 
 class _Dialog extends StatelessWidget {
   const _Dialog();
