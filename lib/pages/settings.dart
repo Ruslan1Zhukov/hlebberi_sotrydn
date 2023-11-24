@@ -27,9 +27,7 @@ void pickImage() async {
     int sizeInBytes = file.lengthSync();
     double sizeInMb = sizeInBytes / (1024 * 1024);
 
-    if (sizeInMb > 5) {
-    } else {
-    }
+    if (sizeInMb > 5) {} else {}
   }
 }
 
@@ -46,6 +44,8 @@ Future<XFile?> compressFile(File file) async {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  get avatarImage => null;
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldProject(
@@ -90,7 +90,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const HeaderWidget(isNeedSettings: false),
               const SizedBox(height: 25),
               ListTile(
-                contentPadding:EdgeInsets.zero,
+                contentPadding: EdgeInsets.zero,
                 title: Row(
                   children: [
                     SvgPicture.asset("assets/icons/icon_izmena.svg"),
@@ -103,19 +103,19 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               const SizedBox(height: 40),
               ListTile(
-                contentPadding:EdgeInsets.zero,
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Пользовательское соглашение'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),
               ListTile(
-                contentPadding:EdgeInsets.zero,
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Правовые документы'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
               ),
               ListTile(
-                contentPadding:EdgeInsets.zero,
+                contentPadding: EdgeInsets.zero,
                 title: const Text('Обратная связь'),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {},
@@ -124,21 +124,19 @@ class _SettingsPageState extends State<SettingsPage> {
                 children: [
                   IconButton(
                     icon: SvgPicture.asset("assets/icons/icon_vk.svg"),
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                   ),
                   const SizedBox(width: 20),
                   IconButton(
                     icon: SvgPicture.asset("assets/icons/icon_telegram.svg"),
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
               const SizedBox(height: 40),
               Center(
                 child: ListTile(
-                  contentPadding:EdgeInsets.zero,
+                  contentPadding: EdgeInsets.zero,
                   title: const Text(
                     'Выйти из аккаунта',
                     style: TextStyle(
