@@ -33,33 +33,43 @@ class AvatarWidget extends StatelessWidget {
         },
         child: Hero(
           tag: user?.avatarUrl ?? "avatar",
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(_size),
-            child: (user != null)
-                ? Image.network(
-                    user!.avatarUrl,
-                    fit: BoxFit.cover,
-                    width: _size,
-                    height: _size,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      }
-                      return Skeletonizer(
-                        enabled: true,
-                        child: Container(
-                          width: _size,
-                          height: _size,
-                          color: ColorProject.white,
-                        ),
-                      );
-                    },
-                  )
-                : Container(
-                    width: _size,
-                    height: _size,
-                    color: ColorProject.white,
-                  ),
+          child: SizedBox(
+            width: _size,
+            height: _size,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(_size),
+              child: (user != null)
+                  ? Image.network(
+                      user!.avatarUrl,
+                      fit: BoxFit.cover,
+                      width: _size,
+                      height: _size,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Skeletonizer(
+                          enabled: true,
+                          child: Container(
+                            width: _size,
+                            height: _size,
+                            color: ColorProject.white,
+                          ),
+                        );
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.error_outline,
+                          color: ColorProject.pink,
+                        );
+                      },
+                    )
+                  : Container(
+                      width: _size,
+                      height: _size,
+                      color: ColorProject.white,
+                    ),
+            ),
           ),
         ),
       ),
@@ -124,4 +134,3 @@ class FullScreenImageScreen extends StatelessWidget {
     );
   }
 }
-

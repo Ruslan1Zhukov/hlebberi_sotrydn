@@ -138,33 +138,37 @@ class _SmenaAvatarWidget extends StatelessWidget {
           },
           child: Hero(
             tag: user.avatarUrl,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(_size),
-              child: Image.network(
-                user.avatarUrl,
-                fit: BoxFit.cover,
-                width: _size,
-                height: _size,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: _size,
-                    height: _size,
-                    color: ColorProject.white,
-                  );
-                },
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
-                  return Skeletonizer(
-                    enabled: true,
-                    child: Container(
-                      width: _size,
-                      height: _size,
-                      color: ColorProject.white,
-                    ),
-                  );
-                },
+            child: SizedBox(
+              width: _size,
+              height: _size,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(_size),
+                child: Image.network(
+                  user.avatarUrl,
+                  fit: BoxFit.cover,
+                  width: _size,
+                  height: _size,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(
+                      Icons.error_outline,
+                      color: ColorProject.pink,
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+                    return Skeletonizer(
+                      enabled: true,
+                      child: Container(
+                        width: _size,
+                        height: _size,
+                        color: ColorProject.white,
+                      ),
+                    );
+                  },
+
+                ),
               ),
             ),
           ),
