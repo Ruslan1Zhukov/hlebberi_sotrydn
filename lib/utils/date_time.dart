@@ -26,4 +26,11 @@ extension DateTimeExtension on DateTime {
       Localizations.localeOf(context).languageCode,
     ).format(this);
   }
+
+  String dMMMMDayOfWeek(BuildContext context) {
+    return DateFormat(
+      "d MMMM (E)",
+      Localizations.localeOf(context).languageCode,
+    ).format(this);
+  }
 }

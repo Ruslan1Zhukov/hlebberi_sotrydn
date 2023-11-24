@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/enums/day_mode.dart';
 import 'package:hlebberi_sotrydn/model/calendar_data.dart';
 import 'package:hlebberi_sotrydn/pages/day.dart';
-import 'package:hlebberi_sotrydn/test_data.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -127,7 +126,6 @@ class _Day extends StatelessWidget {
   final DayMode mode;
 
   _openDay(BuildContext context) {
-    var oneDay = testOneDay(dateTime);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -138,14 +136,7 @@ class _Day extends StatelessWidget {
         ),
       ),
       builder: (BuildContext context) {
-        double screenHeight = MediaQuery.of(context).size.height;
-        double contentHeight = screenHeight - 400;
-        return SizedBox(
-          height: contentHeight,
-          child: DayPage(
-            oneDay: oneDay,
-          ),
-        );
+        return SingleChildScrollView(child: DayPage(initialDay: dateTime));
       },
     );
   }

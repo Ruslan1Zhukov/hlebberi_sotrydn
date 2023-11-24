@@ -95,7 +95,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   children: [
                     SvgPicture.asset("assets/icons/icon_izmena.svg"),
                     const SizedBox(width: 9),
-                    const Expanded(child: Text('Изменить/добавить фотографию')),
+                    const Expanded(child: Text('Изменить фотографию')),
                   ],
                 ),
                 trailing: const Icon(Icons.chevron_right),

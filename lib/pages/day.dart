@@ -1,50 +1,57 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hlebberi_sotrydn/model/one_day.dart';
+import 'package:hlebberi_sotrydn/test_data.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/widgets/salary_day.dart';
 
+const _count = 10000;
+const _initialPage = 5000;
+
 class DayPage extends StatelessWidget {
   const DayPage({
     super.key,
-    required this.oneDay,
+    required this.initialDay,
   });
 
-  final OneDay oneDay;
+  final DateTime initialDay;
 
   @override
   Widget build(BuildContext context) {
-    return OrientationBuilder(
-      builder: (context, orientation) {
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      _DateTime(
-                        oneDay: oneDay,
-                        dateMonth: oneDay.data.dMMMM(context),
-                      ),
-                      const SizedBox(height: 30),
-                      _Position(oneDay: oneDay),
-                      const SizedBox(height: 20),
-                      _Location(oneDay: oneDay),
-                      const SizedBox(height: 50),
-                      const _TitleSalary(),
-                      const SizedBox(height: 15),
-                      SalaryDayWidget(zp: oneDay.zp),
-                    ],
-                  ),
-                ),
+    return CarouselSlider.builder(
+      itemCount: _count,
+      options: CarouselOptions(
+        height: 500,
+        viewportFraction: 1,
+        initialPage: _initialPage,
+      ),
+      itemBuilder: (context, index, realIndex) {
+        var newDateTime =
+            initialDay.add(Duration(days: index - _initialPage));
+        var oneDay = testOneDay(newDateTime);
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 20),
+              _DateTime(
+                oneDay: oneDay,
+                dateMonth: oneDay.data.dMMMMDayOfWeek(context),
               ),
-            ),
-          ],
+              const SizedBox(height: 30),
+              _Position(oneDay: oneDay),
+              const SizedBox(height: 20),
+              _Location(oneDay: oneDay),
+              const SizedBox(height: 50),
+              const _TitleSalary(),
+              const SizedBox(height: 15),
+              SalaryDayWidget(zp: oneDay.zp),
+            ],
+          ),
         );
       },
     );

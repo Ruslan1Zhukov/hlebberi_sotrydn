@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/zp.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
+import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
 import 'package:hlebberi_sotrydn/widgets/legend.dart';
-import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 const _padding = EdgeInsets.symmetric(horizontal: 20.0);
@@ -53,7 +53,7 @@ class SalaryWidget extends StatelessWidget {
     var isCurrentMonth = current.month == month;
     String formattedDate;
     if (isCurrentMonth) {
-      formattedDate = "на ${DateFormat('d MMMM', 'ru_RU').format(current)}";
+      formattedDate = "на ${current.dMMMM(context)}";
     } else {
       formattedDate = "";
     }
