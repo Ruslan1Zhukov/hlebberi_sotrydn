@@ -22,12 +22,12 @@ class AvatarWidget extends StatelessWidget {
       enabled: user == null,
       child: InkWell(
         onTap: () {
-          if (user == null) {
+          if (user?.avatarUrl == null) {
             return;
           }
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) {
-              return FullScreenImageScreen(imageUrl: user!.avatarUrl);
+              return FullScreenImageScreen(imageUrl: user!.avatarUrl!);
             },
           ));
         },
@@ -38,9 +38,9 @@ class AvatarWidget extends StatelessWidget {
             height: _size,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(_size),
-              child: (user != null)
+              child: (user?.avatarUrl != null)
                   ? Image.network(
-                      user!.avatarUrl,
+                      user!.avatarUrl!,
                       fit: BoxFit.cover,
                       width: _size,
                       height: _size,

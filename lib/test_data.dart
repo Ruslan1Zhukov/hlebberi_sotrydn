@@ -45,8 +45,9 @@ final User testUser = User(
     secondName: "Жуков",
   ),
   jobTitle: "Пекарь",
-  avatarUrl:
-      "https://sun6-20.userapi.com/impg/pGrdQf0S3nTSFtCyjKIkWdL_uwzsHsV3-2STwg/GfcGEPiVRX0.jpg?size=810x1080&quality=95&sign=bf91e0cfbc114e073ae2236aa8ade949&type=album",
+  avatarUrl: null,
+  // avatarUrl:
+  //     "https://sun6-20.userapi.com/impg/pGrdQf0S3nTSFtCyjKIkWdL_uwzsHsV3-2STwg/GfcGEPiVRX0.jpg?size=810x1080&quality=95&sign=bf91e0cfbc114e073ae2236aa8ade949&type=album",
   location: "г. Саранск, ул. Пролетарская, 103",
 );
 

@@ -3,12 +3,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/account.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/theme/scaffold.dart';
 import 'package:hlebberi_sotrydn/widgets/header.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -17,19 +19,40 @@ class SettingsPage extends StatefulWidget {
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
-
-void pickImage() async {
+Future<void> pickImage() async {
   final ImagePicker picker = ImagePicker();
   final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
   if (image != null) {
-    File file = File(image.path);
-    int sizeInBytes = file.lengthSync();
-    double sizeInMb = sizeInBytes / (1024 * 1024);
+    final CroppedFile? croppedImage = await ImageCropper().cropImage(
+      sourcePath: image.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      compressQuality: 100,
+      maxWidth: 700,
+      maxHeight: 700,
+      cropStyle: CropStyle.rectangle,
+      compressFormat: ImageCompressFormat.jpg,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Обрезать изображение',
+          toolbarColor: Colors.blue,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.square,
+          lockAspectRatio: true,
+        ),
+        IOSUiSettings(
+          title: 'Обрезать изображение',
+        ),
+      ],
+    );
 
-    if (sizeInMb > 5) {} else {}
+    if (croppedImage != null) {
+      // Дальнейшая обработка обрезанного изображения
+      // Например, вы можете отобразить его в виджете Image
+    }
   }
 }
+
 
 Future<XFile?> compressFile(File file) async {
   final filePath = file.absolute.path;
@@ -44,8 +67,6 @@ Future<XFile?> compressFile(File file) async {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  get avatarImage => null;
-
   @override
   Widget build(BuildContext context) {
     return ScaffoldProject(
@@ -95,11 +116,29 @@ class _SettingsPageState extends State<SettingsPage> {
                   children: [
                     SvgPicture.asset("assets/icons/icon_izmena.svg"),
                     const SizedBox(width: 9),
-                    const Expanded(child: Text('Изменить фотографию')),
+                    Expanded(
+                      child: StoreConnector<AppState, String?>(
+                        converter: (store) =>
+                            store.state.account.user?.avatarUrl,
+                        builder: (context, avatarUrl) {
+                          if (avatarUrl == null) {
+                            return const Text('Добавить фотографию');
+                          } else {
+                            return const Text('Изменить фотографию');
+                          }
+                        },
+                      ),
+                    ),
                   ],
                 ),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => _showActionSheet(context),
+                onTap: () {
+                  if (store.state.account.user?.avatarUrl == null) {
+                    _showCupertinoDialog(context);
+                  } else {
+                    _showActionSheet(context);
+                  }
+                },
               ),
               const SizedBox(height: 40),
               ListTile(
@@ -160,6 +199,37 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  void _showCupertinoDialog(BuildContext context) {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: const Text('Выберите действие'),
+        actions: <Widget>[
+          // CupertinoActionSheetAction(
+          //   child: const Text('Сделать фото с камеры'),
+          //   onPressed: () {
+          //     // TODO: Реализовать функционал камеры
+          //     Navigator.pop(context);
+          //   },
+          // ),
+          CupertinoActionSheetAction(
+            child: const Text('Выбрать из галереи'),
+            onPressed: () {
+              Navigator.pop(context);
+              pickImage();
+            },
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          child: const Text('Отмена'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+    );
+  }
+
   void _showActionSheet(BuildContext context) {
     showCupertinoModalPopup(
       context: context,
@@ -168,7 +238,7 @@ class _SettingsPageState extends State<SettingsPage> {
           CupertinoActionSheetAction(
             child: const Text('Открыть галерею'),
             onPressed: () {
-              Navigator.pop(context); 
+              Navigator.pop(context);
               pickImage();
             },
           ),
@@ -193,7 +263,6 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 }
-
 
 class _Dialog extends StatelessWidget {
   const _Dialog();

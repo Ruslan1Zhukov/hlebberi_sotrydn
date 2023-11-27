@@ -2,7 +2,7 @@ class User {
   final int id;
   final UserFio fio;
   final String jobTitle;
-  final String avatarUrl;
+  final String? avatarUrl;
   final String location;
 
   User({
