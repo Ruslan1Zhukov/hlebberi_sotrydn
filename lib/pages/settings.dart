@@ -19,54 +19,53 @@ class SettingsPage extends StatefulWidget {
   @override
   State<SettingsPage> createState() => _SettingsPageState();
 }
-Future<void> pickImage() async {
-  final ImagePicker picker = ImagePicker();
-  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-  if (image != null) {
-    final CroppedFile? croppedImage = await ImageCropper().cropImage(
-      sourcePath: image.path,
-      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-      compressQuality: 100,
-      maxWidth: 700,
-      maxHeight: 700,
-      cropStyle: CropStyle.rectangle,
-      compressFormat: ImageCompressFormat.jpg,
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarTitle: 'Обрезать изображение',
-          toolbarColor: Colors.blue,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.square,
-          lockAspectRatio: true,
-        ),
-        IOSUiSettings(
-          title: 'Обрезать изображение',
-        ),
-      ],
-    );
-
-    if (croppedImage != null) {
-      // Дальнейшая обработка обрезанного изображения
-      // Например, вы можете отобразить его в виджете Image
-    }
-  }
-}
-
-
-Future<XFile?> compressFile(File file) async {
-  final filePath = file.absolute.path;
-  final lastIndex = filePath.lastIndexOf(RegExp(r'\.(jpg|jpeg|png)'));
-  final outPath = "${filePath.substring(0, lastIndex)}_compressed.jpg";
-
-  return await FlutterImageCompress.compressAndGetFile(
-    filePath,
-    outPath,
-    quality: 85,
-  );
-}
 
 class _SettingsPageState extends State<SettingsPage> {
+  Future<void> _pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      final CroppedFile? croppedImage = await ImageCropper().cropImage(
+        sourcePath: image.path,
+        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        compressQuality: 100,
+        maxWidth: 300,
+        maxHeight: 300,
+        cropStyle: CropStyle.circle,
+        compressFormat: ImageCompressFormat.jpg,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Обрезать изображение',
+            toolbarColor: ColorProject.orange,
+            toolbarWidgetColor: ColorProject.black,
+            initAspectRatio: CropAspectRatioPreset.square,
+            lockAspectRatio: true,
+          ),
+          IOSUiSettings(
+            title: 'Обрезать изображение',
+          ),
+        ],
+      );
+      if (croppedImage != null) {
+        // вычислить размер обрезанного фото
+        // если размер больше 5 мб, то сжать
+      }
+    }
+  }
+
+  Future<XFile?> _compressFile(File file) async {
+    final filePath = file.absolute.path;
+    final lastIndex = filePath.lastIndexOf(RegExp(r'\.(jpg|jpeg|png)'));
+    final outPath = "${filePath.substring(0, lastIndex)}_compressed.jpg";
+
+    return await FlutterImageCompress.compressAndGetFile(
+      filePath,
+      outPath,
+      quality: 85,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldProject(
@@ -77,9 +76,7 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   InkWell(
@@ -216,7 +213,7 @@ class _SettingsPageState extends State<SettingsPage> {
             child: const Text('Выбрать из галереи'),
             onPressed: () {
               Navigator.pop(context);
-              pickImage();
+              _pickImage();
             },
           ),
         ],
@@ -239,7 +236,7 @@ class _SettingsPageState extends State<SettingsPage> {
             child: const Text('Открыть галерею'),
             onPressed: () {
               Navigator.pop(context);
-              pickImage();
+              _pickImage();
             },
           ),
           CupertinoActionSheetAction(
