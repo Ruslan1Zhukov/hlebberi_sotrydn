@@ -1,3 +1,5 @@
+import 'package:hlebberi_sotrydn/model/user.dart';
+
 class Smena {
   final String timePlan;
   final String timeFact;
@@ -12,8 +14,8 @@ class Smena {
 }
 
 class UserSmena {
-  final String avatarUrl;
-  final String fio;
+  final String? avatarUrl;
+  final UserFio fio;
 
   UserSmena({
     required this.avatarUrl,

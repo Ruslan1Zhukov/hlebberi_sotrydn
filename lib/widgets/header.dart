@@ -26,7 +26,11 @@ class HeaderWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                AvatarWidget(user: user),
+                AvatarWidget(
+                  isLoading: user == null,
+                  avatarUrl: user?.avatarUrl,
+                  fio: user?.fio,
+                ),
                 const SizedBox(width: 14),
                 Expanded(child: _buildTitle(user)),
                 if (isNeedSettings) const _ButtonOut(),
@@ -88,7 +92,6 @@ class HeaderWidget extends StatelessWidget {
 class _ButtonOut extends StatelessWidget {
   const _ButtonOut();
 
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -111,4 +114,3 @@ class _ButtonOut extends StatelessWidget {
     );
   }
 }
-

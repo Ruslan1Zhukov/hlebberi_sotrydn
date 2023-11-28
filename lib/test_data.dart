@@ -13,29 +13,36 @@ final Smena testSmena = Smena(
   timeFact: '10:05-открыта',
   users: [
     UserSmena(
-      avatarUrl: "https://media.nazaccent.ru/cache/eb/ae/ebae27a26c6d994b8f36c9699c9bfac8.jpg",
-      fio: "Иван Иванович",
+      avatarUrl:
+          "https://media.nazaccent.ru/cache/eb/ae/ebae27a26c6d994b8f36c9699c9bfac8.jpg",
+      fio: UserFio(
+        firstName: "Иван",
+        secondName: "Иванович",
+      ),
     ),
     UserSmena(
-      avatarUrl: "https://static.mk.ru/upload/iblock_mk/475/6a/47/43/DETAIL_PICTURE_568571.jpg",
-      fio: "Алла Геннадьевна",
+      avatarUrl:
+          "https://static.mk.ru/upload/iblock_mk/475/6a/47/43/DETAIL_PICTURE_568571.jpg",
+      fio: UserFio(
+        firstName: "Алла",
+        secondName: "Геннадьевна",
+      ),
     ),
   ],
 );
 
+UserSmena _defaultUserSmena = UserSmena(
+  avatarUrl: null,
+  fio: UserFio(
+    firstName: "Имя",
+    secondName: "Фамилия",
+  ),
+);
+
 List<UserSmena> skeletonUsers = [
-  UserSmena(
-    avatarUrl: "1",
-    fio: "Имя Фамилия",
-  ),
-  UserSmena(
-    avatarUrl: "2",
-    fio: "Имя Фамилия",
-  ),
-  UserSmena(
-    avatarUrl: "3",
-    fio: "Имя Фамилия",
-  ),
+  _defaultUserSmena,
+  _defaultUserSmena,
+  _defaultUserSmena,
 ];
 
 final User testUser = User(
@@ -45,9 +52,9 @@ final User testUser = User(
     secondName: "Жуков",
   ),
   jobTitle: "Пекарь",
-  avatarUrl: null,
-  // avatarUrl:
-  //     "https://sun6-20.userapi.com/impg/pGrdQf0S3nTSFtCyjKIkWdL_uwzsHsV3-2STwg/GfcGEPiVRX0.jpg?size=810x1080&quality=95&sign=bf91e0cfbc114e073ae2236aa8ade949&type=album",
+  // avatarUrl: null,
+  avatarUrl:
+      "https://sun6-20.userapi.com/impg/pGrdQf0S3nTSFtCyjKIkWdL_uwzsHsV3-2STwg/GfcGEPiVRX0.jpg?size=810x1080&quality=95&sign=bf91e0cfbc114e073ae2236aa8ade949&type=album",
   location: "г. Саранск, ул. Пролетарская, 103",
 );
 

@@ -11,66 +11,152 @@ const double _size = 65;
 class AvatarWidget extends StatelessWidget {
   const AvatarWidget({
     Key? key,
-    required this.user,
+    required this.isLoading,
+    required this.avatarUrl,
+    required this.fio,
+    this.size = _size,
   }) : super(key: key);
 
-  final User? user;
+  final bool isLoading;
+  final String? avatarUrl;
+  final UserFio? fio;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
-    return Skeletonizer(
-      enabled: user == null,
-      child: InkWell(
-        onTap: () {
-          if (user?.avatarUrl == null) {
-            return;
-          }
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) {
-              return FullScreenImageScreen(imageUrl: user!.avatarUrl!);
-            },
-          ));
-        },
-        child: Hero(
-          tag: user?.avatarUrl ?? "avatar",
-          child: SizedBox(
-            width: _size,
-            height: _size,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(_size),
-              child: (user?.avatarUrl != null)
-                  ? Image.network(
-                      user!.avatarUrl!,
-                      fit: BoxFit.cover,
-                      width: _size,
-                      height: _size,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Skeletonizer(
-                          enabled: true,
-                          child: Container(
-                            width: _size,
-                            height: _size,
-                            color: ColorProject.white,
-                          ),
-                        );
-                      },
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.error_outline,
-                          color: ColorProject.pink,
-                        );
-                      },
-                    )
-                  : Container(
-                      width: _size,
-                      height: _size,
-                      color: ColorProject.white,
-                    ),
+    if (isLoading) return _AvatarSkeleton(size: size);
+    var avatarUrl = this.avatarUrl;
+    var fio = this.fio;
+    if (avatarUrl == null) {
+      if (fio == null) return _AvatarError(size: size);
+      return _AvatarFio(fio: fio, size: size);
+    }
+    return _AvatarImage(avatarUrl: avatarUrl, size: size);
+  }
+}
+
+class _AvatarImage extends StatelessWidget {
+  const _AvatarImage({
+    required this.avatarUrl,
+    required this.size,
+  });
+
+  final String avatarUrl;
+  final double size;
+
+  _openFullScreenImage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FullScreenImageScreen(imageUrl: avatarUrl),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => _openFullScreenImage(context),
+      child: Hero(
+        tag: avatarUrl,
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(size),
+            child: Image.network(
+              avatarUrl,
+              width: size,
+              height: size,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return _AvatarSkeleton(size: size);
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return _AvatarError(size: size);
+              },
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AvatarFio extends StatelessWidget {
+  const _AvatarFio({
+    required this.fio,
+    required this.size,
+  });
+
+  final UserFio fio;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: fio,
+      child: Material(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(size),
+          child: Container(
+            width: size,
+            height: size,
+            color: ColorProject.error,
+            child: Center(
+              child: Text(
+                fio.initials(),
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                  color: ColorProject.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AvatarError extends StatelessWidget {
+  const _AvatarError({
+    required this.size,
+  });
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: const Center(
+        child: Icon(Icons.error_outline, color: ColorProject.pink),
+      ),
+    );
+  }
+}
+
+class _AvatarSkeleton extends StatelessWidget {
+  const _AvatarSkeleton({
+    required this.size,
+  });
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(size),
+      child: Skeletonizer(
+        enabled: true,
+        child: Container(
+          width: size,
+          height: size,
+          color: ColorProject.white,
         ),
       ),
     );

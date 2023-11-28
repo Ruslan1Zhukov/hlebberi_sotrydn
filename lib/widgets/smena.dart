@@ -93,92 +93,42 @@ class _SmenaWidgetState extends State<SmenaWidget> {
             ),
           ),
           const SizedBox(height: 8),
-          Skeletonizer(
-            enabled: smena == null,
-            child: Wrap(
-              spacing: 17,
-              runSpacing: 4,
-              children: [
-                for (var user in smena?.users ?? skeletonUsers)
-                  _SmenaAvatarWidget(
-                    user: user,
-                  ),
-              ],
-            ),
+          Wrap(
+            spacing: 17,
+            runSpacing: 4,
+            children: [
+              for (var user in smena?.users ?? skeletonUsers)
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AvatarWidget(
+                      isLoading: smena == null,
+                      avatarUrl: user.avatarUrl,
+                      fio: user.fio,
+                      size: 55,
+                    ),
+                    const SizedBox(height: 4),
+                    smena == null
+                        ? Skeletonizer(
+                            enabled: true,
+                            child: Container(
+                              width: 55,
+                              height: 12,
+                              color: ColorProject.error,
+                            ),
+                          )
+                        : Text(
+                            user.fio.fullFio2(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 8, color: ColorProject.black),
+                          ),
+                  ],
+                ),
+            ],
           ),
         ],
       ),
-    );
-  }
-}
-
-const double _size = 55;
-
-class _SmenaAvatarWidget extends StatelessWidget {
-  const _SmenaAvatarWidget({
-    Key? key,
-    required this.user,
-  }) : super(key: key);
-
-  final UserSmena user;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) {
-                return FullScreenImageScreen(
-                  imageUrl: user.avatarUrl,
-                );
-              },
-            ));
-          },
-          child: Hero(
-            tag: user.avatarUrl,
-            child: SizedBox(
-              width: _size,
-              height: _size,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(_size),
-                child: Image.network(
-                  user.avatarUrl,
-                  fit: BoxFit.cover,
-                  width: _size,
-                  height: _size,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
-                      Icons.error_outline,
-                      color: ColorProject.pink,
-                    );
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return Skeletonizer(
-                      enabled: true,
-                      child: Container(
-                        width: _size,
-                        height: _size,
-                        color: ColorProject.white,
-                      ),
-                    );
-                  },
-
-                ),
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          user.fio,
-          style: const TextStyle(fontSize: 8),
-        ),
-      ],
     );
   }
 }

@@ -34,4 +34,7 @@ abstract class ColorProject {
 
   /// Сплеш экран
   static const Color splash = Color(0xFFF0BA5D);
+
+  /// Ошибка
+  static const Color error = Color(0xFFFE8382);
 }

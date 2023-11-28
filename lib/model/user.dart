@@ -28,4 +28,15 @@ class UserFio {
   String fullFio() {
     return "$firstName $secondName";
   }
+
+  String fullFio2() {
+    return "$firstName\n$secondName";
+  }
+
+  /// Получить инициалы имени и фамилии
+  String initials() {
+    var firstLetter = (firstName.isNotEmpty) ? firstName[0] : "-";
+    var secondLetter = (secondName.isNotEmpty) ? secondName[0] : "-";
+    return "$firstLetter$secondLetter";
+  }
 }
