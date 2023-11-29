@@ -1,6 +1,13 @@
-import 'package:hlebberi_sotrydn/theme/fil_color.dart';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+
+class ColorProject {
+  static const orange = Colors.orange;
+  static const black = Colors.black;
+}
 
 Future<void> pickImage() async {
   final ImagePicker picker = ImagePicker();
@@ -28,21 +35,25 @@ Future<void> pickImage() async {
         ),
       ],
     );
+
     if (croppedImage != null) {
-      // вычислить размер обрезанного фото
-      // если размер больше 5 мб, то сжать
+      await compressImageIfNeeded(croppedImage);
     }
   }
 }
 
-// Future<XFile?> _compressFile(File file) async {
-//   final filePath = file.absolute.path;
-//   final lastIndex = filePath.lastIndexOf(RegExp(r'\.(jpg|jpeg|png)'));
-//   final outPath = "${filePath.substring(0, lastIndex)}_compressed.jpg";
-//
-//   return await FlutterImageCompress.compressAndGetFile(
-//     filePath,
-//     outPath,
-//     quality: 85,
-//   );
-// }
+Future<void> compressImageIfNeeded(CroppedFile croppedImage) async {
+  final File imageFile = File(croppedImage.path);
+  final int fileSize = await imageFile.length();
+
+  if (fileSize > (5 * 1024 * 1024)) {
+    final String targetPath = "${croppedImage.path}_compressed.jpg";
+    final File? compressedImage = (await FlutterImageCompress.compressAndGetFile(
+      croppedImage.path,
+      targetPath,
+      quality: 85,
+    )) as File?;
+    if (compressedImage != null) {
+    }
+  }
+}
