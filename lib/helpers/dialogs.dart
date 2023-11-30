@@ -43,7 +43,7 @@ showAddAvatarDialog(BuildContext context) {
           child: const Text('Выбрать из галереи'),
           onPressed: () {
             Navigator.pop(context);
-            pickImage();
+            pickImage(context);
           },
         ),
       ],
@@ -60,13 +60,13 @@ showAddAvatarDialog(BuildContext context) {
 showChangeAvatarDialog(BuildContext context) {
   showCupertinoModalPopup(
     context: context,
-    builder: (BuildContext context) => CupertinoActionSheet(
+    builder: (BuildContext context2) => CupertinoActionSheet(
       actions: <Widget>[
         CupertinoActionSheetAction(
           child: const Text('Открыть галерею'),
           onPressed: () {
-            Navigator.pop(context);
-            pickImage();
+            Navigator.pop(context2);
+            pickImage(context);
           },
         ),
         CupertinoActionSheetAction(
@@ -75,14 +75,14 @@ showChangeAvatarDialog(BuildContext context) {
             style: TextStyle(color: Colors.red),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context2);
           },
         )
       ],
       cancelButton: CupertinoActionSheetAction(
         isDefaultAction: true,
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pop(context2);
         },
         child: const Text('Отмена'),
       ),
