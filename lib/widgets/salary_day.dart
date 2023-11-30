@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/zp.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
+import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
 import 'package:hlebberi_sotrydn/widgets/legend.dart';
-import 'package:intl/intl.dart';
 
 class SalaryDayWidget extends StatelessWidget {
   const SalaryDayWidget({
     super.key,
     required this.zp,
+    required this.isCurrentDay,
   });
 
   final Zp zp;
+  final bool isCurrentDay;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class SalaryDayWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTitle(),
+          buildTitle(context),
           const SizedBox(height: 20),
           DiagramWidget(zp: zp),
           const SizedBox(height: 20),
@@ -37,10 +39,8 @@ class SalaryDayWidget extends StatelessWidget {
     );
   }
 
-  Widget buildTitle() {
-    final String currentDate = DateFormat('d MMMM', 'ru_RU').format(
-        DateTime.now());
-
+  Widget buildTitle(BuildContext context) {
+    String currentDate = (isCurrentDay) ? "на ${DateTime.now().dMMMM(context)}" : "";
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -52,7 +52,7 @@ class SalaryDayWidget extends StatelessWidget {
           ),
         ),
         Text(
-          " на $currentDate",
+          currentDate,
           style: const TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 12,

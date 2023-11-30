@@ -45,7 +45,7 @@ class CalendarWidget extends StatelessWidget {
             calendarBuilders: CalendarBuilders(
               todayBuilder: _buildToday,
               defaultBuilder: _buildDay,
-              dowBuilder: (_, day) => _DayOfWeek(dayOfWeek: day.weekday),
+              dowBuilder: (_, day) => _DayOfWeek(dateTime: day),
             ),
           ),
         ],
@@ -92,30 +92,47 @@ class CalendarWidget extends StatelessWidget {
   }
 }
 
+const _fontWeightLight = FontWeight.w300;
+const _fontWeightBold = FontWeight.w700;
+
 class _DayOfWeek extends StatelessWidget {
   const _DayOfWeek({
-    required this.dayOfWeek,
+    required this.dateTime,
   });
 
-  final int dayOfWeek;
+  final DateTime dateTime;
 
   @override
   Widget build(BuildContext context) {
-    int currentDayOfWeek = DateTime.now().weekday;
-    FontWeight determineFontWeight(int day) {
-     return day == currentDayOfWeek ? FontWeight.bold : FontWeight.w300;
-    }
-
+    var dayOfWeek = dateTime.weekday;
     return Center(
       child: Text(
         _mapDayOfWeek[dayOfWeek] ?? "ХЗ",
         style: TextStyle(
-          color: const Color(0xFF1D1D1D).withOpacity(0.5),
-          fontWeight: determineFontWeight(dayOfWeek),
+          color: const Color(0xFF1D1D1D).withOpacity(_determineOpacity(dayOfWeek)),
+          fontWeight: _determineFontWeight(dayOfWeek),
           fontSize: 12,
         ),
       ),
     );
+  }
+
+  FontWeight _determineFontWeight(int day) {
+    var now = DateTime.now();
+    int currentDayOfWeek = now.weekday;
+    if (dateTime.year != now.year || dateTime.month != now.month) {
+      return _fontWeightLight;
+    }
+    return day == currentDayOfWeek ? _fontWeightBold : _fontWeightLight;
+  }
+
+  double _determineOpacity(int day) {
+    var now = DateTime.now();
+    int currentDayOfWeek = now.weekday;
+    if (dateTime.year != now.year || dateTime.month != now.month) {
+      return 0.5;
+    }
+    return day == currentDayOfWeek ? 1 : 0.5;
   }
 }
 
@@ -154,20 +171,21 @@ class _Day extends StatelessWidget {
         opacity: mode.getOpacity(),
         child: Stack(
           children: [
-            if (dayData == null) Positioned.fill(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Skeletonizer(
-                  enabled: true,
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    margin: const EdgeInsets.all(3.5),
-                    color: ColorProject.white,
+            if (dayData == null)
+              Positioned.fill(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Skeletonizer(
+                    enabled: true,
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      margin: const EdgeInsets.all(3.5),
+                      color: ColorProject.white,
+                    ),
                   ),
                 ),
               ),
-            ),
             Positioned.fill(
               child: Container(
                 width: double.infinity,

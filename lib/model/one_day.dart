@@ -14,4 +14,11 @@ class OneDay {
     required this.location,
     required this.zp,
   });
+
+  bool isCurrent() {
+    var now = DateTime.now();
+    return now.year == data.year &&
+        now.month == data.month &&
+        now.day == data.day;
+  }
 }

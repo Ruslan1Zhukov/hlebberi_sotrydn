@@ -28,8 +28,7 @@ class DayPage extends StatelessWidget {
         initialPage: _initialPage,
       ),
       itemBuilder: (context, index, realIndex) {
-        var newDateTime =
-            initialDay.add(Duration(days: index - _initialPage));
+        var newDateTime = initialDay.add(Duration(days: index - _initialPage));
         var oneDay = testOneDay(newDateTime);
         return Padding(
           padding: const EdgeInsets.all(20.0),
@@ -47,7 +46,10 @@ class DayPage extends StatelessWidget {
               const SizedBox(height: 20),
               _Location(oneDay: oneDay),
               const SizedBox(height: 32),
-              SalaryDayWidget(zp: oneDay.zp),
+              SalaryDayWidget(
+                zp: oneDay.zp,
+                isCurrentDay: oneDay.isCurrent(),
+              ),
             ],
           ),
         );
@@ -142,4 +144,3 @@ class _Location extends StatelessWidget {
     );
   }
 }
-
