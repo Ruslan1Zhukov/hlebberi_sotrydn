@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/zp.dart';
+import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
 import 'package:hlebberi_sotrydn/widgets/legend.dart';
+import 'package:intl/intl.dart';
 
 class SalaryDayWidget extends StatelessWidget {
   const SalaryDayWidget({
@@ -29,30 +31,33 @@ class SalaryDayWidget extends StatelessWidget {
           const SizedBox(height: 20),
           DiagramWidget(zp: zp),
           const SizedBox(height: 20),
-          const LegendWidget(),
+          const LegendWidgetDay(),
         ],
       ),
     );
   }
 
   Widget buildTitle() {
-    return Row(
+    final String currentDate = DateFormat('d MMMM', 'ru_RU').format(
+        DateTime.now());
+
+    return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "Всего",
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-            ),
-          ],
+        const Text(
+          "Зарплата",
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
+          ),
         ),
-        const Spacer(),
         Text(
-          "${zp.sum} P",
-          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
+          " на $currentDate",
+          style: const TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            color: ColorProject.beige,
+          ),
         ),
       ],
     );

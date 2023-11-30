@@ -101,12 +101,17 @@ class _DayOfWeek extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int currentDayOfWeek = DateTime.now().weekday;
+    FontWeight determineFontWeight(int day) {
+     return day == currentDayOfWeek ? FontWeight.bold : FontWeight.w300;
+    }
+
     return Center(
       child: Text(
         _mapDayOfWeek[dayOfWeek] ?? "ХЗ",
         style: TextStyle(
           color: const Color(0xFF1D1D1D).withOpacity(0.5),
-          fontWeight: FontWeight.w400,
+          fontWeight: determineFontWeight(dayOfWeek),
           fontSize: 12,
         ),
       ),

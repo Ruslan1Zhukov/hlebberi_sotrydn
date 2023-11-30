@@ -46,9 +46,7 @@ class DayPage extends StatelessWidget {
               _Position(oneDay: oneDay),
               const SizedBox(height: 20),
               _Location(oneDay: oneDay),
-              const SizedBox(height: 50),
-              const _TitleSalary(),
-              const SizedBox(height: 15),
+              const SizedBox(height: 32),
               SalaryDayWidget(zp: oneDay.zp),
             ],
           ),
@@ -145,21 +143,3 @@ class _Location extends StatelessWidget {
   }
 }
 
-class _TitleSalary extends StatelessWidget {
-  const _TitleSalary();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        Text(
-          "Зарплата",
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 15,
-          ),
-        ),
-      ],
-    );
-  }
-}
