@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hlebberi_sotrydn/model/user.dart';
 import 'package:hlebberi_sotrydn/pages/settings.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
@@ -106,9 +107,8 @@ class _ButtonOut extends StatelessWidget {
           vertical: 8,
           horizontal: 20,
         ),
-        child: const Icon(
-          Icons.settings,
-          size: 24.0,
+        child: SvgPicture.asset(
+          "assets/icons/icon_settings.svg",
         ),
       ),
     );

@@ -20,6 +20,9 @@ class ListTileProject extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       contentPadding: EdgeInsets.zero,
+      minVerticalPadding: 0,
+      visualDensity: VisualDensity.compact,
+      titleAlignment: ListTileTitleAlignment.center,
       trailing: arrow ? const Icon(Icons.chevron_right, color: ColorProject.black,) : null,
       title: Row(
         children: [

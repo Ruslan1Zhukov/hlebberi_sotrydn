@@ -27,7 +27,7 @@ class LegendWidget extends StatelessWidget {
           title: 'Процент с продаж',
         ),
         _Item(
-          color: Color(0xFFE5E5E5),
+          color: ColorProject.grayDiagram,
           title: 'Демотивация',
         ),
       ],
@@ -86,7 +86,7 @@ class LegendWidgetDay extends StatelessWidget {
           title: 'Процент с продаж',
         ),
         _Item(
-          color: Color(0xFFE5E5E5),
+          color: ColorProject.grayDiagram,
           title: 'Демотивация',
         ),
       ],

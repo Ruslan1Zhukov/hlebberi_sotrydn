@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hlebberi_sotrydn/theme/divider.dart';
 import 'package:hlebberi_sotrydn/theme/list_tile.dart';
 import 'package:hlebberi_sotrydn/theme/scaffold.dart';
 import 'package:hlebberi_sotrydn/widgets/back.dart';
@@ -24,29 +25,30 @@ class SettingsPage extends StatelessWidget {
               const BackWidget(title: "Информация"),
               const SizedBox(height: 32),
               const HeaderWidget(isNeedSettings: false),
-              const Divider(),
-              const SizedBox(height: 15),
+              const SizedBox(height: 24),
+              const DividerProject(),
               const ChangeImageButton(),
-              const Divider(),
-              const SizedBox(height: 30),
+              const DividerProject(),
+              const SizedBox(height: 40),
+              const DividerProject(),
               ListTileProject(
                 title: 'Пользовательское соглашение',
                 onTap: () {},
               ),
-              const Divider(),
+              const DividerProject(),
               ListTileProject(
                 title: 'Правовые документы',
                 onTap: () {},
               ),
-              const Divider(),
+              const DividerProject(),
               ListTileProject(
                 title: 'Обратная связь',
                 onTap: () {},
               ),
-              const Divider(),
-              const SizedBox(height: 35),
+              const DividerProject(),
+              const SizedBox(height: 20),
               const SocialsWidget(),
-              const SizedBox(height: 40),
+              const SizedBox(height: 26),
               const LogoutWidget(),
             ],
           ),
