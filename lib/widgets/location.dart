@@ -42,6 +42,7 @@ class LocationWidget extends StatelessWidget {
             children: [
               const Icon(
                 Icons.location_on,
+                size: 20,
                 color: ColorProject.orange,
               ),
               const SizedBox(width: 6),

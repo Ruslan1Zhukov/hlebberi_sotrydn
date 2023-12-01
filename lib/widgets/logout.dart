@@ -13,7 +13,7 @@ class LogoutWidget extends StatelessWidget {
         'Выйти из аккаунта',
         style: TextStyle(
           color: ColorProject.black,
-          fontSize: 15,
+          fontSize: 12,
           fontWeight: FontWeight.w700,
         ),
       ),
