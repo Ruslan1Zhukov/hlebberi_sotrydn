@@ -3,7 +3,7 @@ import 'dart:ui';
 /// Политра проекта
 abstract class ColorProject {
   /// Жёлтый цвет
-  static const Color orange = Color(0xFFFFC107);
+  static const Color orange = Color(0xFFFDD733);
 
   /// Чёрный цвет
   static const Color black = Color(0xFF000000);
@@ -22,6 +22,9 @@ abstract class ColorProject {
 
   /// Синий цвет
   static const Color blue = Color(0xFF6B7AFF);
+
+  /// Синий цвет
+  static const Color grayDiagram = Color(0xFF939393);
 
   /// Белый цвет
   static const Color white = Color(0xFFFFFFFF);

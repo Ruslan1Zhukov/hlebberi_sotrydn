@@ -103,14 +103,14 @@ class _AvatarFio extends StatelessWidget {
           child: Container(
             width: size,
             height: size,
-            color: ColorProject.error,
+            color: ColorProject.orange,
             child: Center(
               child: Text(
                 fio.initials(),
                 style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: FontWeight.w500,
-                  color: ColorProject.white,
+                  color: ColorProject.black,
                 ),
               ),
             ),

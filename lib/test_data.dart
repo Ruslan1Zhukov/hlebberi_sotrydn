@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/enums/day_type.dart';
 import 'package:hlebberi_sotrydn/model/calendar_data.dart';
 import 'package:hlebberi_sotrydn/model/one_day.dart';
 import 'package:hlebberi_sotrydn/model/smena.dart';
 import 'package:hlebberi_sotrydn/model/user.dart';
 import 'package:hlebberi_sotrydn/model/zp.dart';
+import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 
 final Smena testSmena = Smena(
   timePlan: '10:00-20:00',
@@ -162,27 +162,27 @@ Zp _generateZpMonth() {
     items: [
       PlotItem(
         name: "Оклад",
-        color: const Color(0xFFFFC107),
+        color: ColorProject.orange,
         value: value1,
       ),
       PlotItem(
         name: 'Премия(месяц)',
-        color: const Color(0xFFFE8382),
+        color: ColorProject.pink,
         value: value2,
       ),
       PlotItem(
         name: 'Премия(день)',
-        color: const Color(0xFFA0B1FF),
+        color: ColorProject.lightBlue,
         value: value3,
       ),
       PlotItem(
         name: 'Процент с продаж',
-        color: const Color(0xFF6B7AFF),
+        color: ColorProject.blue,
         value: value4,
       ),
       PlotItem(
         name: 'Демотивация',
-        color: const Color(0xFFE5E5E5),
+        color: ColorProject.grayDiagram,
         value: value5,
       ),
     ],
@@ -200,22 +200,22 @@ Zp generateZpDay() {
     items: [
       PlotItem(
         name: "Оклад",
-        color: const Color(0xFFFFC107),
+        color: ColorProject.orange,
         value: value1,
       ),
       PlotItem(
         name: 'Премия(день)',
-        color: const Color(0xFFA0B1FF),
+        color: ColorProject.lightBlue,
         value: value3,
       ),
       PlotItem(
         name: 'Процент с продаж',
-        color: const Color(0xFF6B7AFF),
+        color: ColorProject.blue,
         value: value4,
       ),
       PlotItem(
         name: 'Демотивация',
-        color: const Color(0xFFE5E5E5),
+        color: ColorProject.grayDiagram,
         value: value5,
       ),
     ],
