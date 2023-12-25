@@ -111,7 +111,13 @@ class _Position extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset("assets/icons/icon_profile.svg"),
+        ColorFiltered(
+          colorFilter: const ColorFilter.mode(
+            ColorProject.grey,
+            BlendMode.srcIn,
+          ),
+          child: SvgPicture.asset("assets/icons/icon_profile.svg"),
+        ),
         const SizedBox(width: 13),
         Text(
           oneDay.jobTitle,
@@ -137,10 +143,18 @@ class _Location extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset("assets/icons/icon_locat.svg"),
+        ColorFiltered(
+        colorFilter: const ColorFilter.mode(
+          ColorProject.grey,
+          BlendMode.srcIn,
+        ),
+        child: SvgPicture.asset("assets/icons/icon_locat.svg"),
+      ),
         const SizedBox(width: 12),
         Text(oneDay.location),
       ],
     );
   }
 }
+
+

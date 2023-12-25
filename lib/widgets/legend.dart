@@ -69,25 +69,44 @@ class LegendWidgetDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Wrap(
-      spacing: 12,
-      runSpacing: 6,
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _Item(
-          color: ColorProject.orange,
-          title: 'Оклад',
-        ),
+        // _Item(
+        //   color: ColorProject.orange,
+        //   title: 'Оклад',
+        // ),
+        // SizedBox(height: 4), // Adding space between items
+        // Text(
+        //   'Комментарий: ',
+        //   style: TextStyle(color: Color(0xFFD9D9D9)),
+        // ),
         _Item(
           color: ColorProject.lightBlue,
-          title: 'Премия (день)',
+          title: 'Премия за день',
         ),
-        _Item(
-          color: ColorProject.blue,
-          title: 'Процент с продаж',
+        SizedBox(height: 4),
+        Text(
+          'Комментарий: Хорошо убрались',
+          style: TextStyle(color: Color(0xFFD9D9D9)),
         ),
+        // _Item(
+        //   color: ColorProject.blue,
+        //   title: 'Процент с продаж',
+        // ),
+        // SizedBox(height: 4),
+        // Text(
+        //   'Комментарий: Цвет D9D9D9',
+        //   style: TextStyle(color: Color(0xFFD9D9D9)),
+        // ),
         _Item(
           color: Color(0xFFE5E5E5),
-          title: 'Демотивация',
+          title: 'Демотивация за день',
+        ),
+        SizedBox(height: 4),
+        Text(
+          'Комментарий: Плохо убрались',
+          style: TextStyle(color: Color(0xFFD9D9D9)),
         ),
       ],
     );
