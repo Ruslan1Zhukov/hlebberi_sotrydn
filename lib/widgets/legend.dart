@@ -78,7 +78,7 @@ class LegendWidgetDay extends StatelessWidget {
         // ),
         // SizedBox(height: 4), // Adding space between items
         // Text(
-        //   'Комментарий: ',
+        //   'Комментарий: Цвет D9D9D9',
         //   style: TextStyle(color: Color(0xFFD9D9D9)),
         // ),
         _Item(
@@ -88,7 +88,7 @@ class LegendWidgetDay extends StatelessWidget {
         SizedBox(height: 4),
         Text(
           'Комментарий: Хорошо убрались',
-          style: TextStyle(color: Color(0xFFD9D9D9)),
+          style: TextStyle(color: ColorProject.grey),
         ),
         // _Item(
         //   color: ColorProject.blue,
@@ -106,10 +106,11 @@ class LegendWidgetDay extends StatelessWidget {
         SizedBox(height: 4),
         Text(
           'Комментарий: Плохо убрались',
-          style: TextStyle(color: Color(0xFFD9D9D9)),
+          style: TextStyle(color: ColorProject.grey),
         ),
       ],
     );
   }
+
 }
 
