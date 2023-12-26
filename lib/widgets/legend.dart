@@ -72,15 +72,15 @@ class LegendWidgetDay extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // _Item(
-        //   color: ColorProject.orange,
-        //   title: 'Оклад',
-        // ),
-        // SizedBox(height: 4), // Adding space between items
-        // Text(
-        //   'Комментарий: Цвет D9D9D9',
-        //   style: TextStyle(color: Color(0xFFD9D9D9)),
-        // ),
+        _Item(
+          color: ColorProject.orange,
+          title: 'Оклад',
+        ),
+        SizedBox(height: 4), // Adding space between items
+        Text(
+          'Комментарий: Цвет D9D9D9',
+          style: TextStyle(color: Color(0xFFD9D9D9)),
+        ),
         _Item(
           color: ColorProject.lightBlue,
           title: 'Премия за день',
@@ -90,15 +90,15 @@ class LegendWidgetDay extends StatelessWidget {
           'Комментарий: Хорошо убрались',
           style: TextStyle(color: ColorProject.grey),
         ),
-        // _Item(
-        //   color: ColorProject.blue,
-        //   title: 'Процент с продаж',
-        // ),
-        // SizedBox(height: 4),
-        // Text(
-        //   'Комментарий: Цвет D9D9D9',
-        //   style: TextStyle(color: Color(0xFFD9D9D9)),
-        // ),
+        _Item(
+          color: ColorProject.blue,
+          title: 'Процент с продаж',
+        ),
+        SizedBox(height: 4),
+        Text(
+          'Комментарий: Цвет D9D9D9',
+          style: TextStyle(color: Color(0xFFD9D9D9)),
+        ),
         _Item(
           color: Color(0xFFE5E5E5),
           title: 'Демотивация за день',

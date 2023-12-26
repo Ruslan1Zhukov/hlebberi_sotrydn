@@ -36,7 +36,6 @@ class DayPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 20),
               _DateTime(
                 oneDay: oneDay,
                 dateMonth: oneDay.data.dMMMMDayOfWeek(context),

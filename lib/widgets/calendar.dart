@@ -109,7 +109,8 @@ class _DayOfWeek extends StatelessWidget {
       child: Text(
         _mapDayOfWeek[dayOfWeek] ?? "ХЗ",
         style: TextStyle(
-          color: const Color(0xFF1D1D1D).withOpacity(_determineOpacity(dayOfWeek)),
+          color: const Color(0xFF1D1D1D).withOpacity(
+              _determineOpacity(dayOfWeek)),
           fontWeight: _determineFontWeight(dayOfWeek),
           fontSize: 12,
         ),
@@ -148,6 +149,10 @@ class _Day extends StatelessWidget {
   final DayMode mode;
 
   _openDay(BuildContext context) {
+    var heightScreen = MediaQuery
+        .of(context)
+        .size
+        .height;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -156,6 +161,11 @@ class _Day extends StatelessWidget {
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
+      ),
+      useSafeArea: true,
+      showDragHandle: true,
+      constraints: BoxConstraints(
+        maxHeight: heightScreen - 80,
       ),
       builder: (BuildContext context) {
         return SingleChildScrollView(child: DayPage(initialDay: dateTime));
