@@ -7,6 +7,7 @@ import 'package:hlebberi_sotrydn/widgets/change_image.dart';
 import 'package:hlebberi_sotrydn/widgets/header.dart';
 import 'package:hlebberi_sotrydn/widgets/logout.dart';
 import 'package:hlebberi_sotrydn/widgets/socials.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -33,12 +34,26 @@ class SettingsPage extends StatelessWidget {
               const DividerProject(),
               ListTileProject(
                 title: 'Пользовательское соглашение',
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const WebViewPage(url: 'https://www.google.com/'),
+                    ),
+                  );
+                },
               ),
               const DividerProject(),
               ListTileProject(
-                title: 'Правовые документы',
-                onTap: () {},
+                title: 'Пользовательское соглашение',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const WebViewPage(url: 'https://www.google.com/'),
+                    ),
+                  );
+                },
               ),
               const DividerProject(),
               ListTileProject(
@@ -58,5 +73,19 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
+class WebViewPage extends StatelessWidget {
+  final String url;
+  const WebViewPage({Key? key, required this.url}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaffoldProject(
+      child:  WebView(
+      initialUrl: url,
+      javascriptMode: JavascriptMode.unrestricted,
+    ),
+    );
+  }
+}
 
 
