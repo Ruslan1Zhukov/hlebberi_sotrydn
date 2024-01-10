@@ -32,6 +32,7 @@ class ScaffoldProject extends StatelessWidget {
               height: 80,
               child: FloatingActionButton(
                 onPressed: () => openScan(context),
+                shape: const CircleBorder(),
                 backgroundColor: ColorProject.orange,
                 child: Padding(
                   padding: const EdgeInsets.all(19),

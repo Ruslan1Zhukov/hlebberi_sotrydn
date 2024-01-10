@@ -32,24 +32,26 @@ class DayPage extends StatelessWidget {
         var oneDay = testOneDay(newDateTime);
         return Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _DateTime(
-                oneDay: oneDay,
-                dateMonth: oneDay.data.dMMMMDayOfWeek(context),
-              ),
-              const SizedBox(height: 30),
-              _Position(oneDay: oneDay),
-              const SizedBox(height: 20),
-              _Location(oneDay: oneDay),
-              const SizedBox(height: 32),
-              SalaryDayWidget(
-                zp: oneDay.zp,
-                isCurrentDay: oneDay.isCurrent(),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _DateTime(
+                  oneDay: oneDay,
+                  dateMonth: oneDay.data.dMMMMDayOfWeek(context),
+                ),
+                const SizedBox(height: 30),
+                _Position(oneDay: oneDay),
+                const SizedBox(height: 20),
+                _Location(oneDay: oneDay),
+                const SizedBox(height: 32),
+                SalaryDayWidget(
+                  zp: oneDay.zp,
+                  isCurrentDay: oneDay.isCurrent(),
+                ),
+              ],
+            ),
           ),
         );
       },
