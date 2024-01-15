@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/zp.dart';
+import 'package:hlebberi_sotrydn/pages/day.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
@@ -9,7 +10,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 const _padding = EdgeInsets.symmetric(horizontal: 20.0);
 
-class SalaryWidget extends StatelessWidget {
+class SalaryWidget extends StatefulWidget {
   const SalaryWidget({
     super.key,
     required this.month,
@@ -20,29 +21,65 @@ class SalaryWidget extends StatelessWidget {
   final Zp? zp;
 
   @override
-  Widget build(BuildContext context) {
-    return Skeletonizer(
-      enabled: month == null,
-      child: Container(
-        margin: _padding,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: ColorProject.grey,
-          ),
-          color: ColorProject.white,
+  State<SalaryWidget> createState() => _SalaryWidgetState();
+}
+
+class _SalaryWidgetState extends State<SalaryWidget> {
+  DateTime dateTime = DateTime.now();
+
+  void _openDay(BuildContext context) {
+    var heightScreen = MediaQuery.of(context).size.height;
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildTitle(context),
-            const SizedBox(height: 20),
-            DiagramWidget(zp: zp),
-            const SizedBox(height: 20),
-            const LegendWidget(),
-          ],
+      ),
+      useSafeArea: true,
+      showDragHandle: true,
+      constraints: BoxConstraints(
+        maxHeight: heightScreen - 80,
+      ),
+      builder: (BuildContext context) {
+        return SingleChildScrollView(child: DayPage(initialDay: dateTime));
+      },
+    );
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        _openDay(context);
+      },
+      child: Skeletonizer(
+        enabled: widget.month == null,
+        child: Container(
+          margin: _padding,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+              color: ColorProject.grey,
+            ),
+            color: ColorProject.white,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildTitle(context),
+              const SizedBox(height: 20),
+              DiagramWidget(zp: widget.zp),
+              const SizedBox(height: 20),
+              const LegendWidget(),
+            ],
+          ),
         ),
       ),
     );
@@ -50,7 +87,7 @@ class SalaryWidget extends StatelessWidget {
 
   Widget buildTitle(BuildContext context) {
     var current = DateTime.now();
-    var isCurrentMonth = current.month == month;
+    var isCurrentMonth = current.month == widget.month;
     String formattedDate;
     if (isCurrentMonth) {
       formattedDate = "на ${current.dMMMM(context)}";
@@ -58,7 +95,7 @@ class SalaryWidget extends StatelessWidget {
       formattedDate = "";
     }
 
-    final zpSum = zp?.sum ?? 0;
+    final zpSum = widget.zp?.sum ?? 0;
     var formattedSum = zpSum.toPriceString();
 
     return Row(
