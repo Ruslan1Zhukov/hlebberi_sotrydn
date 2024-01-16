@@ -38,19 +38,19 @@ class SettingsPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const WebViewPage(url: 'https://www.google.com/'),
+                      builder: (context) => const WebViewPage(url: 'https://doc.hlbr.ru/s/agreement/'),
                     ),
                   );
                 },
               ),
               const DividerProject(),
               ListTileProject(
-                title: 'Пользовательское соглашение',
+                title: 'Правовые документы',
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const WebViewPage(url: 'https://www.google.com/'),
+                      builder: (context) => const WebViewPage(url: 'https://doc.hlbr.ru/s/agreement/'),
                     ),
                   );
                 },
