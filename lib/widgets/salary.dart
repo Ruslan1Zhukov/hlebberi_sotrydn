@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/zp.dart';
-import 'package:hlebberi_sotrydn/pages/day.dart';
+import 'package:hlebberi_sotrydn/pages/zp.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
@@ -44,7 +44,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
         maxHeight: heightScreen - 80,
       ),
       builder: (BuildContext context) {
-        return SingleChildScrollView(child: DayPage(initialDay: dateTime));
+        return const SingleChildScrollView(child: ZpPage());
       },
     );
   }

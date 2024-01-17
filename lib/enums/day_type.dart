@@ -7,7 +7,8 @@ enum DayType {
   night,
   k5,
   o,
-  plus;
+  plus,
+  b;
 
   Widget getLabelWidget() {
     switch (this) {
@@ -21,6 +22,8 @@ enum DayType {
         return SvgPicture.asset("assets/icons/icon_night.svg");
       case DayType.o:
         return SvgPicture.asset("assets/icons/icon_airplane.svg");
+      case DayType.b:
+        return SvgPicture.asset("assets/icons/icon_bol.svg");
     }
   }
 
@@ -36,6 +39,8 @@ enum DayType {
         return ColorProject.lightGreen;
       case DayType.plus:
         return ColorProject.lightBlue;
+      case DayType.b:
+        return ColorProject.pink;
     }
   }
 
@@ -52,6 +57,8 @@ enum DayType {
         return "+";
       case DayType.o:
         return "o";
+      case DayType.b:
+        return "b";
     }
   }
 }

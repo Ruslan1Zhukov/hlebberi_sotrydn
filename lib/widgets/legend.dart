@@ -76,11 +76,7 @@ class LegendWidgetDay extends StatelessWidget {
           color: ColorProject.orange,
           title: 'Оклад',
         ),
-        SizedBox(height: 4), // Adding space between items
-        Text(
-          'Комментарий: Цвет D9D9D9',
-          style: TextStyle(color: Color(0xFFD9D9D9)),
-        ),
+        SizedBox(height: 4),
         _Item(
           color: ColorProject.lightBlue,
           title: 'Премия за день',
@@ -95,10 +91,6 @@ class LegendWidgetDay extends StatelessWidget {
           title: 'Процент с продаж',
         ),
         SizedBox(height: 4),
-        Text(
-          'Комментарий: Цвет D9D9D9',
-          style: TextStyle(color: Color(0xFFD9D9D9)),
-        ),
         _Item(
           color: Color(0xFFE5E5E5),
           title: 'Демотивация за день',

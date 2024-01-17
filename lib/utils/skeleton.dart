@@ -1,1 +1,1 @@
-const String skeletonText = "--------";
+const String skeletonText = "-------";
