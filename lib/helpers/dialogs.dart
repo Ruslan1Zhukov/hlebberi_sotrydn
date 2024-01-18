@@ -32,13 +32,13 @@ showAddAvatarDialog(BuildContext context) {
     builder: (BuildContext context) => CupertinoActionSheet(
       title: const Text('Выберите действие'),
       actions: <Widget>[
-        // CupertinoActionSheetAction(
-        //   child: const Text('Сделать фото с камеры'),
-        //   onPressed: () {
-        //     // TODO: Реализовать функционал камеры
-        //     Navigator.pop(context);
-        //   },
-        // ),
+        CupertinoActionSheetAction(
+          child: const Text('Сделать фото с камеры'),
+          onPressed: () {
+
+            /// Чтобы открывалась камера и кидала в обрезание
+          },
+        ),
         CupertinoActionSheetAction(
           child: const Text('Выбрать из галереи'),
           onPressed: () {

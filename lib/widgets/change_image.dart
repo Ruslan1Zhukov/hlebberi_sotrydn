@@ -25,8 +25,8 @@ class ChangeImageButton extends StatelessWidget {
           icon: SvgPicture.asset(
             "assets/icons/icon_izmena.svg",
             colorFilter: const ColorFilter.mode(
-              ColorProject.orange, // Цвет фильтра
-              BlendMode.srcIn, // Режим наложения
+              ColorProject.orange,
+              BlendMode.srcIn,
             ),
           ),
         );

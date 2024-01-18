@@ -13,22 +13,27 @@ class LegendWidget extends StatelessWidget {
         _Item(
           color: ColorProject.orange,
           title: 'Оклад',
+          sum: null,
         ),
         _Item(
           color: ColorProject.pink,
           title: 'Премия (месяц)',
+          sum: null,
         ),
         _Item(
           color: ColorProject.lightBlue,
           title: 'Премия (день)',
+          sum: null,
         ),
         _Item(
           color: ColorProject.blue,
           title: 'Процент с продаж',
+          sum: null,
         ),
         _Item(
           color: Color(0xFFE5E5E5),
           title: 'Демотивация',
+          sum: null,
         ),
       ],
     );
@@ -39,10 +44,14 @@ class _Item extends StatelessWidget {
   const _Item({
     required this.color,
     required this.title,
+    required this.sum,
+    this.isRed = false,
   });
 
   final String title;
   final Color color;
+  final String? sum;
+  final bool isRed;
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +68,14 @@ class _Item extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         Text(title),
+        if (sum != null) const Spacer(),
+        if (sum != null)
+          Text(
+            sum!,
+            style: TextStyle(
+              color: (isRed) ? ColorProject.red : ColorProject.black,
+            ),
+          ),
       ],
     );
   }
@@ -75,11 +92,13 @@ class LegendWidgetDay extends StatelessWidget {
         _Item(
           color: ColorProject.orange,
           title: 'Оклад',
+          sum: '1000',
         ),
         SizedBox(height: 4),
         _Item(
           color: ColorProject.lightBlue,
           title: 'Премия за день',
+          sum: '600',
         ),
         SizedBox(height: 4),
         Text(
@@ -89,11 +108,13 @@ class LegendWidgetDay extends StatelessWidget {
         _Item(
           color: ColorProject.blue,
           title: 'Процент с продаж',
+          sum: '200',
         ),
         SizedBox(height: 4),
         _Item(
           color: Color(0xFFE5E5E5),
           title: 'Демотивация за день',
+          sum: '100',
         ),
         SizedBox(height: 4),
         Text(
@@ -104,7 +125,6 @@ class LegendWidgetDay extends StatelessWidget {
     );
   }
 }
-
 
 class LegendWidgetZp extends StatelessWidget {
   const LegendWidgetZp({super.key});
@@ -117,11 +137,13 @@ class LegendWidgetZp extends StatelessWidget {
         _Item(
           color: ColorProject.orange,
           title: 'Оклад за месяц',
+          sum: '12 000',
         ),
         SizedBox(height: 4),
         _Item(
           color: ColorProject.blue,
           title: 'Премия за месяц',
+          sum: '5000',
         ),
         SizedBox(height: 4),
         Text(
@@ -131,11 +153,14 @@ class LegendWidgetZp extends StatelessWidget {
         _Item(
           color: ColorProject.pink,
           title: 'Больничный',
+          sum: '2000',
         ),
         SizedBox(height: 4),
         _Item(
           color: ColorProject.red,
           title: 'Демотивация за месяц',
+          sum: '2000',
+          isRed: true,
         ),
         Text(
           'Комментарий: Плохо убрались',
@@ -145,6 +170,7 @@ class LegendWidgetZp extends StatelessWidget {
         _Item(
           color: ColorProject.grey,
           title: 'Компенсация за сан. книжку',
+          sum: '500',
         ),
         Text(
           'Комментарий: возврат 50%',
@@ -154,6 +180,7 @@ class LegendWidgetZp extends StatelessWidget {
         _Item(
           color: ColorProject.lightBlue,
           title: 'Отпуск',
+          sum: '500',
         ),
         Text(
           'Комментарий: возврат 50%',
@@ -163,6 +190,7 @@ class LegendWidgetZp extends StatelessWidget {
         _Item(
           color: ColorProject.green,
           title: '% с продаж',
+          sum: '500',
         ),
         Text(
           'Комментарий: возврат 50%',
@@ -172,6 +200,7 @@ class LegendWidgetZp extends StatelessWidget {
         _Item(
           color: ColorProject.ndfl,
           title: 'НДФЛ',
+          sum: '500',
         ),
         Text(
           'Комментарий: возврат 50%',
@@ -181,4 +210,3 @@ class LegendWidgetZp extends StatelessWidget {
     );
   }
 }
-
