@@ -103,6 +103,82 @@ class LegendWidgetDay extends StatelessWidget {
       ],
     );
   }
+}
 
+
+class LegendWidgetZp extends StatelessWidget {
+  const LegendWidgetZp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _Item(
+          color: ColorProject.orange,
+          title: 'Оклад за месяц',
+        ),
+        SizedBox(height: 4),
+        _Item(
+          color: ColorProject.blue,
+          title: 'Премия за месяц',
+        ),
+        SizedBox(height: 4),
+        Text(
+          'Комментарий: Хорошо убрались',
+          style: TextStyle(color: ColorProject.grey),
+        ),
+        _Item(
+          color: ColorProject.pink,
+          title: 'Больничный',
+        ),
+        SizedBox(height: 4),
+        _Item(
+          color: ColorProject.red,
+          title: 'Демотивация за месяц',
+        ),
+        Text(
+          'Комментарий: Плохо убрались',
+          style: TextStyle(color: ColorProject.grey),
+        ),
+        SizedBox(height: 4),
+        _Item(
+          color: ColorProject.grey,
+          title: 'Компенсация за сан. книжку',
+        ),
+        Text(
+          'Комментарий: возврат 50%',
+          style: TextStyle(color: ColorProject.grey),
+        ),
+        SizedBox(height: 4),
+        _Item(
+          color: ColorProject.lightBlue,
+          title: 'Отпуск',
+        ),
+        Text(
+          'Комментарий: возврат 50%',
+          style: TextStyle(color: ColorProject.grey),
+        ),
+        SizedBox(height: 4),
+        _Item(
+          color: ColorProject.green,
+          title: '% с продаж',
+        ),
+        Text(
+          'Комментарий: возврат 50%',
+          style: TextStyle(color: ColorProject.grey),
+        ),
+        SizedBox(height: 4),
+        _Item(
+          color: ColorProject.ndfl,
+          title: 'НДФЛ',
+        ),
+        Text(
+          'Комментарий: возврат 50%',
+          style: TextStyle(color: ColorProject.grey),
+        ),
+      ],
+    );
+  }
 }
 

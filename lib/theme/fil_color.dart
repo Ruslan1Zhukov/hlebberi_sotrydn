@@ -40,4 +40,13 @@ abstract class ColorProject {
 
   /// Ошибка
   static const Color error = Color(0xFFFE8382);
+
+  /// Демотивация
+  static const Color red = Color(0xFFDC3545);
+
+  /// % c продаж
+  static const Color green = Color(0xFF10C200);
+
+  /// Ндфл
+  static const Color ndfl = Color(0xFFEB00FF);
 }

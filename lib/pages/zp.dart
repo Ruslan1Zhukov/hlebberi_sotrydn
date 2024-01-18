@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/widgets/diagramZp.dart';
+import 'package:hlebberi_sotrydn/widgets/legend.dart';
 
 
 class ZpPage extends StatelessWidget {
@@ -47,7 +48,8 @@ class ZpPage extends StatelessWidget {
           ),
           SizedBox(height: 10),
           DiagramZpWidget(zp: null,),
-          SizedBox(height: 1000),
+          SizedBox(height: 10),
+          LegendWidgetZp(),
         ],
       ),
     );
