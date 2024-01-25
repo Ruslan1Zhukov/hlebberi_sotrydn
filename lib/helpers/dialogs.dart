@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/helpers/picker.dart';
@@ -26,6 +27,9 @@ showLogoutDialog(BuildContext context) async {
   );
 }
 
+
+/// Чтобы открывалась камера и кидала в обрезание
+
 showAddAvatarDialog(BuildContext context) {
   showCupertinoModalPopup(
     context: context,
@@ -34,9 +38,16 @@ showAddAvatarDialog(BuildContext context) {
       actions: <Widget>[
         CupertinoActionSheetAction(
           child: const Text('Сделать фото с камеры'),
-          onPressed: () {
-
-            /// Чтобы открывалась камера и кидала в обрезание
+          onPressed: () async {
+            List<CameraDescription> cameras = await availableCameras();
+            CameraController controller = CameraController(cameras[0], ResolutionPreset.medium);
+            await controller.initialize();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CameraScreen(controller),
+              ),
+            );
           },
         ),
         CupertinoActionSheetAction(
@@ -56,6 +67,41 @@ showAddAvatarDialog(BuildContext context) {
     ),
   );
 }
+
+class CameraScreen extends StatefulWidget {
+  final CameraController controller;
+
+  CameraScreen(this.controller);
+
+  @override
+  _CameraScreenState createState() => _CameraScreenState();
+}
+
+class _CameraScreenState extends State<CameraScreen> {
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.startImageStream((CameraImage image) {
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.controller.stopImageStream();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Camera Screen'),
+      ),
+      body: CameraPreview(widget.controller),
+    );
+  }
+}
+
 
 showChangeAvatarDialog(BuildContext context) {
   showCupertinoModalPopup(
