@@ -1,5 +1,3 @@
-import 'package:flutter/notifications.dart';
-
 class ApiResponse<T> {
   final T? response;
   final String? error;
@@ -8,10 +6,6 @@ class ApiResponse<T> {
     this.response,
     this.error,
   });
-
-  printError() {
-    showToast(error, isError: true);
-  }
 }
 
 class ApiResponseError<T> extends ApiResponse<T> {
@@ -26,6 +20,9 @@ class ApiResponseError<T> extends ApiResponse<T> {
 
   ApiResponseError.standard()
       : super(error: "Возникла ошибка\nОбратитесь к администратору");
+
+  @override
+  String toString() => "ApiResponseError($error)";
 }
 
 class ApiResponseData<T> extends ApiResponse<T> {
@@ -39,4 +36,7 @@ class ApiResponseData<T> extends ApiResponse<T> {
   ApiResponseData({
     required super.response,
   });
+
+  @override
+  String toString() => "ApiResponseData(${response.toString()})";
 }
