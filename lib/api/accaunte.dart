@@ -23,19 +23,19 @@ abstract class ApiAccount {
       converter: (response) => LoginData.fromJson(response.data["data"]),
     );
   }
-  static Future<ApiResponse<UserData>> getUserData() async {
+  static Future<ApiResponse<LoginData>> getUserData() async {
     final response = await ClientDio.get(
       url: "/auth/login",
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => UserData.fromJson(response.data["data"]),
+      converter: (response) => LoginData.fromJson(response.data["data"]),
     );
   }
   static Future<ApiResponse<void>> logout() async {
     final response = await ClientDio.post(
       url: "/auth/logout",
     );
-    return ClientDio.makeResult(response: response);
+    return ClientDio.makeResult(response: response, converter: (response) {  });
   }
 }
