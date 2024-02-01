@@ -1,4 +1,4 @@
-import 'package:hlebberi_sotrydn/model/user.dart';
+import 'package:hlebberi_sotrydn/model/login_data.dart';
 
 class Smena {
   final String timePlan;

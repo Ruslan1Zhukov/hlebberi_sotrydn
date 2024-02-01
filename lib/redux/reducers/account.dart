@@ -8,23 +8,18 @@ final accountReducer = TypedReducer<Account, dynamic>(_accountReducer);
 /// Обработчик для аккаунта
 Account _accountReducer(Account state, action) {
   switch (action.runtimeType) {
-    case SetUser:
-      return _setUser(state, action);
-    case SetUserAuth:
-      return _setUserAuth(state, action);
+    case SetLoginData:
+      return _setLoginData(state, action);
   }
   return state;
 }
 
-/// Установить пользователя
-Account _setUser(Account state, SetUser action) {
-  state.user = action.user;
-  return state;
-}
-
-/// Установить авторизацию пользователя
-Account _setUserAuth(Account state, SetUserAuth action) {
-  state.userAuth = action.userAuth;
+Account _setLoginData(Account state, SetLoginData action) {
+  state.user = action.loginData?.user;
+  state.token = action.loginData?.token;
+  state.employeeAppSettings = action.loginData?.employeeAppSettings;
+  state.employeeExternalLinks = action.loginData?.employeeExternalLinks;
+  state.employeeSocialLinks = action.loginData?.employeeSocialLinks;
   return state;
 }
 

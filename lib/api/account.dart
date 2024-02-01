@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/_client_dio.dart';
-import '../model/login_data.dart';
+import 'package:hlebberi_sotrydn/model/login_data.dart';
 
 abstract class ApiAccount {
   static Future<ApiResponse<LoginData>> login({
@@ -23,19 +23,22 @@ abstract class ApiAccount {
       converter: (response) => LoginData.fromJson(response.data["data"]),
     );
   }
-  static Future<ApiResponse<LoginData>> getUserData() async {
+
+  static Future<ApiResponse<LoginData>> checkAuth() async {
+    // TODO: проверить выполнение метода
     final response = await ClientDio.get(
-      url: "/auth/login",
+      url: "/auth/user",
     );
     return ClientDio.makeResult(
       response: response,
       converter: (response) => LoginData.fromJson(response.data["data"]),
     );
   }
+
   static Future<ApiResponse<void>> logout() async {
     final response = await ClientDio.post(
       url: "/auth/logout",
     );
-    return ClientDio.makeResult(response: response, converter: (response) {  });
+    return ClientDio.makeResult(response: response, converter: (response) {});
   }
 }

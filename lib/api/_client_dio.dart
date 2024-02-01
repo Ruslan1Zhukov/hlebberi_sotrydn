@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/_dio_response.dart';
+import 'package:hlebberi_sotrydn/redux/app_state.dart';
 
 const String _domen = "https://test-office-api.hlbr.ru";
 const String _path = "/v1";
@@ -21,12 +22,13 @@ abstract class ClientDio {
     Map<String, dynamic>? parameters,
     Object? requestBody,
   }) async {
+    final token = store.state.account.token;
     return _makeRequest(
       function: () => _dio.get(
         _path + url,
         queryParameters: parameters,
         data: requestBody,
-        options: _buildHeaders(),
+        options: _buildHeaders(token),
       ),
     );
   }
@@ -36,12 +38,13 @@ abstract class ClientDio {
     Map<String, dynamic>? parameters,
     Object? requestBody,
   }) async {
+    final token = store.state.account.token;
     return _makeRequest(
       function: () => _dio.post(
         _path + url,
         queryParameters: parameters,
         data: requestBody,
-        options: _buildHeaders(),
+        options: _buildHeaders(token),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/model/user.dart';
+import 'package:hlebberi_sotrydn/model/login_data.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import "package:photo_view/photo_view.dart";

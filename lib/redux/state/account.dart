@@ -1,10 +1,20 @@
-import 'package:hlebberi_sotrydn/model/user.dart';
+import 'package:hlebberi_sotrydn/model/login_data.dart';
 
 /// Состояние аккаунта
- class Account {
-   /// Пользователь
-   User? user;
+class Account {
+  User? user;
+  String? token;
+  EmployeeAppSettings? employeeAppSettings;
+  List<EmployeeExternalLink>? employeeExternalLinks;
+  List<EmployeeSocialLink>? employeeSocialLinks;
 
-   /// Авторизован ли пользователь
-   bool userAuth = false;
- }
+  Account({
+    this.user,
+    this.token,
+    this.employeeAppSettings,
+    this.employeeExternalLinks,
+    this.employeeSocialLinks,
+  });
+
+  bool get isAuth => token != null;
+}

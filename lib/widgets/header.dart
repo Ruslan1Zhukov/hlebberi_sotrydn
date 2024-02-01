@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hlebberi_sotrydn/model/user.dart';
+import 'package:hlebberi_sotrydn/model/login_data.dart';
 import 'package:hlebberi_sotrydn/pages/settings.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/utils/skeleton.dart';

@@ -1,21 +1,9 @@
-import 'package:hlebberi_sotrydn/model/user.dart';
+import 'package:hlebberi_sotrydn/model/login_data.dart';
 
-/// Установить пользователя
-class SetUser {
-  ///Пользователь
-  final User? user;
+class SetLoginData {
+  final LoginData? loginData;
 
-  SetUser({
-    required this.user,
-  });
-}
-
-/// Установить авторизацию пользователя
-class SetUserAuth {
-  /// Авторизован ли пользователь
-  final bool userAuth;
-
-  SetUserAuth({
-    required this.userAuth,
+  SetLoginData({
+    required this.loginData,
   });
 }
