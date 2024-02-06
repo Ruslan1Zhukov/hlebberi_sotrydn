@@ -1,4 +1,4 @@
-import 'package:hlebberi_sotrydn/model/login_data.dart';
+import 'package:hlebberi_sotrydn/model/response/login_data.dart';
 
 class SetLoginData {
   final LoginData? loginData;

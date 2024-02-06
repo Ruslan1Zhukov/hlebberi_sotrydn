@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:hlebberi_sotrydn/enums/day_type.dart';
 import 'package:hlebberi_sotrydn/model/calendar_data.dart';
-import 'package:hlebberi_sotrydn/model/login_data.dart';
+import 'package:hlebberi_sotrydn/model/response/login_data.dart';
 import 'package:hlebberi_sotrydn/model/one_day.dart';
 import 'package:hlebberi_sotrydn/model/smena.dart';
 import 'package:hlebberi_sotrydn/model/zp.dart';

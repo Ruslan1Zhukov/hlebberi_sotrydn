@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/helpers/url.dart';
-import 'package:hlebberi_sotrydn/model/login_data.dart';
+import 'package:hlebberi_sotrydn/model/response/login_data.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 
 class SocialsWidget extends StatelessWidget {
