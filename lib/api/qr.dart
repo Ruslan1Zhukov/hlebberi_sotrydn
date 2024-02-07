@@ -2,16 +2,16 @@ import 'dart:convert';
 
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/_client_dio.dart';
-import 'package:hlebberi_sotrydn/model/response/qr_data.dart';
+import 'package:hlebberi_sotrydn/model/response/token_qr.dart';
 
-abstract class ApiAccount {
-  static Future<ApiResponse<ShiftAccessToken>> login({
+abstract class ApiQR {
+  static Future<ApiResponse<TokenQR>> login({
     required String hash,
-    required int user_id,
+    required int userId,
   }) async {
     final data = {
       "hash": hash,
-      "user_id": user_id,
+      "user_id": userId,
     };
     final json = jsonEncode(data);
     final response = await ClientDio.post(
@@ -20,7 +20,9 @@ abstract class ApiAccount {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => ShiftAccessToken.fromJson(response.data["data"]),
+      converter: (response) => TokenQR.fromJson(
+        response.data["data"]["shift_access_token"],
+      ),
     );
   }
 }

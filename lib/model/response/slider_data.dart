@@ -1,3 +1,34 @@
+class SliderData {
+  final int total;
+  final Report report;
+  final Map<String, ReportLabel> reportLabels;
+  final WorkSchedules workSchedules;
+  final Map<String, WorkScheduleLabel> workScheduleLabels;
+
+  SliderData({
+    required this.total,
+    required this.report,
+    required this.reportLabels,
+    required this.workSchedules,
+    required this.workScheduleLabels,
+  });
+
+  factory SliderData.fromJson(Map<String, dynamic> json) {
+    final data = json['data'];
+    return SliderData(
+      total: data['total_salary'],
+      report: Report.fromJson(data['report']),
+      reportLabels: Map.from(data['report_labels']).map(
+            (key, value) => MapEntry(key, ReportLabel.fromJson(value)),
+      ),
+      workSchedules: WorkSchedules.fromJson(data['work_schedules']),
+      workScheduleLabels: Map.from(data['work_schedule_labels']).map(
+            (key, value) => MapEntry(key, WorkScheduleLabel.fromJson(value)),
+      ),
+    );
+  }
+}
+
 class Report {
   final int prepaymentMonthly;
   final int bonusMonthly;
@@ -79,54 +110,6 @@ class WorkScheduleLabel {
     return WorkScheduleLabel(
       name: json['name'],
       color: json['color'],
-    );
-  }
-}
-
-class Data {
-  final int totalSalary;
-  final Report report;
-  final Map<String, ReportLabel> reportLabels;
-  final WorkSchedules workSchedules;
-  final Map<String, WorkScheduleLabel> workScheduleLabels;
-
-  Data({
-    required this.totalSalary,
-    required this.report,
-    required this.reportLabels,
-    required this.workSchedules,
-    required this.workScheduleLabels,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) {
-    final data = json['data'];
-    return Data(
-      totalSalary: data['total_salary'],
-      report: Report.fromJson(data['report']),
-      reportLabels: Map.from(data['report_labels']).map(
-            (key, value) => MapEntry(key, ReportLabel.fromJson(value)),
-      ),
-      workSchedules: WorkSchedules.fromJson(data['work_schedules']),
-      workScheduleLabels: Map.from(data['work_schedule_labels']).map(
-            (key, value) => MapEntry(key, WorkScheduleLabel.fromJson(value)),
-      ),
-    );
-  }
-}
-
-class MyJsonData {
-  final bool status;
-  final Data data;
-
-  MyJsonData({
-    required this.status,
-    required this.data,
-  });
-
-  factory MyJsonData.fromJson(Map<String, dynamic> json) {
-    return MyJsonData(
-      status: json['status'],
-      data: Data.fromJson(json),
     );
   }
 }

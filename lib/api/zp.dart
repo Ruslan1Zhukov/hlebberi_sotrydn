@@ -1,9 +1,11 @@
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/_client_dio.dart';
-import 'package:hlebberi_sotrydn/model/response/zp_month_data.dart';
+import 'package:hlebberi_sotrydn/model/response/day_detail.dart';
+import 'package:hlebberi_sotrydn/model/response/month_detail.dart';
+import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
 
 abstract class ApiZp {
-  static Future<ApiResponse<ReportLabels>> zp({
+  static Future<ApiResponse<SliderData>> slider({
     required String date,
   }) async {
     final response = await ClientDio.get(
@@ -14,10 +16,11 @@ abstract class ApiZp {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => ReportLabels.fromJson(response.data["data"]),
+      converter: (response) => SliderData.fromJson(response.data["data"]),
     );
   }
-  static Future<ApiResponse<ReportLabels>> zpDetail({
+
+  static Future<ApiResponse<MonthDetail>> monthDetail({
     required String date,
   }) async {
     final response = await ClientDio.get(
@@ -28,10 +31,11 @@ abstract class ApiZp {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => ReportLabels.fromJson(response.data["data"]),
+      converter: (response) => MonthDetail.fromJson(response.data["data"]),
     );
   }
-  static Future<ApiResponse<ReportLabels>> zpDay({
+
+  static Future<ApiResponse<DayDetail>> dayDetail({
     required String date,
   }) async {
     final response = await ClientDio.get(
@@ -42,7 +46,7 @@ abstract class ApiZp {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => ReportLabels.fromJson(response.data["data"]),
+      converter: (response) => DayDetail.fromJson(response.data["data"]),
     );
   }
 }

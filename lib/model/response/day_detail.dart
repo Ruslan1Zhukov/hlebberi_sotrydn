@@ -1,7 +1,27 @@
+class DayDetail {
+  final UserShift userShift;
+  final Salary salary;
+  final ReportLabels reportLabels;
+
+  DayDetail({
+    required this.userShift,
+    required this.salary,
+    required this.reportLabels,
+  });
+
+  factory DayDetail.fromJson(Map<String, dynamic> json) {
+    return DayDetail(
+      userShift: UserShift.fromJson(json['user_shift']),
+      salary: Salary.fromJson(json['salary']),
+      reportLabels: ReportLabels.fromJson(json['report_labels']),
+    );
+  }
+}
+
 class UserShift {
   final int id;
   final String start;
-  final String end;
+  final String? end;
   final Location location;
   final Role role;
 
@@ -139,43 +159,6 @@ class ReportLabel {
     return ReportLabel(
       name: json['name'],
       color: json['color'],
-    );
-  }
-}
-
-class Data {
-  final UserShift userShift;
-  final Salary salary;
-  final ReportLabels reportLabels;
-
-  Data({
-    required this.userShift,
-    required this.salary,
-    required this.reportLabels,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(
-      userShift: UserShift.fromJson(json['user_shift']),
-      salary: Salary.fromJson(json['salary']),
-      reportLabels: ReportLabels.fromJson(json['report_labels']),
-    );
-  }
-}
-
-class Example {
-  final bool status;
-  final Data data;
-
-  Example({
-    required this.status,
-    required this.data,
-  });
-
-  factory Example.fromJson(Map<String, dynamic> json) {
-    return Example(
-      status: json['status'],
-      data: Data.fromJson(json['data']),
     );
   }
 }
