@@ -13,20 +13,26 @@ class SliderData {
     required this.workScheduleLabels,
   });
 
-  factory SliderData.fromJson(Map<String, dynamic> json) {
+  factory SliderData.fromJson(final Map<String, dynamic> json) {
     final data = json['data'];
+    final total = data['total_salary'];
+    final report = Report.fromJson(data['report']);
+    final reportLabels = Map<String, ReportLabel>.from(data['report_labels']).map(
+          (key, value) => MapEntry(key, ReportLabel.fromJson(value as Map<String, dynamic>)),
+    );
+    final workSchedules = WorkSchedules.fromJson(data['work_schedules']);
+    final workScheduleLabels = Map<String, WorkScheduleLabel>.from(data['work_schedule_labels']).map(
+          (key, value) => MapEntry(key, WorkScheduleLabel.fromJson(value as Map<String, dynamic>)),
+    );
     return SliderData(
-      total: data['total_salary'],
-      report: Report.fromJson(data['report']),
-      reportLabels: Map.from(data['report_labels']).map(
-            (key, value) => MapEntry(key, ReportLabel.fromJson(value)),
-      ),
-      workSchedules: WorkSchedules.fromJson(data['work_schedules']),
-      workScheduleLabels: Map.from(data['work_schedule_labels']).map(
-            (key, value) => MapEntry(key, WorkScheduleLabel.fromJson(value)),
-      ),
+      total: total,
+      report: report,
+      reportLabels: reportLabels,
+      workSchedules: workSchedules,
+      workScheduleLabels: workScheduleLabels,
     );
   }
+
 }
 
 class Report {
@@ -44,16 +50,22 @@ class Report {
     required this.penaltyMonthly,
   });
 
-  factory Report.fromJson(Map<String, dynamic> json) {
+  factory Report.fromJson(final Map<String, dynamic> json) {
     final report = json['report'];
+    final prepaymentMonthly = report['prepayment_monthly'];
+    final bonusMonthly = report['bonus_monthly'];
+    final bonusDaily = report['bonus_daily'];
+    final salaryMonthly = report['salary_monthly'];
+    final penaltyMonthly = report['penalty_monthly'];
     return Report(
-      prepaymentMonthly: report['prepayment_monthly'],
-      bonusMonthly: report['bonus_monthly'],
-      bonusDaily: report['bonus_daily'],
-      salaryMonthly: report['salary_monthly'],
-      penaltyMonthly: report['penalty_monthly'],
+      prepaymentMonthly: prepaymentMonthly,
+      bonusMonthly: bonusMonthly,
+      bonusDaily: bonusDaily,
+      salaryMonthly: salaryMonthly,
+      penaltyMonthly: penaltyMonthly,
     );
   }
+
 }
 
 class ReportLabel {
@@ -65,12 +77,15 @@ class ReportLabel {
     required this.color,
   });
 
-  factory ReportLabel.fromJson(Map<String, dynamic> json) {
+  factory ReportLabel.fromJson(final Map<String, dynamic> json) {
+    final name = json['name'];
+    final color = json['color'];
     return ReportLabel(
-      name: json['name'],
-      color: json['color'],
+      name: name,
+      color: color,
     );
   }
+
 }
 
 class WorkSchedules {
@@ -86,15 +101,20 @@ class WorkSchedules {
     required this.sickLeaveDates,
   });
 
-  factory WorkSchedules.fromJson(Map<String, dynamic> json) {
+  factory WorkSchedules.fromJson(final Map<String, dynamic> json) {
     final schedules = json['work_schedules'];
+    final workSchedules = Map<String, String>.from(schedules['work_schedules']);
+    final shiftUserExistDates = List<String>.from(schedules['shift_user_exist_dates']);
+    final vacationDates = List<String>.from(schedules['vacation_dates']);
+    final sickLeaveDates = List<String>.from(schedules['sick_leave_dates']);
     return WorkSchedules(
-      workSchedules: Map<String, String>.from(schedules['work_schedules']),
-      shiftUserExistDates: List<String>.from(schedules['shift_user_exist_dates']),
-      vacationDates: List<String>.from(schedules['vacation_dates']),
-      sickLeaveDates: List<String>.from(schedules['sick_leave_dates']),
+      workSchedules: workSchedules,
+      shiftUserExistDates: shiftUserExistDates,
+      vacationDates: vacationDates,
+      sickLeaveDates: sickLeaveDates,
     );
   }
+
 }
 
 class WorkScheduleLabel {
@@ -106,10 +126,13 @@ class WorkScheduleLabel {
     required this.color,
   });
 
-  factory WorkScheduleLabel.fromJson(Map<String, dynamic> json) {
+  factory WorkScheduleLabel.fromJson(final Map<String, dynamic> json) {
+    final name = json['name'];
+    final color = json['color'];
     return WorkScheduleLabel(
-      name: json['name'],
-      color: json['color'],
+      name: name,
+      color: color,
     );
   }
+
 }

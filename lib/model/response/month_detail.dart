@@ -11,16 +11,21 @@ class MonthDetail {
     required this.detailList,
   });
 
-  factory MonthDetail.fromJson(Map<String, dynamic> json) {
+  factory MonthDetail.fromJson(final Map<String, dynamic> json) {
+    final total = json['total_salary'];
+    final report = Report.fromJson(json['report']);
+    final labels = Map<String, ReportLabel>.from(json['report_labels']).map(
+          (key, value) => MapEntry(key, ReportLabel.fromJson(value as Map<String, dynamic>)),
+    );
+    final detailList = Map<String, dynamic>.from(json['report_detail_list']);
     return MonthDetail(
-      total: json['total_salary'],
-      report: Report.fromJson(json['report']),
-      labels: Map.from(json['report_labels']).map(
-            (key, value) => MapEntry(key, ReportLabel.fromJson(value)),
-      ),
-      detailList: Map.from(json['report_detail_list']),
+      total: total,
+      report: report,
+      labels: labels,
+      detailList: detailList,
     );
   }
+
 }
 
 class Report {
@@ -38,15 +43,21 @@ class Report {
     required this.penaltyMonthly,
   });
 
-  factory Report.fromJson(Map<String, dynamic> json) {
+  factory Report.fromJson(final Map<String, dynamic> json) {
+    final prepaymentMonthly = json['prepayment_monthly'];
+    final bonusMonthly = json['bonus_monthly'];
+    final bonusDaily = json['bonus_daily'];
+    final salaryMonthly = json['salary_monthly'];
+    final penaltyMonthly = json['penalty_monthly'];
     return Report(
-      prepaymentMonthly: json['prepayment_monthly'],
-      bonusMonthly: json['bonus_monthly'],
-      bonusDaily: json['bonus_daily'],
-      salaryMonthly: json['salary_monthly'],
-      penaltyMonthly: json['penalty_monthly'],
+      prepaymentMonthly: prepaymentMonthly,
+      bonusMonthly: bonusMonthly,
+      bonusDaily: bonusDaily,
+      salaryMonthly: salaryMonthly,
+      penaltyMonthly: penaltyMonthly,
     );
   }
+
 }
 
 class ReportLabel {
@@ -55,12 +66,15 @@ class ReportLabel {
 
   ReportLabel({required this.name, required this.color});
 
-  factory ReportLabel.fromJson(Map<String, dynamic> json) {
+  factory ReportLabel.fromJson(final Map<String, dynamic> json) {
+    final name = json['name'];
+    final color = json['color'];
     return ReportLabel(
-      name: json['name'],
-      color: json['color'],
+      name: name,
+      color: color,
     );
   }
+
 }
 
 class ReportDetailList {
@@ -76,12 +90,17 @@ class ReportDetailList {
     required this.amount,
   });
 
-  factory ReportDetailList.fromJson(Map<String, dynamic> json) {
+  factory ReportDetailList.fromJson(final Map<String, dynamic> json) {
+    final name = json['name'];
+    final color = json['color'];
+    final comment = json['comment'];
+    final amount = json['amount'];
     return ReportDetailList(
-      name: json['name'],
-      color: json['color'],
-      comment: json['comment'],
-      amount: json['amount'],
+      name: name,
+      color: color,
+      comment: comment,
+      amount: amount,
     );
   }
+
 }

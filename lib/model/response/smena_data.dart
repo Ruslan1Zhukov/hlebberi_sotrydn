@@ -9,13 +9,17 @@ class ShiftData {
     required this.users,
   });
 
-  factory ShiftData.fromJson(Map<String, dynamic> json) {
+  factory ShiftData.fromJson(final Map<String, dynamic> json) {
+    final userShift = UserShift.fromJson(json['user_shift']);
+    final shiftWorkingTime = ShiftWorkingTime.fromJson(json['shift_working_time']);
+    final users = List<User>.from(json['users'].map((user) => User.fromJson(user)));
     return ShiftData(
-      userShift: UserShift.fromJson(json['user_shift']),
-      shiftWorkingTime: ShiftWorkingTime.fromJson(json['shift_working_time']),
-      users: List<User>.from(json['users'].map((user) => User.fromJson(user))),
+      userShift: userShift,
+      shiftWorkingTime: shiftWorkingTime,
+      users: users,
     );
   }
+
 }
 
 class UserShift {
@@ -29,13 +33,17 @@ class UserShift {
     required this.end,
   });
 
-  factory UserShift.fromJson(Map<String, dynamic> json) {
+  factory UserShift.fromJson(final Map<String, dynamic> json) {
+    final id = json['id'];
+    final start = json['start'];
+    final end = json['end'];
     return UserShift(
-      id: json['id'],
-      start: json['start'],
-      end: json['end'],
+      id: id,
+      start: start,
+      end: end,
     );
   }
+
 }
 
 class ShiftWorkingTime {
@@ -47,12 +55,15 @@ class ShiftWorkingTime {
     required this.finishingAt,
   });
 
-  factory ShiftWorkingTime.fromJson(Map<String, dynamic> json) {
+  factory ShiftWorkingTime.fromJson(final Map<String, dynamic> json) {
+    final startingAt = json['starting_at'];
+    final finishingAt = json['finishing_at'];
     return ShiftWorkingTime(
-      startingAt: json['starting_at'],
-      finishingAt: json['finishing_at'],
+      startingAt: startingAt,
+      finishingAt: finishingAt,
     );
   }
+
 }
 
 class User {
@@ -70,13 +81,19 @@ class User {
     required this.avatar,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  factory User.fromJson(final Map<String, dynamic> json) {
+    final id = json['id'];
+    final name = json['name'];
+    final surname = json['surname'];
+    final secondname = json['secondname'];
+    final avatar = json['avatar'];
     return User(
-      id: json['id'],
-      name: json['name'],
-      surname: json['surname'],
-      secondname: json['secondname'],
-      avatar: json['avatar'],
+      id: id,
+      name: name,
+      surname: surname,
+      secondname: secondname,
+      avatar: avatar,
     );
   }
+
 }

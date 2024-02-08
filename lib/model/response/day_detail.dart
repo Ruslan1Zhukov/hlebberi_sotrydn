@@ -9,11 +9,14 @@ class DayDetail {
     required this.reportLabels,
   });
 
-  factory DayDetail.fromJson(Map<String, dynamic> json) {
+  factory DayDetail.fromJson(final Map<String, dynamic> json) {
+    final userShift = UserShift.fromJson(json['user_shift']);
+    final salary = Salary.fromJson(json['salary']);
+    final reportLabels = ReportLabels.fromJson(json['report_labels']);
     return DayDetail(
-      userShift: UserShift.fromJson(json['user_shift']),
-      salary: Salary.fromJson(json['salary']),
-      reportLabels: ReportLabels.fromJson(json['report_labels']),
+      userShift: userShift,
+      salary: salary,
+      reportLabels: reportLabels,
     );
   }
 }
@@ -33,15 +36,21 @@ class UserShift {
     required this.role,
   });
 
-  factory UserShift.fromJson(Map<String, dynamic> json) {
+  factory UserShift.fromJson(final Map<String, dynamic> json) {
+    final id = json['id'];
+    final start = json['start'];
+    final end = json['end'];
+    final location = Location.fromJson(json['location']);
+    final role = Role.fromJson(json['role']);
     return UserShift(
-      id: json['id'],
-      start: json['start'],
-      end: json['end'],
-      location: Location.fromJson(json['location']),
-      role: Role.fromJson(json['role']),
+      id: id,
+      start: start,
+      end: end,
+      location: location,
+      role: role,
     );
   }
+
 }
 
 class Location {
@@ -51,11 +60,13 @@ class Location {
     required this.address,
   });
 
-  factory Location.fromJson(Map<String, dynamic> json) {
+  factory Location.fromJson(final Map<String, dynamic> json) {
+    final address = json['address'];
     return Location(
-      address: json['address'],
+      address: address,
     );
   }
+
 }
 
 class Role {
@@ -65,11 +76,13 @@ class Role {
     required this.name,
   });
 
-  factory Role.fromJson(Map<String, dynamic> json) {
+  factory Role.fromJson(final Map<String, dynamic> json) {
+    final name = json['name'];
     return Role(
-      name: json['name'],
+      name: name,
     );
   }
+
 }
 
 class Salary {
@@ -81,12 +94,15 @@ class Salary {
     required this.bonuses,
   });
 
-  factory Salary.fromJson(Map<String, dynamic> json) {
+  factory Salary.fromJson(final Map<String, dynamic> json) {
+    final penalty = Penalty.fromJson(json['penalty']);
+    final bonuses = Bonuses.fromJson(json['bonuses']);
     return Salary(
-      penalty: Penalty.fromJson(json['penalty']),
-      bonuses: Bonuses.fromJson(json['bonuses']),
+      penalty: penalty,
+      bonuses: bonuses,
     );
   }
+
 }
 
 class Penalty {
@@ -96,11 +112,13 @@ class Penalty {
     required this.penaltyDaily,
   });
 
-  factory Penalty.fromJson(Map<String, dynamic> json) {
+  factory Penalty.fromJson(final Map<String, dynamic> json) {
+    final penaltyDaily = json['penalty_daily'];
     return Penalty(
-      penaltyDaily: json['penalty_daily'],
+      penaltyDaily: penaltyDaily,
     );
   }
+
 }
 
 class Bonuses {
@@ -110,11 +128,13 @@ class Bonuses {
     required this.bonusDaily,
   });
 
-  factory Bonuses.fromJson(Map<String, dynamic> json) {
+  factory Bonuses.fromJson(final Map<String, dynamic> json) {
+    final bonusDaily = json['bonus_daily'];
     return Bonuses(
-      bonusDaily: json['bonus_daily'],
+      bonusDaily: bonusDaily,
     );
   }
+
 }
 
 class ReportLabels {
@@ -134,16 +154,23 @@ class ReportLabels {
     required this.penaltyDaily,
   });
 
-  factory ReportLabels.fromJson(Map<String, dynamic> json) {
+  factory ReportLabels.fromJson(final Map<String, dynamic> json) {
+    final salaryMonthly = ReportLabel.fromJson(json['salary_monthly']);
+    final bonusMonthly = ReportLabel.fromJson(json['bonus_monthly']);
+    final bonusDaily = ReportLabel.fromJson(json['bonus_daily']);
+    final salePercentageDaily = ReportLabel.fromJson(json['sale_percentage_daily']);
+    final penaltyMonthly = ReportLabel.fromJson(json['penalty_monthly']);
+    final penaltyDaily = ReportLabel.fromJson(json['penalty_daily']);
     return ReportLabels(
-      salaryMonthly: ReportLabel.fromJson(json['salary_monthly']),
-      bonusMonthly: ReportLabel.fromJson(json['bonus_monthly']),
-      bonusDaily: ReportLabel.fromJson(json['bonus_daily']),
-      salePercentageDaily: ReportLabel.fromJson(json['sale_percentage_daily']),
-      penaltyMonthly: ReportLabel.fromJson(json['penalty_monthly']),
-      penaltyDaily: ReportLabel.fromJson(json['penalty_daily']),
+      salaryMonthly: salaryMonthly,
+      bonusMonthly: bonusMonthly,
+      bonusDaily: bonusDaily,
+      salePercentageDaily: salePercentageDaily,
+      penaltyMonthly: penaltyMonthly,
+      penaltyDaily: penaltyDaily,
     );
   }
+
 }
 
 class ReportLabel {
@@ -155,10 +182,13 @@ class ReportLabel {
     required this.color,
   });
 
-  factory ReportLabel.fromJson(Map<String, dynamic> json) {
+  factory ReportLabel.fromJson(final Map<String, dynamic> json) {
+    final name = json['name'];
+    final color = json['color'];
     return ReportLabel(
-      name: json['name'],
-      color: json['color'],
+      name: name,
+      color: color,
     );
   }
+
 }
