@@ -1,47 +1,43 @@
 class DayDetail {
   final UserShift userShift;
-  final Salary salary;
-  final ReportLabels reportLabels;
+  final SalaryReport salary;
 
   DayDetail({
     required this.userShift,
     required this.salary,
-    required this.reportLabels,
   });
 
-  factory DayDetail.fromJson(final Map<String, dynamic> json) {
+  factory DayDetail.fromJson(Map<String, dynamic> json) {
     final userShift = UserShift.fromJson(json['user_shift']);
-    final salary = Salary.fromJson(json['salary']);
-    final reportLabels = ReportLabels.fromJson(json['report_labels']);
+    final salary = SalaryReport.fromJson(json['salary']);
     return DayDetail(
       userShift: userShift,
       salary: salary,
-      reportLabels: reportLabels,
     );
   }
 }
 
 class UserShift {
   final int id;
-  final String start;
-  final String? end;
-  final Location location;
-  final Role role;
+  final DateTime start;
+  final DateTime? end;
+  final String location;
+  final String role;
 
   UserShift({
     required this.id,
     required this.start,
-    required this.end,
+    this.end,
     required this.location,
     required this.role,
   });
 
-  factory UserShift.fromJson(final Map<String, dynamic> json) {
+  factory UserShift.fromJson(Map<String, dynamic> json) {
     final id = json['id'];
-    final start = json['start'];
-    final end = json['end'];
-    final location = Location.fromJson(json['location']);
-    final role = Role.fromJson(json['role']);
+    final start = DateTime.parse(json['start']);
+    final end = json['end'] != null ? DateTime.parse(json['end']) : null;
+    final location = json['location'];
+    final role = json['role'];
     return UserShift(
       id: id,
       start: start,
@@ -50,145 +46,83 @@ class UserShift {
       role: role,
     );
   }
-
 }
 
-class Location {
-  final String address;
+class SalaryReport {
+  final int total;
+  final Map<String, int> report;
+  final Map<String, WorkScheduleLabel> labels;
+  final List<Detail> detailList;
 
-  Location({
-    required this.address,
+  SalaryReport({
+    required this.total,
+    required this.report,
+    required this.labels,
+    required this.detailList,
   });
 
-  factory Location.fromJson(final Map<String, dynamic> json) {
-    final address = json['address'];
-    return Location(
-      address: address,
+  factory SalaryReport.fromJson(Map<String, dynamic> json) {
+    final total = json['total'];
+    final reportJson = json['report'] as Map<String, dynamic>;
+    final report = reportJson.map((key, value) => MapEntry(key, value as int));
+    final labelsJson = json['labels'] as Map<String, dynamic>;
+    final labels = labelsJson.map((key, value) =>
+        MapEntry(key, WorkScheduleLabel.fromJson(value as Map<String, dynamic>)));
+    final detailListJson = json['detail_list'] as List<dynamic>;
+    final detailList = detailListJson
+        .map((detail) => Detail.fromJson(detail as Map<String, dynamic>))
+        .toList();
+    return SalaryReport(
+      total: total,
+      report: report,
+      labels: labels,
+      detailList: detailList,
     );
   }
-
 }
 
-class Role {
-  final String name;
-
-  Role({
-    required this.name,
-  });
-
-  factory Role.fromJson(final Map<String, dynamic> json) {
-    final name = json['name'];
-    return Role(
-      name: name,
-    );
-  }
-
-}
-
-class Salary {
-  final Penalty penalty;
-  final Bonuses bonuses;
-
-  Salary({
-    required this.penalty,
-    required this.bonuses,
-  });
-
-  factory Salary.fromJson(final Map<String, dynamic> json) {
-    final penalty = Penalty.fromJson(json['penalty']);
-    final bonuses = Bonuses.fromJson(json['bonuses']);
-    return Salary(
-      penalty: penalty,
-      bonuses: bonuses,
-    );
-  }
-
-}
-
-class Penalty {
-  final int penaltyDaily;
-
-  Penalty({
-    required this.penaltyDaily,
-  });
-
-  factory Penalty.fromJson(final Map<String, dynamic> json) {
-    final penaltyDaily = json['penalty_daily'];
-    return Penalty(
-      penaltyDaily: penaltyDaily,
-    );
-  }
-
-}
-
-class Bonuses {
-  final int bonusDaily;
-
-  Bonuses({
-    required this.bonusDaily,
-  });
-
-  factory Bonuses.fromJson(final Map<String, dynamic> json) {
-    final bonusDaily = json['bonus_daily'];
-    return Bonuses(
-      bonusDaily: bonusDaily,
-    );
-  }
-
-}
-
-class ReportLabels {
-  final ReportLabel salaryMonthly;
-  final ReportLabel bonusMonthly;
-  final ReportLabel bonusDaily;
-  final ReportLabel salePercentageDaily;
-  final ReportLabel penaltyMonthly;
-  final ReportLabel penaltyDaily;
-
-  ReportLabels({
-    required this.salaryMonthly,
-    required this.bonusMonthly,
-    required this.bonusDaily,
-    required this.salePercentageDaily,
-    required this.penaltyMonthly,
-    required this.penaltyDaily,
-  });
-
-  factory ReportLabels.fromJson(final Map<String, dynamic> json) {
-    final salaryMonthly = ReportLabel.fromJson(json['salary_monthly']);
-    final bonusMonthly = ReportLabel.fromJson(json['bonus_monthly']);
-    final bonusDaily = ReportLabel.fromJson(json['bonus_daily']);
-    final salePercentageDaily = ReportLabel.fromJson(json['sale_percentage_daily']);
-    final penaltyMonthly = ReportLabel.fromJson(json['penalty_monthly']);
-    final penaltyDaily = ReportLabel.fromJson(json['penalty_daily']);
-    return ReportLabels(
-      salaryMonthly: salaryMonthly,
-      bonusMonthly: bonusMonthly,
-      bonusDaily: bonusDaily,
-      salePercentageDaily: salePercentageDaily,
-      penaltyMonthly: penaltyMonthly,
-      penaltyDaily: penaltyDaily,
-    );
-  }
-
-}
-
-class ReportLabel {
+class WorkScheduleLabel {
   final String name;
   final String color;
+  final String? colored;
 
-  ReportLabel({
+  WorkScheduleLabel({
     required this.name,
     required this.color,
+    this.colored,
   });
 
-  factory ReportLabel.fromJson(final Map<String, dynamic> json) {
+  factory WorkScheduleLabel.fromJson(Map<String, dynamic> json) {
     final name = json['name'];
     final color = json['color'];
-    return ReportLabel(
+    final colored = json['colored'];
+    return WorkScheduleLabel(
       name: name,
       color: color,
+      colored: colored,
     );
   }
+}
 
+class Detail {
+  final String type;
+  final String? comment;
+  final int amount;
+
+  Detail({
+    required this.type,
+    required this.comment,
+    required this.amount,
+  });
+
+  factory Detail.fromJson(Map<String, dynamic> json) {
+    final type = json['type'];
+    final comment = json['comment'];
+    final amount = json['amount'];
+    return Detail(
+      type: type,
+      comment: comment,
+      amount: amount,
+    );
+  }
 }

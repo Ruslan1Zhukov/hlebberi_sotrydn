@@ -1,49 +1,24 @@
-class ShiftData {
-  final UserShift userShift;
-  final ShiftWorkingTime shiftWorkingTime;
-  final List<User> users;
-
-  ShiftData({
-    required this.userShift,
-    required this.shiftWorkingTime,
-    required this.users,
-  });
-
-  factory ShiftData.fromJson(final Map<String, dynamic> json) {
-    final userShift = UserShift.fromJson(json['user_shift']);
-    final shiftWorkingTime = ShiftWorkingTime.fromJson(json['shift_working_time']);
-    final users = List<User>.from(json['users'].map((user) => User.fromJson(user)));
-    return ShiftData(
-      userShift: userShift,
-      shiftWorkingTime: shiftWorkingTime,
-      users: users,
-    );
-  }
-
-}
-
 class UserShift {
   final int id;
-  final String start;
-  final String? end;
+  final DateTime start;
+  final DateTime? end;
 
   UserShift({
     required this.id,
     required this.start,
-    required this.end,
+    this.end,
   });
 
-  factory UserShift.fromJson(final Map<String, dynamic> json) {
+  factory UserShift.fromJson(Map<String, dynamic> json) {
     final id = json['id'];
-    final start = json['start'];
-    final end = json['end'];
+    final start = DateTime.parse(json['start']);
+    final end = json['end'] != null ? DateTime.parse(json['end']) : null;
     return UserShift(
       id: id,
       start: start,
       end: end,
     );
   }
-
 }
 
 class ShiftWorkingTime {
@@ -55,7 +30,7 @@ class ShiftWorkingTime {
     required this.finishingAt,
   });
 
-  factory ShiftWorkingTime.fromJson(final Map<String, dynamic> json) {
+  factory ShiftWorkingTime.fromJson(Map<String, dynamic> json) {
     final startingAt = json['starting_at'];
     final finishingAt = json['finishing_at'];
     return ShiftWorkingTime(
@@ -63,17 +38,16 @@ class ShiftWorkingTime {
       finishingAt: finishingAt,
     );
   }
-
 }
 
-class User {
+class ShiftData {
   final int id;
   final String name;
   final String surname;
-  final String? secondname;
-  final String? avatar;
+  final String secondname;
+  final String avatar;
 
-  User({
+  ShiftData({
     required this.id,
     required this.name,
     required this.surname,
@@ -81,13 +55,13 @@ class User {
     required this.avatar,
   });
 
-  factory User.fromJson(final Map<String, dynamic> json) {
+  factory ShiftData.fromJson(Map<String, dynamic> json) {
     final id = json['id'];
     final name = json['name'];
     final surname = json['surname'];
     final secondname = json['secondname'];
     final avatar = json['avatar'];
-    return User(
+    return ShiftData(
       id: id,
       name: name,
       surname: surname,
@@ -95,5 +69,4 @@ class User {
       avatar: avatar,
     );
   }
-
 }

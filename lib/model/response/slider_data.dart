@@ -1,138 +1,89 @@
-class SliderData {
+class SalaryReport {
   final int total;
-  final Report report;
-  final Map<String, ReportLabel> reportLabels;
-  final WorkSchedules workSchedules;
-  final Map<String, WorkScheduleLabel> workScheduleLabels;
+  final Map<String, int> report;
+  final Map<String, WorkScheduleLabel> labels;
 
-  SliderData({
+  SalaryReport({
     required this.total,
     required this.report,
-    required this.reportLabels,
-    required this.workSchedules,
-    required this.workScheduleLabels,
+    required this.labels,
   });
 
-  factory SliderData.fromJson(final Map<String, dynamic> json) {
-    final data = json['data'];
-    final total = data['total_salary'];
-    final report = Report.fromJson(data['report']);
-    final reportLabels = Map<String, ReportLabel>.from(data['report_labels']).map(
-          (key, value) => MapEntry(key, ReportLabel.fromJson(value as Map<String, dynamic>)),
-    );
-    final workSchedules = WorkSchedules.fromJson(data['work_schedules']);
-    final workScheduleLabels = Map<String, WorkScheduleLabel>.from(data['work_schedule_labels']).map(
-          (key, value) => MapEntry(key, WorkScheduleLabel.fromJson(value as Map<String, dynamic>)),
-    );
-    return SliderData(
+  factory SalaryReport.fromJson(Map<String, dynamic> json) {
+    final total = json['total'];
+    final reportJson = json['report'] as Map<String, dynamic>;
+    final report = reportJson.map((key, value) => MapEntry(key, value as int));
+    final labelsJson = json['labels'] as Map<String, dynamic>;
+    final labels = labelsJson.map((key, value) =>
+        MapEntry(key, WorkScheduleLabel.fromJson(value as Map<String, dynamic>)));
+    return SalaryReport(
       total: total,
       report: report,
-      reportLabels: reportLabels,
-      workSchedules: workSchedules,
-      workScheduleLabels: workScheduleLabels,
+      labels: labels,
     );
   }
-
 }
 
-class Report {
-  final int prepaymentMonthly;
-  final int bonusMonthly;
-  final int bonusDaily;
-  final int salaryMonthly;
-  final int penaltyMonthly;
+class WorkSchedule {
+  final Map<String, String> report;
+  final Map<String, WorkScheduleLabel> labels;
 
-  Report({
-    required this.prepaymentMonthly,
-    required this.bonusMonthly,
-    required this.bonusDaily,
-    required this.salaryMonthly,
-    required this.penaltyMonthly,
+  WorkSchedule({
+    required this.report,
+    required this.labels,
   });
 
-  factory Report.fromJson(final Map<String, dynamic> json) {
-    final report = json['report'];
-    final prepaymentMonthly = report['prepayment_monthly'];
-    final bonusMonthly = report['bonus_monthly'];
-    final bonusDaily = report['bonus_daily'];
-    final salaryMonthly = report['salary_monthly'];
-    final penaltyMonthly = report['penalty_monthly'];
-    return Report(
-      prepaymentMonthly: prepaymentMonthly,
-      bonusMonthly: bonusMonthly,
-      bonusDaily: bonusDaily,
-      salaryMonthly: salaryMonthly,
-      penaltyMonthly: penaltyMonthly,
+  factory WorkSchedule.fromJson(Map<String, dynamic> json) {
+    final reportJson = json['report'] as Map<String, dynamic>;
+    final report = reportJson.map((key, value) => MapEntry(key, value as String));
+    final labelsJson = json['labels'] as Map<String, dynamic>;
+    final labels = labelsJson.map((key, value) =>
+        MapEntry(key, WorkScheduleLabel.fromJson(value as Map<String, dynamic>)));
+    return WorkSchedule(
+      report: report,
+      labels: labels,
     );
   }
-
-}
-
-class ReportLabel {
-  final String name;
-  final String color;
-
-  ReportLabel({
-    required this.name,
-    required this.color,
-  });
-
-  factory ReportLabel.fromJson(final Map<String, dynamic> json) {
-    final name = json['name'];
-    final color = json['color'];
-    return ReportLabel(
-      name: name,
-      color: color,
-    );
-  }
-
-}
-
-class WorkSchedules {
-  final Map<String, String> workSchedules;
-  final List<String> shiftUserExistDates;
-  final List<String> vacationDates;
-  final List<String> sickLeaveDates;
-
-  WorkSchedules({
-    required this.workSchedules,
-    required this.shiftUserExistDates,
-    required this.vacationDates,
-    required this.sickLeaveDates,
-  });
-
-  factory WorkSchedules.fromJson(final Map<String, dynamic> json) {
-    final schedules = json['work_schedules'];
-    final workSchedules = Map<String, String>.from(schedules['work_schedules']);
-    final shiftUserExistDates = List<String>.from(schedules['shift_user_exist_dates']);
-    final vacationDates = List<String>.from(schedules['vacation_dates']);
-    final sickLeaveDates = List<String>.from(schedules['sick_leave_dates']);
-    return WorkSchedules(
-      workSchedules: workSchedules,
-      shiftUserExistDates: shiftUserExistDates,
-      vacationDates: vacationDates,
-      sickLeaveDates: sickLeaveDates,
-    );
-  }
-
 }
 
 class WorkScheduleLabel {
   final String name;
   final String color;
+  final String? iconUrl;
 
   WorkScheduleLabel({
     required this.name,
     required this.color,
+    this.iconUrl,
   });
 
-  factory WorkScheduleLabel.fromJson(final Map<String, dynamic> json) {
+  factory WorkScheduleLabel.fromJson(Map<String, dynamic> json) {
     final name = json['name'];
     final color = json['color'];
+    final iconUrl = json['iconUrl'];
     return WorkScheduleLabel(
       name: name,
       color: color,
+      iconUrl: iconUrl,
     );
   }
+}
 
+class SliderData {
+  final SalaryReport salary;
+  final WorkSchedule workSchedule;
+
+  SliderData({
+    required this.salary,
+    required this.workSchedule,
+  });
+
+  factory SliderData.fromJson(Map<String, dynamic> json) {
+    final salary = SalaryReport.fromJson(json['salary']);
+    final workSchedule = WorkSchedule.fromJson(json['work_schedule']);
+    return SliderData(
+      salary: salary,
+      workSchedule: workSchedule,
+    );
+  }
 }
