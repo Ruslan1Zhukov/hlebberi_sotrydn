@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/enums/day_mode.dart';
-import 'package:hlebberi_sotrydn/model/calendar_data.dart';
+import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
 import 'package:hlebberi_sotrydn/pages/day.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
+import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -15,16 +16,18 @@ const Map<int, String> _mapDayOfWeek = {
   6: "Сб",
   7: "Вс",
 };
+const _fontWeightLight = FontWeight.w300;
+const _fontWeightBold = FontWeight.w700;
 
 class CalendarWidget extends StatelessWidget {
   const CalendarWidget({
     super.key,
     required this.month,
-    required this.data,
+    required this.workSchedule,
   });
 
   final DateTime month;
-  final Map<DateTime, CalendarDay>? data;
+  final WorkSchedule? workSchedule;
 
   @override
   Widget build(BuildContext context) {
@@ -53,47 +56,81 @@ class CalendarWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildDay(_, day, focus) {
+  Widget _buildDay(context, DateTime day, focus) {
     var currentDay = DateTime.now();
     DayMode mode = (currentDay.isAfter(day)) ? DayMode.last : DayMode.future;
-    if (data != null) {
-      CalendarDay calendarDay = data![day] ?? CalendarDay.empty();
+    final keyOfLabel = workSchedule?.report[day.yyyy_mm_dd(context)];
+    if (keyOfLabel == null) {
       return _Day(
         dateTime: day,
-        dayData: calendarDay,
         mode: mode,
-      );
-    } else {
-      CalendarDay? calendarDay = data?[day];
-      return _Day(
-        dateTime: day,
-        dayData: calendarDay,
-        mode: mode,
+        color: ColorProject.white,
+        label: const SizedBox.shrink(),
       );
     }
+    if (keyOfLabel.length > 2) {
+      final label = workSchedule?.labels[keyOfLabel];
+      if (label == null) {
+        return _Day(
+          dateTime: day,
+          mode: mode,
+          color: ColorProject.white,
+          label: const SizedBox.shrink(),
+        );
+      }
+      return _Day(
+        dateTime: day,
+        mode: mode,
+        color: label.color,
+        label: label.icon,
+      );
+    }
+    final color = workSchedule?.labels["default"]?.color;
+    return _Day(
+      dateTime: day,
+      mode: mode,
+      color: color,
+      label: Text(keyOfLabel),
+    );
   }
 
-  Widget _buildToday(_, day, focus) {
-    if (data != null) {
-      CalendarDay calendarDay = data![day] ?? CalendarDay.empty();
+  Widget _buildToday(context, DateTime day, focus) {
+    DayMode mode = DayMode.current;
+    final keyOfLabel = workSchedule?.report[day.yyyy_mm_dd(context)];
+    if (keyOfLabel == null) {
       return _Day(
         dateTime: day,
-        dayData: calendarDay,
-        mode: DayMode.current,
-      );
-    } else {
-      CalendarDay? calendarDay = data?[day];
-      return _Day(
-        dateTime: day,
-        dayData: calendarDay,
-        mode: DayMode.current,
+        mode: mode,
+        color: ColorProject.white,
+        label: const SizedBox.shrink(),
       );
     }
+    if (keyOfLabel.length > 2) {
+      final label = workSchedule?.labels[keyOfLabel];
+      if (label == null) {
+        return _Day(
+          dateTime: day,
+          mode: mode,
+          color: ColorProject.white,
+          label: const SizedBox.shrink(),
+        );
+      }
+      return _Day(
+        dateTime: day,
+        mode: mode,
+        color: label.color,
+        label: label.icon,
+      );
+    }
+    final color = workSchedule?.labels["default"]?.color;
+    return _Day(
+      dateTime: day,
+      mode: mode,
+      color: color,
+      label: Text(keyOfLabel),
+    );
   }
 }
-
-const _fontWeightLight = FontWeight.w300;
-const _fontWeightBold = FontWeight.w700;
 
 class _DayOfWeek extends StatelessWidget {
   const _DayOfWeek({
@@ -109,8 +146,8 @@ class _DayOfWeek extends StatelessWidget {
       child: Text(
         _mapDayOfWeek[dayOfWeek] ?? "ХЗ",
         style: TextStyle(
-          color: const Color(0xFF1D1D1D).withOpacity(
-              _determineOpacity(dayOfWeek)),
+          color:
+              const Color(0xFF1D1D1D).withOpacity(_determineOpacity(dayOfWeek)),
           fontWeight: _determineFontWeight(dayOfWeek),
           fontSize: 12,
         ),
@@ -140,19 +177,18 @@ class _DayOfWeek extends StatelessWidget {
 class _Day extends StatelessWidget {
   const _Day({
     required this.dateTime,
-    required this.dayData,
     required this.mode,
+    required this.color,
+    required this.label,
   });
 
   final DateTime dateTime;
-  final CalendarDay? dayData;
   final DayMode mode;
+  final Color? color;
+  final Widget? label;
 
   _openDay(BuildContext context) {
-    var heightScreen = MediaQuery
-        .of(context)
-        .size
-        .height;
+    var heightScreen = MediaQuery.of(context).size.height;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -181,7 +217,7 @@ class _Day extends StatelessWidget {
         opacity: mode.getOpacity(),
         child: Stack(
           children: [
-            if (dayData == null)
+            if (label == null)
               Positioned.fill(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
@@ -196,27 +232,28 @@ class _Day extends StatelessWidget {
                   ),
                 ),
               ),
-            Positioned.fill(
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                margin: const EdgeInsets.all(3.5),
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: dayData?.type.getColor(),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: const Color(0xFFD9D9D9)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    dayData?.type.getLabelWidget() ?? const SizedBox.shrink(),
-                    const Spacer(),
-                    Text(dateTime.day.toString()),
-                  ],
+            if (label != null)
+              Positioned.fill(
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  margin: const EdgeInsets.all(3.5),
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: const Color(0xFFD9D9D9)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      label ?? const SizedBox.shrink(),
+                      const Spacer(),
+                      Text(dateTime.day.toString()),
+                    ],
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),

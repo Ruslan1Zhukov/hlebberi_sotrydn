@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/model/smena.dart';
-import 'package:hlebberi_sotrydn/test_data.dart';
+import 'package:hlebberi_sotrydn/api/_api_response.dart';
+import 'package:hlebberi_sotrydn/api/smena.dart';
+import 'package:hlebberi_sotrydn/model/response/smena_data.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/widgets/avatar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -15,14 +16,14 @@ class SmenaWidget extends StatefulWidget {
 }
 
 class _SmenaWidgetState extends State<SmenaWidget> {
-  Smena? smena;
+  ApiResponse<Smena>? _response;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(const Duration(seconds: 3));
+      final response = await ApiSmena.smena();
       setState(() {
-        smena = testSmena;
+        _response = response;
       });
     });
     super.initState();
@@ -30,8 +31,15 @@ class _SmenaWidgetState extends State<SmenaWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (_response is ApiResponseError) {
+      return const SizedBox.shrink();
+    }
+    final smena = _response?.data;
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 32,
+      ),
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         color: ColorProject.white,
@@ -60,9 +68,9 @@ class _SmenaWidgetState extends State<SmenaWidget> {
               ),
               const SizedBox(width: 6),
               Skeletonizer(
-                enabled: smena == null,
+                enabled: _response == null,
                 child: Text(
-                  smena?.timePlan ?? "-----------------------",
+                  smena?.timePlan() ?? "-----------------------",
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -76,9 +84,9 @@ class _SmenaWidgetState extends State<SmenaWidget> {
               ),
               const SizedBox(width: 6),
               Skeletonizer(
-                enabled: smena == null,
+                enabled: _response == null,
                 child: Text(
-                  smena?.timeFact ?? "-----------------------",
+                  smena?.timeFact(context) ?? "-----------------------",
                 ),
               ),
             ],
@@ -97,18 +105,19 @@ class _SmenaWidgetState extends State<SmenaWidget> {
             spacing: 17,
             runSpacing: 4,
             children: [
-              for (var user in smena?.users ?? skeletonUsers)
+              for (var user
+                  in smena?.users ?? [User.empty(), User.empty(), User.empty()])
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AvatarWidget(
-                      isLoading: smena == null,
-                      avatarUrl: user.avatarUrl,
+                      isLoading: _response == null,
+                      avatarUrl: user.avatar,
                       fio: user.fio,
                       size: 55,
                     ),
                     const SizedBox(height: 4),
-                    smena == null
+                    _response == null
                         ? Skeletonizer(
                             enabled: true,
                             child: Container(
@@ -121,7 +130,9 @@ class _SmenaWidgetState extends State<SmenaWidget> {
                             user.fio.fullFio2(),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 8, color: ColorProject.black),
+                              fontSize: 8,
+                              color: ColorProject.black,
+                            ),
                           ),
                   ],
                 ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/model/zp.dart';
+import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
 import 'package:hlebberi_sotrydn/pages/zp.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
@@ -14,11 +14,11 @@ class SalaryWidget extends StatefulWidget {
   const SalaryWidget({
     super.key,
     required this.month,
-    required this.zp,
+    required this.salary,
   });
 
   final int? month;
-  final Zp? zp;
+  final Salary? salary;
 
   @override
   State<SalaryWidget> createState() => _SalaryWidgetState();
@@ -27,7 +27,7 @@ class SalaryWidget extends StatefulWidget {
 class _SalaryWidgetState extends State<SalaryWidget> {
   DateTime dateTime = DateTime.now();
 
-  void _openDay(BuildContext context) {
+  void _openMonthDetailed(BuildContext context) {
     var heightScreen = MediaQuery.of(context).size.height;
     showModalBottomSheet(
       context: context,
@@ -49,13 +49,11 @@ class _SalaryWidgetState extends State<SalaryWidget> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        _openDay(context);
+        _openMonthDetailed(context);
       },
       child: Skeletonizer(
         enabled: widget.month == null,
@@ -75,9 +73,9 @@ class _SalaryWidgetState extends State<SalaryWidget> {
             children: [
               buildTitle(context),
               const SizedBox(height: 20),
-              DiagramWidget(zp: widget.zp),
+              DiagramWidget(salary: widget.salary),
               const SizedBox(height: 20),
-              const LegendWidget(),
+              LegendWidget(labels: widget.salary?.labels.values.toList()),
             ],
           ),
         ),
@@ -95,7 +93,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
       formattedDate = "";
     }
 
-    final zpSum = widget.zp?.sum ?? 0;
+    final zpSum = widget.salary?.total ?? 0;
     var formattedSum = zpSum.toPriceString();
 
     return Row(

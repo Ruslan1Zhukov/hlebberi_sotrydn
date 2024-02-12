@@ -1,9 +1,9 @@
 class ApiResponse<T> {
-  final T? response;
+  final T? data;
   final String? error;
 
   ApiResponse({
-    this.response,
+    this.data,
     this.error,
   });
 }
@@ -16,7 +16,7 @@ class ApiResponseError<T> extends ApiResponse<T> {
 
   ApiResponseError({
     required super.error,
-  }) : super(response: null);
+  }) : super(data: null);
 
   ApiResponseError.standard()
       : super(error: "Возникла ошибка\nОбратитесь к администратору");
@@ -27,16 +27,16 @@ class ApiResponseError<T> extends ApiResponse<T> {
 
 class ApiResponseData<T> extends ApiResponse<T> {
   @override
-  T get response {
-    var response = super.response;
+  T get data {
+    var response = super.data;
     if (response == null) throw Exception();
     return response;
   }
 
   ApiResponseData({
-    required super.response,
+    required super.data,
   });
 
   @override
-  String toString() => "ApiResponseData(${response.toString()})";
+  String toString() => "ApiResponseData(${data.toString()})";
 }

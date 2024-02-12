@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/model/zp.dart';
+import 'package:hlebberi_sotrydn/helpers/plot_width.dart';
+import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
 
 const double _radius = 27;
@@ -7,15 +8,15 @@ const double _radius = 27;
 class DiagramWidget extends StatelessWidget {
   const DiagramWidget({
     super.key,
-    required this.zp,
+    required this.salary,
   });
 
-  final Zp? zp;
+  final Salary? salary;
 
   @override
   Widget build(BuildContext context) {
-    var zp = this.zp;
-    if (zp == null) {
+    var salary = this.salary;
+    if (salary == null) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(_radius),
         child: Row(
@@ -31,36 +32,56 @@ class DiagramWidget extends StatelessWidget {
       );
     }
     var widthScreen = MediaQuery.of(context).size.width;
-    var count = zp.items.length.toDouble();
-    var sum = zp.sumDouble();
+    var count = salary.report.length.toDouble();
+    var sum = salary.sumDouble();
+    List<Widget> list = [];
+    salary.report.forEach((key, value) {
+      final label = salary.labels[key];
+      if (label == null) return;
+      list.add(
+        _Item(
+          label: label,
+          value: value,
+          flex: systemPlot(
+            widthScreen: widthScreen,
+            count: count,
+            sum: sum,
+            value: value,
+          ),
+        ),
+      );
+    });
     return ClipRRect(
       borderRadius: BorderRadius.circular(_radius),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          for (var item in zp.items)
-            _buildItemWidget(
-              item,
-              item.getFlex(
-                widthScreen: widthScreen,
-                count: count,
-                sum: sum,
-              ),
-            ),
-        ],
+        children: list,
       ),
     );
   }
+}
 
-  Widget _buildItemWidget(PlotItem plotItem, double flex) {
+class _Item extends StatelessWidget {
+  const _Item({
+    required this.label,
+    required this.value,
+    required this.flex,
+  });
+
+  final SalaryLabel label;
+  final int value;
+  final double flex;
+
+  @override
+  Widget build(BuildContext context) {
     return Flexible(
       flex: flex.toInt(),
       child: Container(
         height: 27,
         alignment: Alignment.center,
-        color: plotItem.color,
+        color: label.color,
         child: Text(
-          plotItem.value.toPriceString(),
+          value.toPriceString(),
           maxLines: 1,
         ),
       ),

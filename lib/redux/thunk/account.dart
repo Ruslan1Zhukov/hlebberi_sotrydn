@@ -17,7 +17,7 @@ ThunkAction<AppState> init(BuildContext context) {
     if (loginDataSaved != null) {
       final response = await ApiAccount.checkAuth();
       if (response is ApiResponseData) {
-        final loginDataServer = response.response;
+        final loginDataServer = response.data;
         if (loginDataServer == null) {
           toast(context, "Данные с сервера не пришли");
           await saveLoginData(null);
@@ -46,7 +46,7 @@ ThunkAction<AppState> login({
   return (Store<AppState> store) async {
     final response = await ApiAccount.login(login: login, password: password);
     if (response is ApiResponseData) {
-      final loginData = response.response;
+      final loginData = response.data;
       if (loginData == null) {
         toast(context, "Данные с сервера не пришли");
         return;

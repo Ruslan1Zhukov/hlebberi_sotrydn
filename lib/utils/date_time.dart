@@ -33,4 +33,20 @@ extension DateTimeExtension on DateTime {
       Localizations.localeOf(context).languageCode,
     ).format(this);
   }
+
+  String hhmm(BuildContext context) {
+    final languageCode = Localizations.localeOf(context).languageCode;
+    debugPrint("languageCode=$languageCode");
+    return DateFormat(
+      "hh:mm",
+      Localizations.localeOf(context).languageCode,
+    ).format(this);
+  }
+
+  String yyyy_mm_dd(BuildContext context) {
+    return DateFormat(
+      "yyyy-MM-dd",
+      Localizations.localeOf(context).languageCode,
+    ).format(this);
+  }
 }

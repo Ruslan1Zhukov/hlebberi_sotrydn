@@ -1,7 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hlebberi_sotrydn/api/_api_response.dart';
+import 'package:hlebberi_sotrydn/api/account.dart';
+import 'package:hlebberi_sotrydn/helpers/auth.dart';
 import 'package:hlebberi_sotrydn/helpers/picker.dart';
+import 'package:hlebberi_sotrydn/redux/actions/account.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/account.dart';
 
@@ -120,7 +124,30 @@ showChangeAvatarDialog(BuildContext context) {
             'Удалить фото',
             style: TextStyle(color: Colors.red),
           ),
-          onPressed: () {
+          onPressed: () async {
+            final response = await ApiAccount.deleteAvatar();
+            if (response is ApiResponseError) {
+              debugPrint("Ошибка удаления аватара: ${response.error}");
+              return;
+            }
+            final result = response.data;
+            if (result == null) {
+              debugPrint("Ошибка удаления аватара: НЕТ ДАННЫХ");
+              return;
+            }
+            if (!result) {
+              debugPrint("Ошибка удаления аватара");
+              return;
+            }
+            final savedLoginData = await getLoginData();
+            if (savedLoginData == null) {
+              debugPrint("Ошибка загрузки аватара: НЕТ СОХРАНЁННЫХ ДАННЫХ");
+              return;
+            }
+            final changedLoginData = savedLoginData.copyWith(avatarUrl: null);
+            await store.dispatch(SetLoginData(loginData: changedLoginData));
+            await saveLoginData(changedLoginData);
+            // ignore: use_build_context_synchronously
             Navigator.pop(context2);
           },
         )

@@ -1,8 +1,8 @@
-import 'package:hlebberi_sotrydn/model/data_month.dart';
+import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
 
 class SetSliderData {
   final int month;
-  final DataMonth data;
+  final SliderData data;
 
   SetSliderData({
     required this.data,

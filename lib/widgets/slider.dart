@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/helpers/month.dart';
-import 'package:hlebberi_sotrydn/model/data_month.dart';
+import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/slider.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
@@ -145,7 +145,7 @@ class _SlideWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, DataMonth?>(
+    return StoreConnector<AppState, SliderData?>(
       converter: (store) => store.state.slider.data[month],
       builder: (context, dataMonth) {
         if (dataMonth == null) {
@@ -156,13 +156,13 @@ class _SlideWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             SalaryWidget(
-              zp: dataMonth?.zp,
+              salary: dataMonth?.salary,
               month: (dataMonth == null) ? null : month,
             ),
             const SizedBox(height: 15),
             CalendarWidget(
               month: monthDateTime,
-              data: dataMonth?.calendar.data,
+              workSchedule: dataMonth?.workSchedule,
             ),
           ],
         );

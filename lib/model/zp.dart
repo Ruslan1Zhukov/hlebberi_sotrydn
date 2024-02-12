@@ -40,7 +40,7 @@ class PlotItem {
       x: x,
       widthScreen: widthScreen,
       count: count,
-      value: value.toDouble(),
+      value: value,
       sum: sum,
     );
   }

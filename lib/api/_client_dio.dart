@@ -59,7 +59,7 @@ abstract class ClientDio {
       try {
         if (response.response.data["status"] == true) {
           var result = converter(response.response);
-          return ApiResponseData(response: result);
+          return ApiResponseData(data: result);
         }
         var errors = "Какая-то ошибка";
         return ApiResponseError(error: errors);

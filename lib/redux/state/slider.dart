@@ -1,5 +1,5 @@
-import 'package:hlebberi_sotrydn/model/data_month.dart';
+import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
 
 class SliderState {
-  Map<int,DataMonth> data = {};
+  Map<int, SliderData> data = {};
 }

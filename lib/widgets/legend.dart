@@ -1,38 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 
 class LegendWidget extends StatelessWidget {
-  const LegendWidget({super.key});
+  const LegendWidget({
+    super.key,
+    required this.labels,
+  });
+
+  final List<SalaryLabel>? labels;
 
   @override
   Widget build(BuildContext context) {
-    return const Wrap(
+    final labels = this.labels;
+    if (labels == null) {
+      return const SizedBox.shrink();
+    }
+    return Wrap(
       spacing: 12,
       runSpacing: 6,
       children: [
-        _Item(
-          color: ColorProject.orange,
-          title: 'Оклад',
-          sum: null,
-        ),
-        _Item(
-          color: ColorProject.pink,
-          title: 'Премия (месяц)',
-          sum: null,
-        ),
-        _Item(
-          color: ColorProject.lightBlue,
-          title: 'Премия (день)',
-          sum: null,
-        ),
-        _Item(
-          color: ColorProject.blue,
-          title: 'Процент с продаж',
-          sum: null,
-        ),
-        _Item(
-          color: Color(0xFFE5E5E5),
-          title: 'Демотивация',
+        for (var label in labels) _Item(
+          color: label.color,
+          title: label.name,
           sum: null,
         ),
       ],

@@ -1,3 +1,36 @@
+import 'package:flutter/material.dart';
+import 'package:hlebberi_sotrydn/model/response/login_data.dart';
+import 'package:hlebberi_sotrydn/utils/date_time.dart';
+
+class Smena {
+  final UserShift userShift;
+  final ShiftWorkingTime shiftWorkingTime;
+  final List<User> users;
+
+  Smena({
+    required this.userShift,
+    required this.shiftWorkingTime,
+    required this.users,
+  });
+
+  factory Smena.fromJson(final Map<String, dynamic> json) {
+    final userShift = UserShift.fromJson(json['user_shift']);
+    final shiftWorkingTime =
+        ShiftWorkingTime.fromJson(json['shift_working_time']);
+    final users =
+        List<User>.from(json['users'].map((user) => User.fromJson(user)));
+    return Smena(
+      userShift: userShift,
+      shiftWorkingTime: shiftWorkingTime,
+      users: users,
+    );
+  }
+
+  String timePlan() => shiftWorkingTime.getTimePlan();
+
+  String timeFact(BuildContext context) => userShift.getTimeFact(context);
+}
+
 class UserShift {
   final int id;
   final DateTime start;
@@ -19,6 +52,12 @@ class UserShift {
       end: end,
     );
   }
+
+  String getTimeFact(BuildContext context) {
+    final dateStart = start.hhmm(context);
+    final dateEnd = end?.hhmm(context) ?? "открыта";
+    return "$dateStart-$dateEnd";
+  }
 }
 
 class ShiftWorkingTime {
@@ -38,35 +77,34 @@ class ShiftWorkingTime {
       finishingAt: finishingAt,
     );
   }
+
+  String getTimePlan() => "$startingAt-$finishingAt";
 }
 
-class ShiftData {
+class User {
   final int id;
-  final String name;
-  final String surname;
-  final String secondname;
-  final String avatar;
+  final UserFio fio;
+  final String? avatar;
 
-  ShiftData({
+  User({
     required this.id,
-    required this.name,
-    required this.surname,
-    required this.secondname,
+    required this.fio,
     required this.avatar,
   });
 
-  factory ShiftData.fromJson(Map<String, dynamic> json) {
+  factory User.fromJson(final Map<String, dynamic> json) {
     final id = json['id'];
-    final name = json['name'];
-    final surname = json['surname'];
-    final secondname = json['secondname'];
+    final fio = UserFio.fromJson(json);
     final avatar = json['avatar'];
-    return ShiftData(
+    return User(
       id: id,
-      name: name,
-      surname: surname,
-      secondname: secondname,
+      fio: fio,
       avatar: avatar,
     );
   }
+
+  User.empty()
+      : id = 0,
+        fio = UserFio.empty(),
+        avatar = null;
 }

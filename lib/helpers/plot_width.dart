@@ -1,8 +1,10 @@
+const defaultWidthMin = 50.0; // минимальная ширина единицы графика
+
 double systemPlot({
-  required double x,
+  double x = defaultWidthMin,
   required double widthScreen,
   required double count,
-  required double value,
+  required int value,
   required double sum,
 }) {
   return x + (widthScreen - count * x) * value / sum;

@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/_client_dio.dart';
 import 'package:hlebberi_sotrydn/model/response/login_data.dart';
@@ -42,17 +45,33 @@ abstract class ApiAccount {
     return ClientDio.makeResult(response: response, converter: (response) {});
   }
 
-  static Future<ApiResponse<void>> avatar({
-    required String userId,
-    required String addressCode1c,
+  static Future<ApiResponse<String>> avatar({
+    required File avatar,
   }) async {
+    String fileName = avatar.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      'image': await MultipartFile.fromFile(
+        avatar.path,
+        filename: fileName,
+      ),
+    });
     final response = await ClientDio.post(
-      url: "/users/{userId}/upload-avatar",
-      parameters: {
-        "userId": userId,
-        "address_code_1c": addressCode1c,
-      },
+      url: "/employee/upload-avatar",
+      requestBody: formData,
     );
-    return ClientDio.makeResult(response: response, converter: (response) {});
+    return ClientDio.makeResult(
+      response: response,
+      converter: (response) => response.data['data']['avatar'],
+    );
+  }
+
+  static Future<ApiResponse<bool>> deleteAvatar() async {
+    final response = await ClientDio.post(
+      url: "/employee/delete-avatar",
+    );
+    return ClientDio.makeResult(
+      response: response,
+      converter: (response) => true,
+    );
   }
 }

@@ -31,7 +31,7 @@ class SalaryDayWidget extends StatelessWidget {
         children: [
           buildTitle(context),
           const SizedBox(height: 20),
-          DiagramWidget(zp: zp),
+          // DiagramWidget(salary: zp), // TODO: вернуть
           const SizedBox(height: 20),
           const LegendWidgetDay(),
         ],

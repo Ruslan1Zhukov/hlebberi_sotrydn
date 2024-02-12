@@ -33,6 +33,24 @@ class LoginData {
     );
   }
 
+  LoginData copyWith({
+    String? avatarUrl,
+  }) {
+    return LoginData(
+      user: User(
+        id: user.id,
+        fio: user.fio,
+        defaultRole: user.defaultRole,
+        addressCode1C: user.addressCode1C,
+        avatarUrl: avatarUrl,
+      ),
+      token: token,
+      employeeAppSettings: employeeAppSettings,
+      employeeExternalLinks: employeeExternalLinks,
+      employeeSocialLinks: employeeSocialLinks,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'user': user.toJson(),
@@ -124,6 +142,11 @@ class UserFio {
       patronymic: secondname,
     );
   }
+
+  UserFio.empty()
+      : firstName = "--------",
+        secondName = "--------",
+        patronymic = null;
 
   @override
   String toString() => fullFio();
