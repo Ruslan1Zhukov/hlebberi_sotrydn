@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  StoreProvider(
+    return StoreProvider(
       store: store,
       child: MaterialApp(
         localizationsDelegates: const [
@@ -23,22 +23,13 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: const [
-          Locale('ru'),
-        ],
+        supportedLocales: const [Locale('ru')],
         routes: {
-          '/': (BuildContext context) {
-            return const SplashPage();
-          },
-          '/login': (BuildContext context) {
-            return const LoginPage();
-          },
-          '/home': (BuildContext context) {
-            return const HomePage();
-          },
+          '/': (_) => const SplashPage(),
+          '/login': (_) => const LoginPage(),
+          '/home': (_) => const HomePage(),
         },
       ),
     );
   }
 }
-
