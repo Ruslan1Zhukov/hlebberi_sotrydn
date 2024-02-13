@@ -1,7 +1,6 @@
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/_client_dio.dart';
 import 'package:hlebberi_sotrydn/model/response/day_detail.dart';
-import 'package:hlebberi_sotrydn/model/response/month_detail.dart';
 import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
 
 abstract class ApiZp {
@@ -20,7 +19,7 @@ abstract class ApiZp {
     );
   }
 
-  static Future<ApiResponse<MonthDetail>> monthDetail({
+  static Future<ApiResponse<SalaryReport>> monthDetail({
     required String date,
   }) async {
     final response = await ClientDio.get(
@@ -31,7 +30,7 @@ abstract class ApiZp {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => MonthDetail.fromJson(response.data["data"]),
+      converter: (response) => SalaryReport.fromJson(response.data["data"]),
     );
   }
 

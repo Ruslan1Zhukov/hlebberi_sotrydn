@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/model/zp.dart';
+import 'package:hlebberi_sotrydn/model/response/day_detail.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
@@ -8,11 +8,11 @@ import 'package:hlebberi_sotrydn/widgets/legend.dart';
 class SalaryDayWidget extends StatelessWidget {
   const SalaryDayWidget({
     super.key,
-    required this.zp,
+    required this.salaryReport,
     required this.isCurrentDay,
   });
 
-  final Zp zp;
+  final SalaryReport salaryReport;
   final bool isCurrentDay;
 
   @override
@@ -31,9 +31,9 @@ class SalaryDayWidget extends StatelessWidget {
         children: [
           buildTitle(context),
           const SizedBox(height: 20),
-          // DiagramWidget(salary: zp), // TODO: вернуть
+          DiagramWidget(salary: salaryReport),
           const SizedBox(height: 20),
-          const LegendWidgetDay(),
+          LegendDetailsWidget(salaryReport: salaryReport),
         ],
       ),
     );

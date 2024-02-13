@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
-import 'package:hlebberi_sotrydn/pages/zp.dart';
+import 'package:hlebberi_sotrydn/pages/month.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
@@ -44,7 +44,9 @@ class _SalaryWidgetState extends State<SalaryWidget> {
         maxHeight: heightScreen - 80,
       ),
       builder: (BuildContext context) {
-        return const SingleChildScrollView(child: ZpPage());
+        final month = widget.month;
+        if (month == null) return const SizedBox.shrink();
+        return SingleChildScrollView(child: MonthDetailPage(month: month));
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/helpers/color.dart';
+import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 
 class SliderData {
   final Salary salary;
@@ -58,22 +59,30 @@ class Salary {
 class SalaryLabel {
   final String name;
   final String colorString; // "#FDD733"
+  final String? coloredString;
 
   SalaryLabel({
     required this.name,
     required this.colorString,
+    this.coloredString,
   });
 
   factory SalaryLabel.fromJson(Map<String, dynamic> json) {
     final name = json['name'];
     final color = json['color'];
+    final coloredString = (json['number_colored'] != null)
+        ? (json['number_colored'] ? "#DC3545" : "000000")
+        : null;
     return SalaryLabel(
       name: name,
       colorString: color,
+      coloredString: coloredString,
     );
   }
 
-  Color get color => hexToColor(colorString);
+  Color get color => hexToColor(colorString) ?? ColorProject.black;
+
+  Color? get colored => hexToColor(coloredString);
 }
 
 class WorkSchedule {
@@ -118,7 +127,7 @@ class WorkScheduleLabel {
     );
   }
 
-  Color get color => hexToColor(colorString);
+  Color get color => hexToColor(colorString) ?? ColorProject.black;
 
   Widget get icon {
     final iconUrl = this.iconUrl;

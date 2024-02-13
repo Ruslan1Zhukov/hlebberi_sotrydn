@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
+import 'package:hlebberi_sotrydn/utils/date_time.dart';
+
 class DayDetail {
-  final UserShift userShift;
+  final UserShift? userShift;
   final SalaryReport salary;
 
   DayDetail({
@@ -8,7 +12,9 @@ class DayDetail {
   });
 
   factory DayDetail.fromJson(Map<String, dynamic> json) {
-    final userShift = UserShift.fromJson(json['user_shift']);
+    final userShift = json['user_shift'] != null
+        ? UserShift.fromJson(json['user_shift'])
+        : null;
     final salary = SalaryReport.fromJson(json['salary']);
     return DayDetail(
       userShift: userShift,
@@ -46,60 +52,57 @@ class UserShift {
       role: role,
     );
   }
+
+  String time(BuildContext context) {
+    final startTime = start.hhmm(context);
+    final end = this.end;
+    final endTime = end != null ? end.hhmm(context) : "открыта";
+    return "$startTime-$endTime";
+  }
 }
 
-class SalaryReport {
-  final int total;
-  final Map<String, int> report;
-  final Map<String, WorkScheduleLabel> labels;
+class SalaryReport extends Salary {
   final List<Detail> detailList;
 
   SalaryReport({
-    required this.total,
-    required this.report,
-    required this.labels,
+    required super.total,
+    required super.report,
+    required super.labels,
     required this.detailList,
   });
 
   factory SalaryReport.fromJson(Map<String, dynamic> json) {
     final total = json['total'];
-    final reportJson = json['report'] as Map<String, dynamic>;
-    final report = reportJson.map((key, value) => MapEntry(key, value as int));
-    final labelsJson = json['labels'] as Map<String, dynamic>;
-    final labels = labelsJson.map((key, value) =>
-        MapEntry(key, WorkScheduleLabel.fromJson(value as Map<String, dynamic>)));
-    final detailListJson = json['detail_list'] as List<dynamic>;
-    final detailList = detailListJson
-        .map((detail) => Detail.fromJson(detail as Map<String, dynamic>))
-        .toList();
+    final reportJson = json['report'];
+    Map<String, int> report;
+    if (reportJson == null) {
+      report = {};
+    } else if (reportJson is Map<String, dynamic>) {
+      report = reportJson.map((key, value) => MapEntry(key, value as int));
+    } else {
+      report = {};
+    }
+    final labelsJson = json['labels'];
+    Map<String, SalaryLabel> labels;
+    if (labelsJson == null) {
+      labels = {};
+    } else if (labelsJson is Map<String, dynamic>) {
+      labels = labelsJson.map((key, value) =>
+          MapEntry(key, SalaryLabel.fromJson(value as Map<String, dynamic>)));
+    } else {
+      labels = {};
+    }
+    final detailListJson = json['detail_list'] as List<dynamic>?;
+    List<Detail> detailList = (detailListJson != null)
+        ? detailListJson
+            .map((detail) => Detail.fromJson(detail))
+            .toList()
+        : [];
     return SalaryReport(
       total: total,
       report: report,
       labels: labels,
       detailList: detailList,
-    );
-  }
-}
-
-class WorkScheduleLabel {
-  final String name;
-  final String color;
-  final String? colored;
-
-  WorkScheduleLabel({
-    required this.name,
-    required this.color,
-    this.colored,
-  });
-
-  factory WorkScheduleLabel.fromJson(Map<String, dynamic> json) {
-    final name = json['name'];
-    final color = json['color'];
-    final colored = json['colored'];
-    return WorkScheduleLabel(
-      name: name,
-      color: color,
-      colored: colored,
     );
   }
 }

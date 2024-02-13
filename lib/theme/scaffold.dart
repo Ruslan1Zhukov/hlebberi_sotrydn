@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/pages/qr_scan.dart';
+import 'package:hlebberi_sotrydn/pages/qr.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 
 class ScaffoldProject extends StatelessWidget {

@@ -1,8 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hlebberi_sotrydn/model/one_day.dart';
-import 'package:hlebberi_sotrydn/test_data.dart';
+import 'package:hlebberi_sotrydn/api/_api_response.dart';
+import 'package:hlebberi_sotrydn/api/zp.dart';
+import 'package:hlebberi_sotrydn/model/response/day_detail.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/widgets/salary_day.dart';
@@ -10,8 +11,8 @@ import 'package:hlebberi_sotrydn/widgets/salary_day.dart';
 const _count = 10000;
 const _initialPage = 5000;
 
-class DayPage extends StatelessWidget {
-  const DayPage({
+class DayDetailPage extends StatelessWidget {
+  const DayDetailPage({
     super.key,
     required this.initialDay,
   });
@@ -28,31 +29,52 @@ class DayPage extends StatelessWidget {
         initialPage: _initialPage,
       ),
       itemBuilder: (context, index, realIndex) {
-        var newDateTime = initialDay.add(Duration(days: index - _initialPage));
-        var oneDay = testOneDay(newDateTime);
-        return Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _DateTime(
-                  oneDay: oneDay,
-                  dateMonth: oneDay.data.dMMMMDayOfWeek(context),
-                ),
-                const SizedBox(height: 30),
-                _Position(oneDay: oneDay),
-                const SizedBox(height: 20),
-                _Location(oneDay: oneDay),
-                const SizedBox(height: 32),
-                SalaryDayWidget(
-                  zp: oneDay.zp,
-                  isCurrentDay: oneDay.isCurrent(),
-                ),
-              ],
-            ),
-          ),
+        final date = initialDay.add(Duration(days: index - _initialPage));
+        return FutureBuilder<ApiResponse<DayDetail>>(
+          future: ApiZp.dayDetail(date: date.toServer(context)),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<ApiResponse<DayDetail>> snapshot,
+          ) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+              case ConnectionState.none:
+              case ConnectionState.active:
+                return const Center(child: CircularProgressIndicator());
+              case ConnectionState.done:
+                final dayDetail = snapshot.data?.data;
+                if (dayDetail == null) {
+                  return const Center(child: Text("Ошибка загрузки"));
+                }
+                final role = dayDetail.userShift?.role;
+                final location = dayDetail.userShift?.location;
+                return Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _DateTime(
+                          dayDetail: dayDetail,
+                          dateMonth: date.dMMMMDayOfWeek(context),
+                        ),
+                        const SizedBox(height: 30),
+                        if (role != null) _Position(role: role),
+                        if (role != null) const SizedBox(height: 20),
+                        if (location != null) _Location(location: location),
+                        if (location != null) const SizedBox(height: 32),
+                        if (dayDetail.salary.report.isNotEmpty) SalaryDayWidget(
+                          salaryReport: dayDetail.salary,
+                          isCurrentDay: date.isCurrent(),
+                        ),
+                        if (dayDetail.salary.report.isEmpty) Text("Нет данных"),
+                      ],
+                    ),
+                  ),
+                );
+            }
+          },
         );
       },
     );
@@ -62,14 +84,15 @@ class DayPage extends StatelessWidget {
 class _DateTime extends StatelessWidget {
   const _DateTime({
     required this.dateMonth,
-    required this.oneDay,
+    required this.dayDetail,
   });
 
   final String dateMonth;
-  final OneDay oneDay;
+  final DayDetail dayDetail;
 
   @override
   Widget build(BuildContext context) {
+    final userShift = dayDetail.userShift;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -81,16 +104,16 @@ class _DateTime extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        ColorFiltered(
+        if (userShift != null) ColorFiltered(
           colorFilter: const ColorFilter.mode(
             ColorProject.orange,
             BlendMode.srcIn,
           ),
           child: SvgPicture.asset("assets/icons/icon_clock.svg"),
         ),
-        const SizedBox(width: 4),
-        Text(
-          oneDay.time,
+        if (userShift != null) const SizedBox(width: 4),
+        if (userShift != null) Text(
+          userShift.time(context),
           style: const TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 12,
@@ -103,10 +126,10 @@ class _DateTime extends StatelessWidget {
 
 class _Position extends StatelessWidget {
   const _Position({
-    required this.oneDay,
+    required this.role,
   });
 
-  final OneDay oneDay;
+  final String role;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +144,7 @@ class _Position extends StatelessWidget {
         ),
         const SizedBox(width: 13),
         Text(
-          oneDay.jobTitle,
+          role,
           style: const TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 15,
@@ -135,27 +158,25 @@ class _Position extends StatelessWidget {
 
 class _Location extends StatelessWidget {
   const _Location({
-    required this.oneDay,
+    required this.location,
   });
 
-  final OneDay oneDay;
+  final String location;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         ColorFiltered(
-        colorFilter: const ColorFilter.mode(
-          ColorProject.grey,
-          BlendMode.srcIn,
+          colorFilter: const ColorFilter.mode(
+            ColorProject.grey,
+            BlendMode.srcIn,
+          ),
+          child: SvgPicture.asset("assets/icons/icon_locat.svg"),
         ),
-        child: SvgPicture.asset("assets/icons/icon_locat.svg"),
-      ),
         const SizedBox(width: 12),
-        Text(oneDay.location),
+        Text(location),
       ],
     );
   }
 }
-
-

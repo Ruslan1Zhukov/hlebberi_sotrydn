@@ -204,7 +204,7 @@ class _Day extends StatelessWidget {
         maxHeight: heightScreen - 80,
       ),
       builder: (BuildContext context) {
-        return SingleChildScrollView(child: DayPage(initialDay: dateTime));
+        return SingleChildScrollView(child: DayDetailPage(initialDay: dateTime));
       },
     );
   }

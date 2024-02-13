@@ -105,7 +105,10 @@ class _QRScannerPageState extends State<QRScannerPage> {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
+      final hash = scanData.code;
+      // TODO: отправить на сервер
+      // если ответ сервера true, то выйти из окна
       setState(() {
         result = scanData;
       });

@@ -38,4 +38,11 @@ extension IntExtension on int {
       return this - 1;
     }
   }
+
+  String toServer() {
+    final now = DateTime.now();
+    final yearString = now.year.toString();
+    final monthString = toString().padLeft(2, "0");
+    return "$yearString-$monthString";
+  }
 }
