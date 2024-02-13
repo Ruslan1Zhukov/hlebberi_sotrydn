@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:hlebberi_sotrydn/api/_api_response.dart';
+import 'package:hlebberi_sotrydn/api/qr.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/theme/scaffold.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -106,12 +108,19 @@ class _QRScannerPageState extends State<QRScannerPage> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
-      final hash = scanData.code;
-      // TODO: отправить на сервер
-      // если ответ сервера true, то выйти из окна
+      final hash = scanData.code ?? '';
+      final response = await ApiQR.login(hash: hash);
+      if (response is ApiResponseError) {
+        print("Ошибка при отправке запроса на сервер: ${response.error}");
+      } else {
+        if (response.data == true) {
+          Navigator.of(context).pop();
+        }
+      }
       setState(() {
         result = scanData;
       });
     });
   }
 }
+

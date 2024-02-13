@@ -17,27 +17,32 @@ class MonthDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ApiResponse<SalaryReport>>(
-      future: ApiZp.monthDetail(date: month.toServer()),
-      builder: (
-        BuildContext context,
-        AsyncSnapshot<ApiResponse<SalaryReport>> snapshot,
-      ) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-          case ConnectionState.none:
-          case ConnectionState.active:
-            return const CircularProgressIndicator();
-          case ConnectionState.done:
-            final salaryReport = snapshot.data?.data;
-            if (salaryReport == null) {
-              return const Center(child: Text("Ошибка загрузки"));
-            }
-            return Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SingleChildScrollView(
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: FutureBuilder<ApiResponse<SalaryReport>>(
+        future: ApiZp.monthDetail(date: month.toServer()),
+        builder: (
+            BuildContext context,
+            AsyncSnapshot<ApiResponse<SalaryReport>> snapshot,
+            ) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return const Center(child: CircularProgressIndicator());
+            case ConnectionState.none:
+            case ConnectionState.active:
+              return const Center(child: CircularProgressIndicator());
+            case ConnectionState.done:
+              if (snapshot.hasError) {
+                return Center(child: Text("Ошибка загрузки: ${snapshot.error}"));
+              }
+              final salaryReport = snapshot.data?.data;
+              if (salaryReport == null) {
+                return const Center(child: Text("Ошибка загрузки"));
+              }
+              return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     _TitleWidget(month: month, salaryReport: salaryReport),
                     const SizedBox(height: 29),
@@ -46,13 +51,14 @@ class MonthDetailPage extends StatelessWidget {
                     LegendDetailsWidget(salaryReport: salaryReport),
                   ],
                 ),
-              ),
-            );
-        }
-      },
+              );
+          }
+        },
+      ),
     );
   }
 }
+
 
 class _TitleWidget extends StatelessWidget {
   const _TitleWidget({

@@ -68,7 +68,7 @@ class DayDetailPage extends StatelessWidget {
                           salaryReport: dayDetail.salary,
                           isCurrentDay: date.isCurrent(),
                         ),
-                        if (dayDetail.salary.report.isEmpty) Text("Нет данных"),
+                        if (dayDetail.salary.report.isEmpty) const Text("Нет данных"),
                       ],
                     ),
                   ),
