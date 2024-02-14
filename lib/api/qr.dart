@@ -6,12 +6,12 @@ import 'package:hlebberi_sotrydn/redux/app_state.dart';
 
 abstract class ApiQR {
   static Future<ApiResponse<bool>> login({
-    required String hash,
+    required String code,
   }) async {
     final userId = store.state.account.user?.id;
     if (userId == null) return ApiResponseError(error: "Не найден userId");
     final data = {
-      "hash": hash,
+      "hash": code,
       "user_id": userId,
     };
     final json = jsonEncode(data);

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -15,9 +17,28 @@ class QRScannerPage extends StatefulWidget {
 }
 
 class _QRScannerPageState extends State<QRScannerPage> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  Barcode? result;
-  QRViewController? controller;
+  final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
+  Barcode? _scanData;
+  QRViewController? _controller;
+
+  /// Обработка распознанного кода
+  Future _onQrScan(Barcode scanData) async {
+    final qrCode = scanData.code ?? '';
+    if (qrCode.isEmpty) return debugPrint("Код пустой");
+    // TODO: убрать
+    setState(() {
+      _scanData = scanData;
+    });
+    final response = await ApiQR.login(code: qrCode);
+    if (response is ApiResponseError) {
+      return debugPrint("Ошибка: ${response.error}");
+    }
+    if (response.data != true) {
+      return debugPrint("Ошибка: Нет данных");
+    }
+    await Future.delayed(const Duration(seconds: 3));
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +55,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
                 Expanded(
                   flex: 5,
                   child: QRView(
-                    key: qrKey,
+                    key: _qrKey,
                     onQRViewCreated: _onQRViewCreated,
                     overlay: QrScannerOverlayShape(
                       borderColor: Colors.red,
@@ -47,7 +68,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
                         _onPermissionSet(context, ctrl, p),
                   ),
                 ),
-                if (result != null)
+                if (_scanData != null)
                   const Expanded(
                     flex: 1,
                     child: Center(
@@ -92,7 +113,7 @@ class _QRScannerPageState extends State<QRScannerPage> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -100,27 +121,13 @@ class _QRScannerPageState extends State<QRScannerPage> {
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
-      controller!.pauseCamera();
+      _controller!.pauseCamera();
     }
-    controller!.resumeCamera();
+    _controller!.resumeCamera();
   }
 
   void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) async {
-      final hash = scanData.code ?? '';
-      final response = await ApiQR.login(hash: hash);
-      if (response is ApiResponseError) {
-        print("Ошибка при отправке запроса на сервер: ${response.error}");
-      } else {
-        if (response.data == true) {
-          Navigator.of(context).pop();
-        }
-      }
-      setState(() {
-        result = scanData;
-      });
-    });
+    _controller = controller;
+    controller.scannedDataStream.listen(_onQrScan);
   }
 }
-
