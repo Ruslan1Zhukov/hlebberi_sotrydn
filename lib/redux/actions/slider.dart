@@ -20,3 +20,13 @@ class SetDayDetailedData {
     required this.data,
   });
 }
+
+class SetMonthDetailedData {
+  final int date;
+  final SalaryReport data;
+
+  SetMonthDetailedData({
+    required this.date,
+    required this.data,
+  });
+}

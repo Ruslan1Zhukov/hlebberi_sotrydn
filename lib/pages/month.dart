@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/api/_api_response.dart';
-import 'package:hlebberi_sotrydn/api/salary.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/model/day_detail.dart';
+import 'package:hlebberi_sotrydn/redux/app_state.dart';
+import 'package:hlebberi_sotrydn/redux/thunk/slider.dart';
 import 'package:hlebberi_sotrydn/utils/month.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
@@ -17,47 +18,42 @@ class MonthDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: FutureBuilder<ApiResponse<SalaryReport>>(
-        future: ApiSalary.monthDetail(date: month.toServer()),
-        builder: (
-            BuildContext context,
-            AsyncSnapshot<ApiResponse<SalaryReport>> snapshot,
-            ) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-            case ConnectionState.none:
-            case ConnectionState.active:
-              return const Center(child: CircularProgressIndicator());
-            case ConnectionState.done:
-              if (snapshot.hasError) {
-                return Center(child: Text("Ошибка загрузки: ${snapshot.error}"));
-              }
-              final salaryReport = snapshot.data?.data;
-              if (salaryReport == null) {
-                return const Center(child: Text("Ошибка загрузки"));
-              }
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _TitleWidget(month: month, salaryReport: salaryReport),
-                    const SizedBox(height: 29),
-                    DiagramWidget(salary: salaryReport),
-                    const SizedBox(height: 24),
-                    LegendDetailsWidget(salaryReport: salaryReport),
-                  ],
-                ),
-              );
+    return SizedBox(
+      height: 500,
+      child: StoreConnector<AppState, SalaryReport?>(
+        converter: (store) => store.state.slider.month[month],
+        builder: (context, salaryReport) {
+          if (salaryReport == null) {
+            store.dispatch(setMonthDetailedData(month));
+            return const Center(
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: CircularProgressIndicator(),
+              ),
+            );
           }
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _TitleWidget(month: month, salaryReport: salaryReport),
+                  const SizedBox(height: 29),
+                  DiagramWidget(salary: salaryReport),
+                  const SizedBox(height: 24),
+                  LegendDetailsWidget(salaryReport: salaryReport),
+                ],
+              ),
+            ),
+          );
         },
       ),
     );
   }
-}
 
+}
 
 class _TitleWidget extends StatelessWidget {
   const _TitleWidget({

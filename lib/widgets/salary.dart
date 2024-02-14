@@ -46,7 +46,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
       builder: (BuildContext context) {
         final month = widget.month;
         if (month == null) return const SizedBox.shrink();
-        return SingleChildScrollView(child: MonthDetailPage(month: month));
+        return SingleChildScrollView(child: MonthDetailPage(month: month - 1));
       },
     );
   }

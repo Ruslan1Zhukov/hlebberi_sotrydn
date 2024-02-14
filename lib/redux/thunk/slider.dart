@@ -48,3 +48,24 @@ ThunkAction<AppState> setDayDetailedData(DateTime date) {
     ));
   };
 }
+
+/// Установить данные за день детализированные
+ThunkAction<AppState> setMonthDetailedData(int  date) {
+  return (Store<AppState> store) async {
+    final response = await ApiSalary.monthDetail(date: date.toServer());
+    if (response is ApiResponseError) {
+      debugPrint("Ошмбка получения данных: ${response.error}");
+      return;
+    }
+    final data = response.data;
+    if (data == null) {
+      debugPrint("Ошмбка получения данных: НЕТ ДАННЫХ");
+      return;
+    }
+    await store.dispatch(SetMonthDetailedData(
+      data: data,
+      date: date,
+    ));
+  };
+}
+
