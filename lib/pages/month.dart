@@ -27,7 +27,6 @@ class MonthDetailPage extends StatelessWidget {
             ) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return const Center(child: CircularProgressIndicator());
             case ConnectionState.none:
             case ConnectionState.active:
               return const Center(child: CircularProgressIndicator());
