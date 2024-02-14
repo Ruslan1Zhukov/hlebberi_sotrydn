@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
@@ -8,6 +7,7 @@ import 'package:hlebberi_sotrydn/helpers/picker.dart';
 import 'package:hlebberi_sotrydn/redux/actions/account.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/account.dart';
+import 'package:image_picker/image_picker.dart';
 
 showLogoutDialog(BuildContext context) async {
   await showDialog(
@@ -43,22 +43,15 @@ showAddAvatarDialog(BuildContext context) {
         CupertinoActionSheetAction(
           child: const Text('Сделать фото с камеры'),
           onPressed: () async {
-            List<CameraDescription> cameras = await availableCameras();
-            CameraController controller = CameraController(cameras[0], ResolutionPreset.medium);
-            await controller.initialize();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CameraScreen(controller),
-              ),
-            );
+            Navigator.pop(context);
+            pickImage(ImageSource.camera);
           },
         ),
         CupertinoActionSheetAction(
           child: const Text('Выбрать из галереи'),
           onPressed: () {
             Navigator.pop(context);
-            pickImage(context);
+            pickImage(ImageSource.gallery);
           },
         ),
       ],
@@ -72,51 +65,23 @@ showAddAvatarDialog(BuildContext context) {
   );
 }
 
-class CameraScreen extends StatefulWidget {
-  final CameraController controller;
-
-  CameraScreen(this.controller);
-
-  @override
-  _CameraScreenState createState() => _CameraScreenState();
-}
-
-class _CameraScreenState extends State<CameraScreen> {
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.startImageStream((CameraImage image) {
-    });
-  }
-
-  @override
-  void dispose() {
-    widget.controller.stopImageStream();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Camera Screen'),
-      ),
-      body: CameraPreview(widget.controller),
-    );
-  }
-}
-
-
 showChangeAvatarDialog(BuildContext context) {
   showCupertinoModalPopup(
     context: context,
     builder: (BuildContext context2) => CupertinoActionSheet(
       actions: <Widget>[
         CupertinoActionSheetAction(
-          child: const Text('Открыть галерею'),
+          child: const Text('Сделать фото с камеры'),
+          onPressed: () async {
+            Navigator.pop(context);
+            pickImage(ImageSource.camera);
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: const Text('Выбрать из галереи'),
           onPressed: () {
             Navigator.pop(context2);
-            pickImage(context);
+            pickImage(ImageSource.gallery);
           },
         ),
         CupertinoActionSheetAction(
@@ -125,6 +90,8 @@ showChangeAvatarDialog(BuildContext context) {
             style: TextStyle(color: Colors.red),
           ),
           onPressed: () async {
+            // ignore: use_build_context_synchronously
+            Navigator.pop(context2);
             final response = await ApiAccount.deleteAvatar();
             if (response is ApiResponseError) {
               debugPrint("Ошибка удаления аватара: ${response.error}");
@@ -147,8 +114,6 @@ showChangeAvatarDialog(BuildContext context) {
             final changedLoginData = savedLoginData.copyWith(avatarUrl: null);
             await store.dispatch(SetLoginData(loginData: changedLoginData));
             await saveLoginData(changedLoginData);
-            // ignore: use_build_context_synchronously
-            Navigator.pop(context2);
           },
         )
       ],
