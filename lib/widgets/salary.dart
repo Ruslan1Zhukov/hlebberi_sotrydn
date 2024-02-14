@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
+import 'package:hlebberi_sotrydn/model/slider_data.dart';
 import 'package:hlebberi_sotrydn/pages/month.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';

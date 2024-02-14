@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hlebberi_sotrydn/api/_api_response.dart';
-import 'package:hlebberi_sotrydn/api/zp.dart';
-import 'package:hlebberi_sotrydn/model/response/day_detail.dart';
+import 'package:hlebberi_sotrydn/model/day_detail.dart';
+import 'package:hlebberi_sotrydn/redux/app_state.dart';
+import 'package:hlebberi_sotrydn/redux/thunk/slider.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/widgets/salary_day.dart';
@@ -30,50 +31,44 @@ class DayDetailPage extends StatelessWidget {
       ),
       itemBuilder: (context, index, realIndex) {
         final date = initialDay.add(Duration(days: index - _initialPage));
-        return FutureBuilder<ApiResponse<DayDetail>>(
-          future: ApiZp.dayDetail(date: date.toServer(context)),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<ApiResponse<DayDetail>> snapshot,
-          ) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-              case ConnectionState.none:
-              case ConnectionState.active:
-                return const Center(child: CircularProgressIndicator());
-              case ConnectionState.done:
-                final dayDetail = snapshot.data?.data;
-                if (dayDetail == null) {
-                  return const Center(child: Text("Ошибка загрузки"));
-                }
-                final role = dayDetail.userShift?.role;
-                final location = dayDetail.userShift?.location;
-                return Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _DateTime(
-                          dayDetail: dayDetail,
-                          dateMonth: date.dMMMMDayOfWeek(context),
-                        ),
-                        const SizedBox(height: 30),
-                        if (role != null) _Position(role: role),
-                        if (role != null) const SizedBox(height: 20),
-                        if (location != null) _Location(location: location),
-                        if (location != null) const SizedBox(height: 32),
-                        if (dayDetail.salary.report.isNotEmpty) SalaryDayWidget(
-                          salaryReport: dayDetail.salary,
-                          isCurrentDay: date.isCurrent(),
-                        ),
-                        if (dayDetail.salary.report.isEmpty) const Text("Нет данных"),
-                      ],
-                    ),
-                  ),
-                );
+        final savedDayDetail = store.state.slider.days[date];
+        if (savedDayDetail == null) {
+          store.dispatch(setDayDetailedData(date));
+        }
+        return StoreConnector<AppState, DayDetail?>(
+          converter: (store) => store.state.slider.days[date],
+          builder: (context, dayDetail) {
+            if (dayDetail == null) {
+              return const Center(child: CircularProgressIndicator());
             }
+            final role = dayDetail.userShift?.role;
+            final location = dayDetail.userShift?.location;
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _DateTime(
+                      dayDetail: dayDetail,
+                      dateMonth: date.dMMMMDayOfWeek(context),
+                    ),
+                    const SizedBox(height: 30),
+                    if (role != null) _Position(role: role),
+                    if (role != null) const SizedBox(height: 20),
+                    if (location != null) _Location(location: location),
+                    if (location != null) const SizedBox(height: 32),
+                    if (dayDetail.salary.report.isNotEmpty) SalaryDayWidget(
+                      salaryReport: dayDetail.salary,
+                      isCurrentDay: date.isCurrent(),
+                    ),
+                    if (dayDetail.salary.report.isEmpty) const Text("Нет данных"),
+                  ],
+                ),
+              ),
+            );
+
           },
         );
       },

@@ -8,6 +8,8 @@ SliderState _sliderReducer(SliderState state, action) {
   switch (action.runtimeType) {
     case SetSliderData:
       return _setSliderData(state, action);
+    case SetDayDetailedData:
+      return _setDayDetailedData(state, action);
   }
   return state;
 }
@@ -16,4 +18,10 @@ SliderState _setSliderData(SliderState state, SetSliderData action) {
   state.data[action.month] = action.data;
   return state;
 }
+
+SliderState _setDayDetailedData(SliderState state, SetDayDetailedData action) {
+  state.days[action.date] = action.data;
+  return state;
+}
+
 

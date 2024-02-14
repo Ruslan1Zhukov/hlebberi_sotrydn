@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/helpers/plot_width.dart';
-import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
+import 'package:hlebberi_sotrydn/model/slider_data.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
 
 const double _radius = 27;

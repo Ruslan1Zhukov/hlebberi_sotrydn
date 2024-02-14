@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
-import 'package:hlebberi_sotrydn/api/zp.dart';
-import 'package:hlebberi_sotrydn/model/response/day_detail.dart';
+import 'package:hlebberi_sotrydn/api/salary.dart';
+import 'package:hlebberi_sotrydn/model/day_detail.dart';
 import 'package:hlebberi_sotrydn/utils/month.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
@@ -20,7 +20,7 @@ class MonthDetailPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: FutureBuilder<ApiResponse<SalaryReport>>(
-        future: ApiZp.monthDetail(date: month.toServer()),
+        future: ApiSalary.monthDetail(date: month.toServer()),
         builder: (
             BuildContext context,
             AsyncSnapshot<ApiResponse<SalaryReport>> snapshot,

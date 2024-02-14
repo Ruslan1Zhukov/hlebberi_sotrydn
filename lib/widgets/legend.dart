@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/model/response/day_detail.dart';
-import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
+import 'package:hlebberi_sotrydn/model/day_detail.dart';
+import 'package:hlebberi_sotrydn/model/slider_data.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 
 class LegendWidget extends StatelessWidget {

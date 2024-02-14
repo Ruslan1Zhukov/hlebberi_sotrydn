@@ -1,4 +1,5 @@
-import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
+import 'package:hlebberi_sotrydn/model/day_detail.dart';
+import 'package:hlebberi_sotrydn/model/slider_data.dart';
 
 class SetSliderData {
   final int month;
@@ -7,5 +8,15 @@ class SetSliderData {
   SetSliderData({
     required this.data,
     required this.month,
+  });
+}
+
+class SetDayDetailedData {
+  final DateTime date;
+  final DayDetail data;
+
+  SetDayDetailedData({
+    required this.date,
+    required this.data,
   });
 }

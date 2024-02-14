@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/helpers/month.dart';
-import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
+import 'package:hlebberi_sotrydn/model/slider_data.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/redux/thunk/slider.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
@@ -149,7 +149,7 @@ class _SlideWidget extends StatelessWidget {
       converter: (store) => store.state.slider.data[month],
       builder: (context, dataMonth) {
         if (dataMonth == null) {
-          store.dispatch(setMonthData(month));
+          store.dispatch(setSliderData(month));
         }
         var monthDateTime = month.toDateTime;
         return Column(

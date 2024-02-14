@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:hlebberi_sotrydn/model/response/login_data.dart';
+import 'package:hlebberi_sotrydn/model/login_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> saveLoginData(LoginData? data) async {

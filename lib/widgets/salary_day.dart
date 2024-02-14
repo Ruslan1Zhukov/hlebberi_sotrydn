@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/model/response/day_detail.dart';
+import 'package:hlebberi_sotrydn/model/day_detail.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';

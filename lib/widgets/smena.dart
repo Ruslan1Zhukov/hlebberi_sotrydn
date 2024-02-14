@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/smena.dart';
-import 'package:hlebberi_sotrydn/model/response/smena_data.dart';
+import 'package:hlebberi_sotrydn/model/smena_data.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/widgets/avatar.dart';
 import 'package:skeletonizer/skeletonizer.dart';

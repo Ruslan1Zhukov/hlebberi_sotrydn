@@ -1,9 +1,9 @@
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/_client_dio.dart';
-import 'package:hlebberi_sotrydn/model/response/day_detail.dart';
-import 'package:hlebberi_sotrydn/model/response/slider_data.dart';
+import 'package:hlebberi_sotrydn/model/day_detail.dart';
+import 'package:hlebberi_sotrydn/model/slider_data.dart';
 
-abstract class ApiZp {
+abstract class ApiSalary {
   static Future<ApiResponse<SliderData>> slider({
     required String date,
   }) async {

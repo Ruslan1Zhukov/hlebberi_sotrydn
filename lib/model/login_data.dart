@@ -41,7 +41,6 @@ class LoginData {
         id: user.id,
         fio: user.fio,
         defaultRole: user.defaultRole,
-        addressCode1C: user.addressCode1C,
         avatarUrl: avatarUrl,
       ),
       token: token,
@@ -73,14 +72,12 @@ class User {
   final int id;
   final UserFio fio;
   final DefaultRole? defaultRole;
-  final String addressCode1C;
   final String? avatarUrl;
 
   User({
     required this.id,
     required this.fio,
     required this.defaultRole,
-    required this.addressCode1C,
     required this.avatarUrl,
   });
 
@@ -90,13 +87,11 @@ class User {
     final defaultRole = (json['default_role'] != null)
         ? DefaultRole.fromJson(json['default_role'])
         : null;
-    final addressCode1C = json['point_location_code_1c'];
     final avatarUrl = json['avatar'];
     return User(
       id: id,
       fio: fio,
       defaultRole: defaultRole,
-      addressCode1C: addressCode1C,
       avatarUrl: avatarUrl,
     );
   }
@@ -108,7 +103,6 @@ class User {
       'surename': fio.secondName,
       'secondname': fio.patronymic,
       'default_role': defaultRole?.toJson(),
-      'point_location_code_1c': addressCode1C,
       'avatar': avatarUrl,
     };
   }
@@ -116,7 +110,7 @@ class User {
   @override
   String toString() => "User($fio)";
 
-  String get location => "ХЗ";
+  String? get location => null;
 
   String get jobTitle => defaultRole?.name ?? 'ХЗ';
 }

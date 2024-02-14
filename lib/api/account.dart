@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/_client_dio.dart';
-import 'package:hlebberi_sotrydn/model/response/login_data.dart';
+import 'package:hlebberi_sotrydn/model/login_data.dart';
 
 abstract class ApiAccount {
   static Future<ApiResponse<LoginData>> login({

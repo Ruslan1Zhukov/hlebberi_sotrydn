@@ -50,17 +50,10 @@ extension DateTimeExtension on DateTime {
     ).format(this);
   }
 
-  String toServer(BuildContext context) {
-    return DateFormat(
-      "yyyy-MM",
-      Localizations.localeOf(context).languageCode,
-    ).format(this);
-  }
+  String get toServer => DateFormat("yyyy-MM", "ru").format(this);
 
   bool isCurrent() {
     final now = DateTime.now();
-    return year == now.year &&
-        month == now.month &&
-        day == now.day;
+    return year == now.year && month == now.month && day == now.day;
   }
 }
