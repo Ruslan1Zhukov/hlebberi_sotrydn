@@ -96,10 +96,22 @@ abstract class ClientDio {
     Response response,
   ) {
     switch (response.statusCode) {
+      case 400:
+        return DioResponseError(error: "Неправильный, некорректный запрос");
       case 401:
-        return DioResponseError(error: "Ошибка авторизации!");
+        return DioResponseError(error: "Ошибка авторизации");
+      case 403:
+        return DioResponseError(error: "Нет необходимых разрешений");
       case 404:
         return DioResponseError(error: "Не найдено");
+      case 405:
+        return DioResponseError(error: "Метод не поддерживается");
+      case 406:
+        return DioResponseError(error: "Ошибка: неприемлемо");
+      case 407:
+        return DioResponseError(error: "Необходима аутентификация прокси");
+      case 408:
+        return DioResponseError(error: "Истекло время ожидания");
       default:
         return null;
     }
