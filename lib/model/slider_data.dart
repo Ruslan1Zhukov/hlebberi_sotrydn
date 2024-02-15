@@ -161,6 +161,10 @@ class WorkScheduleLabel {
     if (iconUrl == null) {
       return const SizedBox.shrink();
     }
-    return Image.network(iconUrl);
+    return Image.network(
+      iconUrl,
+      width: 20,
+      height: 20,
+    );
   }
 }
