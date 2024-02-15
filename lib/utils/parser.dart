@@ -95,14 +95,14 @@ extension ParserJsonDateTimeExtension on Map<String, dynamic> {
 }
 
 extension ParserJsonListExtension on Map<String, dynamic> {
-  List<T> getList<T>(
-    String key,
-    T Function(dynamic item) toElement,
-  ) {
+  List<T> getList<T>({
+    required String key,
+    required T Function(dynamic item) converter,
+  }) {
     final list = this[key];
     if (list == null) [];
     if (list is List) {
-      return list.map((element) => toElement(element)).toList();
+      return list.map((element) => converter(element)).toList();
     }
     if (list is Map) if (list.isEmpty) return [];
     return [];
@@ -110,14 +110,14 @@ extension ParserJsonListExtension on Map<String, dynamic> {
 }
 
 extension ParserJsonMapExtension on Map<String, dynamic> {
-  Map<K, V> getMap<K, V>(
-    String key,
-    V Function(dynamic v) toValue,
-  ) {
+  Map<K, V> getMap<K, V>({
+    required String key,
+    required V Function(dynamic item) converter,
+  }) {
     final map = this[key];
     if (map == null) return {};
     if (map is Map) {
-      return map.map((k, v) => MapEntry(k, toValue(v)));
+      return map.map((k, v) => MapEntry(k, converter(v)));
     }
     if (map is List) if (map.isEmpty) return {};
     return {};

@@ -14,13 +14,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // TODO: убрать дефолтные значения
-  final _controllerLogin = TextEditingController(
-    text: "zhukov.roo@gmail.com",
-  );
-  final _controllerPassword = TextEditingController(
-    text: "12345",
-  );
+  final _controllerLogin = TextEditingController();
+  final _controllerPassword = TextEditingController();
 
   bool isLoading = false;
 

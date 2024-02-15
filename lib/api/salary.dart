@@ -15,7 +15,7 @@ abstract class ApiSalary {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => SliderData.fromJson(response.data["data"]),
+      converter: (response) => SliderData.fromJson(response.data["data"])!,
     );
   }
 
@@ -30,7 +30,7 @@ abstract class ApiSalary {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => SalaryReport.fromJson(response.data["data"]),
+      converter: (response) => SalaryReport.fromJson(response.data["data"])!,
     );
   }
 
@@ -45,7 +45,7 @@ abstract class ApiSalary {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => DayDetail.fromJson(response.data["data"]),
+      converter: (response) => DayDetail.fromJson(response.data["data"])!,
     );
   }
 }

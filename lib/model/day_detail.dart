@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/slider_data.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
+import 'package:hlebberi_sotrydn/utils/parser.dart';
 
 class DayDetail {
   final UserShift? userShift;
@@ -11,11 +12,11 @@ class DayDetail {
     required this.salary,
   });
 
-  factory DayDetail.fromJson(Map<String, dynamic> json) {
-    final userShift = json['user_shift'] != null
-        ? UserShift.fromJson(json['user_shift'])
-        : null;
+  static DayDetail? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final userShift = UserShift.fromJson(json['user_shift']);
     final salary = SalaryReport.fromJson(json['salary']);
+    if (salary == null) return null;
     return DayDetail(
       userShift: userShift,
       salary: salary,
@@ -38,12 +39,16 @@ class UserShift {
     required this.role,
   });
 
-  factory UserShift.fromJson(Map<String, dynamic> json) {
-    final id = json['id'];
-    final start = DateTime.parse(json['start']);
-    final end = json['end'] != null ? DateTime.parse(json['end']) : null;
-    final location = json['location'];
-    final role = json['role'];
+  static UserShift? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final id = json.getIntOrNull('id');
+    final start = json.getDateTimeOrNull('start');
+    final end = json.getDateTimeOrNull('end');
+    final location = json.getStringOrNull('location');
+    final role = json.getStringOrNull('role');
+    if (id == null || start == null || location == null || role == null) {
+      return null;
+    }
     return UserShift(
       id: id,
       start: start,
@@ -71,33 +76,22 @@ class SalaryReport extends Salary {
     required this.detailList,
   });
 
-  factory SalaryReport.fromJson(Map<String, dynamic> json) {
-    final total = json['total'];
-    final reportJson = json['report'];
-    Map<String, int> report;
-    if (reportJson == null) {
-      report = {};
-    } else if (reportJson is Map<String, dynamic>) {
-      report = reportJson.map((key, value) => MapEntry(key, value as int));
-    } else {
-      report = {};
-    }
-    final labelsJson = json['labels'];
-    Map<String, SalaryLabel> labels;
-    if (labelsJson == null) {
-      labels = {};
-    } else if (labelsJson is Map<String, dynamic>) {
-      labels = labelsJson.map((key, value) =>
-          MapEntry(key, SalaryLabel.fromJson(value as Map<String, dynamic>)));
-    } else {
-      labels = {};
-    }
-    final detailListJson = json['detail_list'] as List<dynamic>?;
-    List<Detail> detailList = (detailListJson != null)
-        ? detailListJson
-            .map((detail) => Detail.fromJson(detail))
-            .toList()
-        : [];
+  static SalaryReport? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final total = json.getIntOrNull('total');
+    final Map<String, int> report = json.getMap(
+      key: 'report',
+      converter: (v) => v as int,
+    );
+    final Map<String, SalaryLabel> labels = json.getMap(
+      key: 'labels',
+      converter: (v) => SalaryLabel.fromJson(v as Map<String, dynamic>)!,
+    );
+    final List<Detail> detailList = json.getList(
+      key: 'detail_list',
+      converter: (v) => Detail.fromJson(v)!,
+    );
+    if (total == null) return null;
     return SalaryReport(
       total: total,
       report: report,
@@ -118,10 +112,12 @@ class Detail {
     required this.amount,
   });
 
-  factory Detail.fromJson(Map<String, dynamic> json) {
-    final type = json['type'];
-    final comment = json['comment'];
-    final amount = json['amount'];
+  static Detail? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final type = json.getStringOrNull('type');
+    final comment = json.getStringOrNull('comment');
+    final amount = json.getIntOrNull('amount');
+    if (type == null || amount == null) return null;
     return Detail(
       type: type,
       comment: comment,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/helpers/color.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
+import 'package:hlebberi_sotrydn/utils/parser.dart';
 
 class SliderData {
   final Salary salary;
@@ -11,9 +12,11 @@ class SliderData {
     required this.workSchedule,
   });
 
-  factory SliderData.fromJson(Map<String, dynamic> json) {
-    final salary = Salary.fromJson(json['salary']);
-    final workSchedule = WorkSchedule.fromJson(json['work_schedule']);
+  static SliderData? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final salary = Salary.fromJson(json['salary']) ?? Salary.empty();
+    final workSchedule =
+        WorkSchedule.fromJson(json['work_schedule']) ?? WorkSchedule.empty();
     return SliderData(
       salary: salary,
       workSchedule: workSchedule,
@@ -22,24 +25,36 @@ class SliderData {
 }
 
 class Salary {
+  final bool isNormal;
   final int total;
   final Map<String, int> report;
   final Map<String, SalaryLabel> labels;
 
   Salary({
+    this.isNormal = true,
     required this.total,
     required this.report,
     required this.labels,
   });
 
-  factory Salary.fromJson(Map<String, dynamic> json) {
-    final total = json['total'];
-    final reportJson = json['report'] as Map<String, dynamic>?;
-    final report =
-        reportJson?.map((key, value) => MapEntry(key, value as int)) ?? {};
-    final labelsJson = json['labels'] as Map<String, dynamic>;
-    final labels = labelsJson.map((key, value) =>
-        MapEntry(key, SalaryLabel.fromJson(value as Map<String, dynamic>)));
+  Salary.empty()
+      : isNormal = false,
+        total = 0,
+        report = {},
+        labels = {};
+
+  static Salary? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final total = json.getIntOrNull('total');
+    final Map<String, int> report = json.getMap(
+      key: 'report',
+      converter: (v) => v as int,
+    );
+    final Map<String, SalaryLabel> labels = json.getMap(
+      key: 'labels',
+      converter: (v) => SalaryLabel.fromJson(v as Map<String, dynamic>)!,
+    );
+    if (total == null) return null;
     return Salary(
       total: total,
       report: report,
@@ -67,15 +82,16 @@ class SalaryLabel {
     this.coloredString,
   });
 
-  factory SalaryLabel.fromJson(Map<String, dynamic> json) {
-    final name = json['name'];
-    final color = json['color'];
-    final coloredString = (json['number_colored'] != null)
-        ? (json['number_colored'] ? "#DC3545" : "000000")
-        : null;
+  static SalaryLabel? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final name = json.getStringOrNull('name');
+    final colorString = json.getStringOrNull('color');
+    final coloredString =
+        json.getBoolOrNull('number_colored') == true ? "#DC3545" : "000000";
+    if (name == null || colorString == null) return null;
     return SalaryLabel(
       name: name,
-      colorString: color,
+      colorString: colorString,
       coloredString: coloredString,
     );
   }
@@ -86,24 +102,33 @@ class SalaryLabel {
 }
 
 class WorkSchedule {
+  final bool isNormal;
   final Map<String, String> report;
   final Map<String, WorkScheduleLabel> labels;
 
   WorkSchedule({
+    this.isNormal = true,
     required this.report,
     required this.labels,
   });
 
-  factory WorkSchedule.fromJson(Map<String, dynamic> json) {
-    final reportJson = json['report'] as Map<String, dynamic>;
-    // final report =
-    //     reportJson.map((key, value) => MapEntry(key, value as String));
-    // TODO: вернуть
-    final labelsJson = json['labels'] as Map<String, dynamic>;
-    final labels = labelsJson.map((key, value) => MapEntry(
-        key, WorkScheduleLabel.fromJson(value as Map<String, dynamic>)));
+  WorkSchedule.empty()
+      : isNormal = false,
+        report = {},
+        labels = {};
+
+  static WorkSchedule? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final Map<String, String> report = json.getMap(
+      key: 'report',
+      converter: (v) => v.toString(),
+    );
+    final Map<String, WorkScheduleLabel> labels = json.getMap(
+      key: 'labels',
+      converter: (v) => WorkScheduleLabel.fromJson(v)!,
+    );
     return WorkSchedule(
-      report: {}, // TODO: вернуть report
+      report: report,
       labels: labels,
     );
   }
@@ -118,9 +143,11 @@ class WorkScheduleLabel {
     required this.iconUrl,
   });
 
-  factory WorkScheduleLabel.fromJson(Map<String, dynamic> json) {
-    final color = json['color'];
-    final iconUrl = json['iconUrl'];
+  static WorkScheduleLabel? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final color = json.getStringOrNull('color');
+    final iconUrl = json.getStringOrNull('iconUrl');
+    if (color == null) return null;
     return WorkScheduleLabel(
       colorString: color,
       iconUrl: iconUrl,

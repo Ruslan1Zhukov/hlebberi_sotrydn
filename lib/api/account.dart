@@ -32,7 +32,7 @@ abstract class ApiAccount {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => LoginData.fromJson(response.data["data"])!,
+      converter: (response) => LoginData.fromJson(response.data["data"], true)!,
     );
   }
 

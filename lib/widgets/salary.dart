@@ -28,6 +28,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
   DateTime dateTime = DateTime.now();
 
   void _openMonthDetailed(BuildContext context) {
+    if (widget.month == null) return;
     var heightScreen = MediaQuery.of(context).size.height;
     showModalBottomSheet(
       context: context,
@@ -45,7 +46,12 @@ class _SalaryWidgetState extends State<SalaryWidget> {
       ),
       builder: (BuildContext context) {
         final month = widget.month;
-        if (month == null) return const SizedBox.shrink();
+        if (month == null) {
+          return SizedBox(
+            height: 500,
+            width: MediaQuery.of(context).size.width,
+          );
+        }
         return SingleChildScrollView(child: MonthDetailPage(month: month - 1));
       },
     );
@@ -53,10 +59,30 @@ class _SalaryWidgetState extends State<SalaryWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.salary?.isNormal == false) {
+      return Container(
+      margin: _padding,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: ColorProject.grey,
+        ),
+        color: ColorProject.white,
+      ),
+      child: const Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 20),
+          Text("Ошибка загрузки данных"),
+          SizedBox(height: 20),
+        ],
+      ),
+    );
+    }
     return InkWell(
-      onTap: () {
-        _openMonthDetailed(context);
-      },
+      onTap: widget.month != null ? () => _openMonthDetailed(context) : null,
       child: Skeletonizer(
         enabled: widget.month == null,
         child: Container(

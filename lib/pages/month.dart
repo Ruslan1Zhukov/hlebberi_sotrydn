@@ -20,6 +20,7 @@ class MonthDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 500,
+      width: MediaQuery.of(context).size.width,
       child: StoreConnector<AppState, SalaryReport?>(
         converter: (store) => store.state.slider.month[month],
         builder: (context, salaryReport) {

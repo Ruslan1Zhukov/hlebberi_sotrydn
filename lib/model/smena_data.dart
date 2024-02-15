@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/login_data.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
+import 'package:hlebberi_sotrydn/utils/parser.dart';
 
 class Smena {
   final UserShift userShift;
@@ -13,12 +14,16 @@ class Smena {
     required this.users,
   });
 
-  factory Smena.fromJson(final Map<String, dynamic> json) {
+  static Smena? fromJson(final Map<String, dynamic>? json) {
+    if (json == null) return null;
     final userShift = UserShift.fromJson(json['user_shift']);
     final shiftWorkingTime =
         ShiftWorkingTime.fromJson(json['shift_working_time']);
-    final users =
-        List<User>.from(json['users'].map((user) => User.fromJson(user)));
+    final List<User> users = json.getList(
+      key: 'users',
+      converter: (v) => User.fromJson(v)!,
+    );
+    if (userShift == null || shiftWorkingTime == null) return null;
     return Smena(
       userShift: userShift,
       shiftWorkingTime: shiftWorkingTime,
@@ -42,10 +47,12 @@ class UserShift {
     this.end,
   });
 
-  factory UserShift.fromJson(Map<String, dynamic> json) {
-    final id = json['id'];
-    final start = DateTime.parse(json['start']);
-    final end = json['end'] != null ? DateTime.parse(json['end']) : null;
+  static UserShift? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final id = json.getIntOrNull('id');
+    final start = json.getDateTimeOrNull('start');
+    final end = json.getDateTimeOrNull('end');
+    if (id == null || start == null) return null;
     return UserShift(
       id: id,
       start: start,
@@ -69,9 +76,11 @@ class ShiftWorkingTime {
     required this.finishingAt,
   });
 
-  factory ShiftWorkingTime.fromJson(Map<String, dynamic> json) {
-    final startingAt = json['starting_at'];
-    final finishingAt = json['finishing_at'];
+  static ShiftWorkingTime? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final startingAt = json.getStringOrNull('starting_at');
+    final finishingAt = json.getStringOrNull('finishing_at');
+    if (startingAt == null || finishingAt == null) return null;
     return ShiftWorkingTime(
       startingAt: startingAt,
       finishingAt: finishingAt,
@@ -92,13 +101,15 @@ class User {
     required this.avatar,
   });
 
-  factory User.fromJson(final Map<String, dynamic> json) {
-    final id = json['id'];
+  static User? fromJson(final Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final id = json.getIntOrNull('id');
     final fio = UserFio.fromJson(json);
-    final avatar = json['avatar'];
+    final avatar = json.getStringOrNull('avatar');
+    if (id == null || fio == null) return null;
     return User(
       id: id,
-      fio: fio!,
+      fio: fio,
       avatar: avatar,
     );
   }

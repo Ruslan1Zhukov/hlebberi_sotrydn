@@ -15,18 +15,18 @@ ThunkAction<AppState> init(BuildContext context) {
   return (Store<AppState> store) async {
     final loginDataSaved = await getLoginData();
     if (loginDataSaved == null) {
-      Navigator.pushReplacementNamed(context, '/login');
+      _toLogin(context);
       return;
     }
     await _saveLoginData(loginDataSaved); // чтобы записались в redux
     final response = await ApiAccount.checkAuth();
     if (response is ApiResponseData) {
       await _saveLoginData((response as ApiResponseData<LoginData>).data);
-      Navigator.pushReplacementNamed(context, '/home');
+      _toHome(context);
     } else if (response is ApiResponseError) {
       toast(context, (response as ApiResponseError).error);
       await _saveLoginData(null);
-      Navigator.pushReplacementNamed(context, '/login');
+      _toLogin(context);
     }
   };
 }
@@ -40,11 +40,11 @@ ThunkAction<AppState> login({
     final response = await ApiAccount.login(login: login, password: password);
     if (response is ApiResponseData) {
       await _saveLoginData((response as ApiResponseData<LoginData>).data);
-      Navigator.pushReplacementNamed(context, '/home');
+      _toHome(context);
     } else if (response is ApiResponseError) {
       toast(context, (response as ApiResponseError).error);
       await _saveLoginData(null);
-      Navigator.pushReplacementNamed(context, '/login');
+      _toLogin(context);
     }
   };
 }
@@ -52,7 +52,7 @@ ThunkAction<AppState> login({
 ThunkAction<AppState> logout(BuildContext context) {
   return (Store<AppState> store) async {
     await _saveLoginData(null);
-    Navigator.pushReplacementNamed(context, '/');
+    _toSplash(context);
   };
 }
 
@@ -60,3 +60,16 @@ Future _saveLoginData(LoginData? loginData) async {
   await store.dispatch(SetLoginData(loginData: loginData));
   await saveLoginData(loginData);
 }
+
+_toLogin(BuildContext context) => _toNavigate(context, '/login');
+
+_toHome(BuildContext context) => _toNavigate(context, '/home');
+
+_toSplash(BuildContext context) => _toNavigate(context, '/');
+
+_toNavigate(BuildContext context, String key) =>
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      key,
+      (Route<dynamic> route) => false,
+    );

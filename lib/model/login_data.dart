@@ -1,3 +1,4 @@
+import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/utils/parser.dart';
 
 class LoginData {
@@ -15,19 +16,24 @@ class LoginData {
     required this.employeeSocialLinks,
   });
 
-  static LoginData? fromJson(Map<String, dynamic>? json) {
+  static LoginData? fromJson(
+    Map<String, dynamic>? json, [
+    bool isTokenFromStore = false,
+  ]) {
     if (json == null) return null;
     final user = User.fromJson(json['user']);
-    final token = json.getStringOrNull("token");
+    final token = isTokenFromStore
+        ? store.state.account.token
+        : json.getStringOrNull("token");
     final employeeAppSettings =
         EmployeeAppSettings.fromJson(json['employee_app_settings']);
     final List<EmployeeExternalLink> employeeExternalLinks = json.getList(
-      'employee_external_links',
-      (item) => EmployeeExternalLink.fromJson(item)!,
+      key: 'employee_external_links',
+      converter: (item) => EmployeeExternalLink.fromJson(item)!,
     );
     final List<EmployeeSocialLink> employeeSocialLinks = json.getList(
-      'employee_social_links',
-      (item) => EmployeeSocialLink.fromJson(item)!,
+      key: 'employee_social_links',
+      converter: (item) => EmployeeSocialLink.fromJson(item)!,
     );
     if (user == null || token == null) return null;
     return LoginData(

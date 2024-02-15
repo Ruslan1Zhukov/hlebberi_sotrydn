@@ -9,7 +9,7 @@ abstract class ApiSmena {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => Smena.fromJson(response.data["data"]),
+      converter: (response) => Smena.fromJson(response.data["data"])!,
     );
   }
 }
