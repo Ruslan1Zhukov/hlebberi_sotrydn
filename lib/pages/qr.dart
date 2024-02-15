@@ -3,7 +3,6 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/qr.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/theme/scaffold.dart';
@@ -25,19 +24,12 @@ class _QRScannerPageState extends State<QRScannerPage> {
   Future _onQrScan(Barcode scanData) async {
     final qrCode = scanData.code ?? '';
     if (qrCode.isEmpty) return debugPrint("Код пустой");
-    // TODO: убрать
-    setState(() {
-      _scanData = scanData;
-    });
     final response = await ApiQR.login(code: qrCode);
-    if (response is ApiResponseError) {
-      return debugPrint("Ошибка: ${response.error}");
-    }
-    if (response.data != true) {
-      return debugPrint("Ошибка: Нет данных");
-    }
-    await Future.delayed(const Duration(seconds: 3));
-    Navigator.of(context).pop();
+    response.makeResult(
+      onData: (data) async {
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   @override

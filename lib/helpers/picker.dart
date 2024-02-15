@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/account.dart';
 import 'package:hlebberi_sotrydn/helpers/auth.dart';
 import 'package:hlebberi_sotrydn/redux/actions/account.dart';
@@ -70,21 +69,16 @@ Future<File?> _compress(
 
 Future _sendToServer(File compressImageResult) async {
   final response = await ApiAccount.avatar(avatar: compressImageResult);
-  if (response is ApiResponseError) {
-    debugPrint("Ошибка загрузки аватара: ${response.error}");
-    return;
-  }
-  final avatarUrl = response.data;
-  if (avatarUrl == null) {
-    debugPrint("Ошибка загрузки аватара: НЕТ ДАННЫХ");
-    return;
-  }
-  final savedLoginData = await getLoginData();
-  if (savedLoginData == null) {
-    debugPrint("Ошибка загрузки аватара: НЕТ СОХРАНЁННЫХ ДАННЫХ");
-    return;
-  }
-  final changedLoginData = savedLoginData.copyWith(avatarUrl: avatarUrl);
-  await store.dispatch(SetLoginData(loginData: changedLoginData));
-  await saveLoginData(changedLoginData);
+  response.makeResult(
+    onData: (data) async {
+      final savedLoginData = await getLoginData();
+      if (savedLoginData == null) {
+        debugPrint("Ошибка загрузки аватара: НЕТ СОХРАНЁННЫХ ДАННЫХ");
+        return;
+      }
+      final changedLoginData = savedLoginData.copyWith(avatarUrl: data);
+      await store.dispatch(SetLoginData(loginData: changedLoginData));
+      await saveLoginData(changedLoginData);
+    },
+  );
 }

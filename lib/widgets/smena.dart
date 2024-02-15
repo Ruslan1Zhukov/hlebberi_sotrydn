@@ -34,7 +34,7 @@ class _SmenaWidgetState extends State<SmenaWidget> {
     if (_response is ApiResponseError) {
       return const SizedBox.shrink();
     }
-    final smena = _response?.data;
+    final smena = (_response as ApiResponseData<Smena?>?)?.data;
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 20,

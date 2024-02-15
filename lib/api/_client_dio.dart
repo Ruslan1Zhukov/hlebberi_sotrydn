@@ -93,8 +93,8 @@ abstract class ClientDio {
   }
 
   static DioResponseError? _checkResponseError(
-      Response response,
-      ) {
+    Response response,
+  ) {
     switch (response.statusCode) {
       case 401:
         return DioResponseError(error: "Ошибка авторизации!");
@@ -110,9 +110,13 @@ abstract class ClientDio {
     if (error is DioException) {
       switch (error.type) {
         case DioExceptionType.connectionTimeout:
-        case DioExceptionType.sendTimeout:
-        case DioExceptionType.receiveTimeout:
           errorMessage = 'Время истекло';
+          break;
+        case DioExceptionType.sendTimeout:
+          errorMessage = 'Время передачи истекло';
+          break;
+        case DioExceptionType.receiveTimeout:
+          errorMessage = 'Время приёма истекло';
           break;
         case DioExceptionType.connectionError:
         case DioExceptionType.unknown:

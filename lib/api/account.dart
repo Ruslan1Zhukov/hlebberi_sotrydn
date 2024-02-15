@@ -22,18 +22,17 @@ abstract class ApiAccount {
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => LoginData.fromJson(response.data["data"]),
+      converter: (response) => LoginData.fromJson(response.data["data"])!,
     );
   }
 
   static Future<ApiResponse<LoginData>> checkAuth() async {
-    // TODO: проверить выполнение метода
     final response = await ClientDio.get(
       url: "/auth/user",
     );
     return ClientDio.makeResult(
       response: response,
-      converter: (response) => LoginData.fromJson(response.data["data"]),
+      converter: (response) => LoginData.fromJson(response.data["data"])!,
     );
   }
 

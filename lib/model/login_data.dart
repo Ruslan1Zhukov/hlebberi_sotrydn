@@ -1,7 +1,9 @@
+import 'package:hlebberi_sotrydn/utils/parser.dart';
+
 class LoginData {
   final User user;
   final String token;
-  final EmployeeAppSettings employeeAppSettings;
+  final EmployeeAppSettings? employeeAppSettings;
   final List<EmployeeExternalLink> employeeExternalLinks;
   final List<EmployeeSocialLink> employeeSocialLinks;
 
@@ -13,17 +15,21 @@ class LoginData {
     required this.employeeSocialLinks,
   });
 
-  factory LoginData.fromJson(Map<String, dynamic> json) {
+  static LoginData? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
     final user = User.fromJson(json['user']);
-    final token = json['token'];
+    final token = json.getStringOrNull("token");
     final employeeAppSettings =
         EmployeeAppSettings.fromJson(json['employee_app_settings']);
-    final employeeExternalLinks = (json['employee_external_links'] as List)
-        .map((link) => EmployeeExternalLink.fromJson(link))
-        .toList();
-    final employeeSocialLinks = (json['employee_social_links'] as List)
-        .map((link) => EmployeeSocialLink.fromJson(link))
-        .toList();
+    final List<EmployeeExternalLink> employeeExternalLinks = json.getList(
+      'employee_external_links',
+      (item) => EmployeeExternalLink.fromJson(item)!,
+    );
+    final List<EmployeeSocialLink> employeeSocialLinks = json.getList(
+      'employee_social_links',
+      (item) => EmployeeSocialLink.fromJson(item)!,
+    );
+    if (user == null || token == null) return null;
     return LoginData(
       user: user,
       token: token,
@@ -51,10 +57,12 @@ class LoginData {
   }
 
   Map<String, dynamic> toJson() {
+    final employeeAppSettings = this.employeeAppSettings;
     return {
       'user': user.toJson(),
       'token': token,
-      'employee_app_settings': employeeAppSettings.toJson(),
+      if (employeeAppSettings != null)
+        'employee_app_settings': employeeAppSettings.toJson(),
       'employee_external_links':
           employeeExternalLinks.map((link) => link.toJson()).toList(),
       'employee_social_links':
@@ -81,13 +89,13 @@ class User {
     required this.avatarUrl,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    final id = json['id'];
+  static User? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final id = json.getIntOrNull('id');
     final fio = UserFio.fromJson(json);
-    final defaultRole = (json['default_role'] != null)
-        ? DefaultRole.fromJson(json['default_role'])
-        : null;
-    final avatarUrl = json['avatar'];
+    final defaultRole = DefaultRole.fromJson(json['default_role']);
+    final avatarUrl = json.getStringOrNull('avatar');
+    if (id == null || fio == null) return null;
     return User(
       id: id,
       fio: fio,
@@ -126,10 +134,11 @@ class UserFio {
     this.patronymic,
   });
 
-  factory UserFio.fromJson(Map<String, dynamic> json) {
-    final name = json['name'];
-    final surename = json['surename'];
-    final secondname = json['secondname'];
+  static UserFio? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final name = json.getStringOrNull('name') ?? "";
+    final surename = json.getStringOrNull('surename') ?? "";
+    final secondname = json.getStringOrNull('secondname');
     return UserFio(
       firstName: name,
       secondName: surename,
@@ -170,10 +179,14 @@ class DefaultRole {
     required this.name,
   });
 
-  factory DefaultRole.fromJson(Map<String, dynamic> json) {
+  static DefaultRole? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final id = json.getIntOrNull('id');
+    final name = json.getStringOrNull('name');
+    if (id == null || name == null) return null;
     return DefaultRole(
-      id: json['id'],
-      name: json['name'],
+      id: id,
+      name: name,
     );
   }
 
@@ -190,9 +203,12 @@ class EmployeeAppSettings {
 
   EmployeeAppSettings({required this.maxFileSize});
 
-  factory EmployeeAppSettings.fromJson(Map<String, dynamic> json) {
+  static EmployeeAppSettings? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final maxFileSize = json.getIntOrNull('max_file_size');
+    if (maxFileSize == null) return null;
     return EmployeeAppSettings(
-      maxFileSize: json['max_file_size'],
+      maxFileSize: maxFileSize,
     );
   }
 
@@ -212,10 +228,14 @@ class EmployeeExternalLink {
     required this.url,
   });
 
-  factory EmployeeExternalLink.fromJson(Map<String, dynamic> json) {
+  static EmployeeExternalLink? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final name = json.getStringOrNull('name');
+    final url = json.getStringOrNull('url');
+    if (name == null || url == null) return null;
     return EmployeeExternalLink(
-      name: json['name'],
-      url: json['url'],
+      name: name,
+      url: url,
     );
   }
 
@@ -238,11 +258,16 @@ class EmployeeSocialLink {
     required this.logoUrl,
   });
 
-  factory EmployeeSocialLink.fromJson(Map<String, dynamic> json) {
+  static EmployeeSocialLink? fromJson(Map<String, dynamic>? json) {
+    if (json == null) return null;
+    final name = json.getStringOrNull('name') ?? "";
+    final url = json.getStringOrNull('url');
+    final logoUrl = json.getStringOrNull('logo');
+    if (url == null || logoUrl == null) return null;
     return EmployeeSocialLink(
-      name: json['name'],
-      url: json['url'],
-      logoUrl: json['logo'],
+      name: name,
+      url: url,
+      logoUrl: logoUrl,
     );
   }
 

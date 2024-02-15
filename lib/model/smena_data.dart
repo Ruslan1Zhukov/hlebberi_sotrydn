@@ -98,7 +98,7 @@ class User {
     final avatar = json['avatar'];
     return User(
       id: id,
-      fio: fio,
+      fio: fio!,
       avatar: avatar,
     );
   }

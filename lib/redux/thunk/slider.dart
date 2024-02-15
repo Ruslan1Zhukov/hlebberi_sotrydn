@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/salary.dart';
 import 'package:hlebberi_sotrydn/redux/actions/slider.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
@@ -13,19 +11,14 @@ ThunkAction<AppState> setSliderData(int month) {
   return (Store<AppState> store) async {
     final dateRequest = month.toServer();
     final response = await ApiSalary.slider(date: dateRequest);
-    if (response is ApiResponseError) {
-      debugPrint("Ошмбка получения данных: ${response.error}");
-      return;
-    }
-    final data = response.data;
-    if (data == null) {
-      debugPrint("Ошмбка получения данных: НЕТ ДАННЫХ");
-      return;
-    }
-    await store.dispatch(SetSliderData(
-      data: data,
-      month: month,
-    ));
+    response.makeResult(
+      onData: (data) async {
+        await store.dispatch(SetSliderData(
+          data: data,
+          month: month,
+        ));
+      },
+    );
   };
 }
 
@@ -33,39 +26,28 @@ ThunkAction<AppState> setSliderData(int month) {
 ThunkAction<AppState> setDayDetailedData(DateTime date) {
   return (Store<AppState> store) async {
     final response = await ApiSalary.dayDetail(date: date.toServer);
-    if (response is ApiResponseError) {
-      debugPrint("Ошмбка получения данных: ${response.error}");
-      return;
-    }
-    final data = response.data;
-    if (data == null) {
-      debugPrint("Ошмбка получения данных: НЕТ ДАННЫХ");
-      return;
-    }
-    await store.dispatch(SetDayDetailedData(
-      data: data,
-      date: date,
-    ));
+    response.makeResult(
+      onData: (data) async {
+        await store.dispatch(SetDayDetailedData(
+          data: data,
+          date: date,
+        ));
+      },
+    );
   };
 }
 
 /// Установить данные за день детализированные
-ThunkAction<AppState> setMonthDetailedData(int  date) {
+ThunkAction<AppState> setMonthDetailedData(int date) {
   return (Store<AppState> store) async {
     final response = await ApiSalary.monthDetail(date: date.toServer());
-    if (response is ApiResponseError) {
-      debugPrint("Ошмбка получения данных: ${response.error}");
-      return;
-    }
-    final data = response.data;
-    if (data == null) {
-      debugPrint("Ошмбка получения данных: НЕТ ДАННЫХ");
-      return;
-    }
-    await store.dispatch(SetMonthDetailedData(
-      data: data,
-      date: date,
-    ));
+    response.makeResult(
+      onData: (data) async {
+        await store.dispatch(SetMonthDetailedData(
+          data: data,
+          date: date,
+        ));
+      },
+    );
   };
 }
-
