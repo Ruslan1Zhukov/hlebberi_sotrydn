@@ -270,14 +270,13 @@ class _Day extends StatelessWidget {
                 ),
               ),
             if (isExistDate)
-              Positioned.fill(
-                child: Container(
-                  margin: const EdgeInsets.all(3.5),
-                  decoration: BoxDecoration(
-                    color: ColorProject.existDates,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: const Color(0xFFD9D9D9)),
-                  ),
+              const Positioned(
+                top: 8,
+                right: 6,
+                child: Icon(
+                  Icons.close,
+                  size: 16,
+                  color: ColorProject.red,
                 ),
               ),
           ],
