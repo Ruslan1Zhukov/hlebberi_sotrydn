@@ -38,16 +38,17 @@ class DiagramWidget extends StatelessWidget {
     salary.report.forEach((key, value) {
       final label = salary.labels[key];
       if (label == null) return;
+      final flex = systemPlot(
+        widthScreen: widthScreen,
+        count: count,
+        sum: sum,
+        value: value,
+      );
       list.add(
         _Item(
           label: label,
           value: value,
-          flex: systemPlot(
-            widthScreen: widthScreen,
-            count: count,
-            sum: sum,
-            value: value,
-          ),
+          flex: flex,
         ),
       );
     });

@@ -81,7 +81,7 @@ class SalaryReport extends Salary {
     final total = json.getIntOrNull('total');
     final Map<String, int> report = json.getMap(
       key: 'report',
-      converter: (v) => v as int,
+      converter: (v) => (v as int?) ?? 0,
     );
     final Map<String, SalaryLabel> labels = json.getMap(
       key: 'labels',

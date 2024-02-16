@@ -44,6 +44,9 @@ abstract class ColorProject {
   /// Демотивация
   static const Color red = Color(0xFFDC3545);
 
+  /// День в календаре, когда пользователь не вышел
+  static const Color existDates = Color(0x4DDC3545);
+
   /// % c продаж
   static const Color green = Color(0xFF10C200);
 

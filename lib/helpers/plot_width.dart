@@ -7,5 +7,6 @@ double systemPlot({
   required int value,
   required double sum,
 }) {
+  if (sum == 0) return x;
   return x + (widthScreen - count * x) * value / sum;
 }

@@ -95,9 +95,9 @@ extension ParserJsonDateTimeExtension on Map<String, dynamic> {
 }
 
 extension ParserJsonListExtension on Map<String, dynamic> {
-  List<T> getList<T>({
+  List<V> getList<V>({
     required String key,
-    required T Function(dynamic item) converter,
+    required V Function(dynamic item) converter,
   }) {
     final list = this[key];
     if (list == null) [];
@@ -120,6 +120,24 @@ extension ParserJsonMapExtension on Map<String, dynamic> {
       return map.map((k, v) => MapEntry(k, converter(v)));
     }
     if (map is List) if (map.isEmpty) return {};
+    return {};
+  }
+}
+
+extension ParserJsonSetExtension on Map<String, dynamic> {
+  Set<V> getSet<V>({
+    required String key,
+    required V Function(dynamic item) converter,
+  }) {
+    final set = this[key];
+    if (set == null) return {};
+    if (set is Map) {
+      final values = set.values.toList();
+      return values.map((element) => converter(element)).toList().toSet();
+    }
+    if (set is List) {
+      return set.map((element) => converter(element)).toList().toSet();
+    }
     return {};
   }
 }

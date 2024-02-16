@@ -106,37 +106,40 @@ class _ItemDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 7,
-              height: 7,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                color: color,
-              ),
-            ),
-            const SizedBox(width: 4),
-            Text(title),
-            if (sum != null) const Spacer(),
-            if (sum != null)
-              Text(
-                sum!,
-                style: TextStyle(
-                  color: colored ?? ColorProject.black,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 7,
+                height: 7,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  color: color,
                 ),
               ),
-          ],
-        ),
-        if (comment != null)
-          Text(
-            'Комментарий: $comment',
-            style: const TextStyle(color: ColorProject.grey),
+              const SizedBox(width: 4),
+              Text(title),
+              if (sum != null) const Spacer(),
+              if (sum != null)
+                Text(
+                  sum!,
+                  style: TextStyle(
+                    color: colored ?? ColorProject.black,
+                  ),
+                ),
+            ],
           ),
-      ],
+          if (comment != null)
+            Text(
+              'Комментарий: $comment',
+              style: const TextStyle(color: ColorProject.grey),
+            ),
+        ],
+      ),
     );
   }
 }

@@ -59,15 +59,18 @@ class CalendarWidget extends StatelessWidget {
   Widget _buildDay(context, DateTime day, focus) {
     var currentDay = DateTime.now();
     DayMode mode = (currentDay.isAfter(day)) ? DayMode.last : DayMode.future;
-    final keyOfLabel = workSchedule?.report[day.yyyy_mm_dd(context)];
+    final dateKey = day.yyyy_mm_dd(context);
+    final keyOfLabel = workSchedule?.report[dateKey];
     if (keyOfLabel == null) {
       return _Day(
         dateTime: day,
         mode: mode,
         color: ColorProject.white,
         label: const SizedBox.shrink(),
+        isExistDate: false,
       );
     }
+    final isExistDate = workSchedule?.existDates.contains(dateKey) ?? false;
     if (keyOfLabel.length > 2) {
       final label = workSchedule?.labels[keyOfLabel];
       if (label == null) {
@@ -76,6 +79,7 @@ class CalendarWidget extends StatelessWidget {
           mode: mode,
           color: ColorProject.white,
           label: const SizedBox.shrink(),
+          isExistDate: isExistDate,
         );
       }
       return _Day(
@@ -83,6 +87,7 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label.color,
         label: label.icon,
+        isExistDate: isExistDate,
       );
     }
     final color = workSchedule?.labels["default"]?.color;
@@ -91,20 +96,24 @@ class CalendarWidget extends StatelessWidget {
       mode: mode,
       color: color,
       label: Text(keyOfLabel),
+      isExistDate: isExistDate,
     );
   }
 
   Widget _buildToday(context, DateTime day, focus) {
     DayMode mode = DayMode.current;
-    final keyOfLabel = workSchedule?.report[day.yyyy_mm_dd(context)];
+    final dateKey = day.yyyy_mm_dd(context);
+    final keyOfLabel = workSchedule?.report[dateKey];
     if (keyOfLabel == null) {
       return _Day(
         dateTime: day,
         mode: mode,
         color: ColorProject.white,
         label: const SizedBox.shrink(),
+        isExistDate: false,
       );
     }
+    final isExistDate = workSchedule?.existDates.contains(dateKey) ?? false;
     if (keyOfLabel.length > 2) {
       final label = workSchedule?.labels[keyOfLabel];
       if (label == null) {
@@ -113,6 +122,7 @@ class CalendarWidget extends StatelessWidget {
           mode: mode,
           color: ColorProject.white,
           label: const SizedBox.shrink(),
+          isExistDate: isExistDate,
         );
       }
       return _Day(
@@ -120,6 +130,7 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label.color,
         label: label.icon,
+        isExistDate: isExistDate,
       );
     }
     final color = workSchedule?.labels["default"]?.color;
@@ -128,6 +139,7 @@ class CalendarWidget extends StatelessWidget {
       mode: mode,
       color: color,
       label: Text(keyOfLabel),
+      isExistDate: isExistDate,
     );
   }
 }
@@ -180,12 +192,14 @@ class _Day extends StatelessWidget {
     required this.mode,
     required this.color,
     required this.label,
+    required this.isExistDate,
   });
 
   final DateTime dateTime;
   final DayMode mode;
   final Color? color;
   final Widget? label;
+  final bool isExistDate;
 
   _openDay(BuildContext context) {
     var heightScreen = MediaQuery.of(context).size.height;
@@ -204,7 +218,8 @@ class _Day extends StatelessWidget {
         maxHeight: heightScreen - 80,
       ),
       builder: (BuildContext context) {
-        return SingleChildScrollView(child: DayDetailPage(initialDay: dateTime));
+        return SingleChildScrollView(
+            child: DayDetailPage(initialDay: dateTime));
       },
     );
   }
@@ -251,6 +266,17 @@ class _Day extends StatelessWidget {
                       const Spacer(),
                       Text(dateTime.day.toString()),
                     ],
+                  ),
+                ),
+              ),
+            if (isExistDate)
+              Positioned.fill(
+                child: Container(
+                  margin: const EdgeInsets.all(3.5),
+                  decoration: BoxDecoration(
+                    color: ColorProject.existDates,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: const Color(0xFFD9D9D9)),
                   ),
                 ),
               ),

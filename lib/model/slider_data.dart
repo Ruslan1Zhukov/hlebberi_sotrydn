@@ -48,7 +48,7 @@ class Salary {
     final total = json.getIntOrNull('total');
     final Map<String, int> report = json.getMap(
       key: 'report',
-      converter: (v) => v as int,
+      converter: (v) => (v as int?) ?? 0,
     );
     final Map<String, SalaryLabel> labels = json.getMap(
       key: 'labels',
@@ -105,24 +105,36 @@ class WorkSchedule {
   final bool isNormal;
   final Map<String, String> report;
   final Map<String, WorkScheduleLabel> labels;
+  final Set<String> existDates;
 
   WorkSchedule({
     this.isNormal = true,
     required this.report,
     required this.labels,
+    required this.existDates,
   });
 
   WorkSchedule.empty()
       : isNormal = false,
         report = {},
-        labels = {};
+        labels = {},
+        existDates = {};
 
   static WorkSchedule? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;
-    final Map<String, String> report = json.getMap(
-      key: 'report',
-      converter: (v) => v.toString(),
-    );
+    Map<String, String> report = {};
+    Set<String> existDates = {};
+    final jsonReport = json['report'];
+    if (jsonReport is Map<String, dynamic>) {
+      report = jsonReport.getMap(
+        key: 'items',
+        converter: (v) => v.toString(),
+      );
+      existDates = jsonReport.getSet(
+        key: 'shift_user_exist_dates',
+        converter: (v) => v.toString(),
+      );
+    }
     final Map<String, WorkScheduleLabel> labels = json.getMap(
       key: 'labels',
       converter: (v) => WorkScheduleLabel.fromJson(v)!,
@@ -130,6 +142,7 @@ class WorkSchedule {
     return WorkSchedule(
       report: report,
       labels: labels,
+      existDates: existDates,
     );
   }
 }
