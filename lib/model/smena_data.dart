@@ -4,8 +4,8 @@ import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/parser.dart';
 
 class Smena {
-  final UserShift userShift;
-  final ShiftWorkingTime shiftWorkingTime;
+  final UserShift? userShift;
+  final ShiftWorkingTime? shiftWorkingTime;
   final List<User> users;
 
   Smena({
@@ -23,7 +23,6 @@ class Smena {
       key: 'users',
       converter: (v) => User.fromJson(v)!,
     );
-    if (userShift == null || shiftWorkingTime == null) return null;
     return Smena(
       userShift: userShift,
       shiftWorkingTime: shiftWorkingTime,
@@ -31,9 +30,10 @@ class Smena {
     );
   }
 
-  String timePlan() => shiftWorkingTime.getTimePlan();
+  String timePlan() => shiftWorkingTime?.getTimePlan() ?? "Нет данных";
 
-  String timeFact(BuildContext context) => userShift.getTimeFact(context);
+  String timeFact(BuildContext context) =>
+      userShift?.getTimeFact(context) ?? "Нет данных";
 }
 
 class UserShift {

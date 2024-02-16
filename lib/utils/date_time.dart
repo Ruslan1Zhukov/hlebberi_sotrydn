@@ -23,30 +23,28 @@ extension DateTimeExtension on DateTime {
   String dMMMM(BuildContext context) {
     return DateFormat(
       "d MMMM",
-      Localizations.localeOf(context).languageCode,
+      "ru",
     ).format(this);
   }
 
   String dMMMMDayOfWeek(BuildContext context) {
     return DateFormat(
       "d MMMM (E)",
-      Localizations.localeOf(context).languageCode,
+      "ru",
     ).format(this);
   }
 
   String hhmm(BuildContext context) {
-    final languageCode = Localizations.localeOf(context).languageCode;
-    debugPrint("languageCode=$languageCode");
     return DateFormat(
       "hh:mm",
-      Localizations.localeOf(context).languageCode,
+      "ru",
     ).format(this);
   }
 
   String yyyy_mm_dd(BuildContext context) {
     return DateFormat(
       "yyyy-MM-dd",
-      Localizations.localeOf(context).languageCode,
+      "ru",
     ).format(this);
   }
 

@@ -144,10 +144,10 @@ extension ParserJsonSetExtension on Map<String, dynamic> {
 
 DateTime? _parseDateString(String value) {
   try {
-    return DateFormat("dd-MM-yyyy HH:mm:ss").parseLoose(value);
+    return DateFormat("yyyy-MM-dd HH:mm:ss").parseLoose(value);
   } catch (e) {
     try {
-      return DateFormat("dd-MM-yyyy").parseLoose(value);
+      return DateFormat("yyyy-MM-dd").parseLoose(value);
     } catch (e) {
       try {
         return DateFormat("dd.MM.yyyy").parseLoose(value);
