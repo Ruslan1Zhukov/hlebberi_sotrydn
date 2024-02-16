@@ -39,10 +39,10 @@ extension IntExtension on int {
     }
   }
 
-  String toServer() {
+  String toServer([int add = 0]) {
     final now = DateTime.now();
     final yearString = now.year.toString();
-    final monthString = toString().padLeft(2, "0");
+    final monthString = (this + add).toString().padLeft(2, "0");
     return "$yearString-$monthString";
   }
 }

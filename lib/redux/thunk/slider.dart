@@ -40,7 +40,7 @@ ThunkAction<AppState> setDayDetailedData(DateTime date) {
 /// Установить данные за день детализированные
 ThunkAction<AppState> setMonthDetailedData(int date) {
   return (Store<AppState> store) async {
-    final response = await ApiSalary.monthDetail(date: date.toServer());
+    final response = await ApiSalary.monthDetail(date: date.toServer(1));
     response.makeResult(
       onData: (data) async {
         await store.dispatch(SetMonthDetailedData(
