@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/day_detail.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
+import 'package:hlebberi_sotrydn/utils/price.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
 import 'package:hlebberi_sotrydn/widgets/legend.dart';
 
@@ -22,9 +23,9 @@ class SalaryDayWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
-          color: const Color(0xFFD9D9D9),
+          color: ColorProject.grey,
         ),
-        color: Colors.white,
+        color: ColorProject.white,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,25 +42,40 @@ class SalaryDayWidget extends StatelessWidget {
 
   Widget buildTitle(BuildContext context) {
     String currentDate = (isCurrentDay) ? "на ${DateTime.now().dMMMM(context)}" : "";
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+
+    final zpSum = salaryReport.total;
+    var formattedSum = zpSum.toPriceString();
+
+    return Row(
       children: [
-        const Text(
-          "Зарплата",
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 16,
-          ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "Зарплата",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+              ),
+            ),
+
+            Text(
+              currentDate,
+              style: const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+                color: ColorProject.beige,
+              ),
+            ),
+          ],
         ),
+        const Spacer(),
         Text(
-          currentDate,
-          style: const TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
-            color: ColorProject.beige,
-          ),
+          "$formattedSum ₽",
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
         ),
       ],
     );
+
   }
 }

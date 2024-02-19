@@ -35,44 +35,42 @@ class _SliderWidgetState extends State<SliderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: _TitleWidget(
-              monthCurrent: _monthCurrent,
-              onChangeMonth: _onChangeMonth,
-            ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: _TitleWidget(
+            monthCurrent: _monthCurrent,
+            onChangeMonth: _onChangeMonth,
           ),
-          const SizedBox(height: 15),
-          CarouselSlider.builder(
-            itemCount: 12,
-            carouselController: _controller,
-            options: CarouselOptions(
-              height: 714,
-              viewportFraction: 1,
-              initialPage: _monthNow,
-              onPageChanged: (
-                  index,
-                  reason,
-                  ) {
-                if (reason == CarouselPageChangedReason.manual) {
-                  _changeMonth(index);
-                }
-              },
-            ),
-            itemBuilder: (
-                BuildContext context,
-                int index,
-                int realIndex,
+        ),
+        const SizedBox(height: 15),
+        CarouselSlider.builder(
+          itemCount: 12,
+          carouselController: _controller,
+          options: CarouselOptions(
+            height: 750,
+            viewportFraction: 1,
+            initialPage: _monthNow,
+            onPageChanged: (
+                index,
+                reason,
                 ) {
-              var monthInt = index + 1;
-              return _SlideWidget(month: monthInt);
+              if (reason == CarouselPageChangedReason.manual) {
+                _changeMonth(index);
+              }
             },
           ),
-        ],
-      ),
+          itemBuilder: (
+              BuildContext context,
+              int index,
+              int realIndex,
+              ) {
+            var monthInt = index + 1;
+            return _SlideWidget(month: monthInt);
+          },
+        ),
+      ],
     );
   }
 

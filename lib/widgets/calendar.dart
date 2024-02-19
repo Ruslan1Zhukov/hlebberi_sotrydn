@@ -62,11 +62,12 @@ class CalendarWidget extends StatelessWidget {
     final dateKey = day.yyyy_mm_dd(context);
     final keyOfLabel = workSchedule?.report[dateKey];
     if (keyOfLabel == null) {
+      final label = workSchedule?.labels["not_working_day"];
       return _Day(
         dateTime: day,
         mode: mode,
-        color: ColorProject.white,
-        label: const SizedBox.shrink(),
+        color: label?.color??ColorProject.white,
+        label: label?.icon?? const SizedBox.shrink(),
         isExistDate: false,
       );
     }
@@ -228,59 +229,59 @@ class _Day extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _openDay(context),
-      child: Opacity(
-        opacity: mode.getOpacity(),
-        child: Stack(
-          children: [
-            if (label == null)
-              Positioned.fill(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Skeletonizer(
-                    enabled: true,
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      margin: const EdgeInsets.all(3.5),
-                      color: ColorProject.white,
-                    ),
+      child: Stack(
+        children: [
+          if (label == null)
+            Positioned.fill(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Skeletonizer(
+                  enabled: true,
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    margin: const EdgeInsets.all(3.5),
+                    color: ColorProject.white,
                   ),
                 ),
               ),
-            if (label != null)
-              Positioned.fill(
+            ),
+          if (label != null)
+            Positioned.fill(
+              child: Opacity(
+                opacity: mode.getOpacity(),
                 child: Container(
                   width: double.infinity,
                   height: double.infinity,
                   margin: const EdgeInsets.all(3.5),
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: color,
+                    color: isExistDate ? Colors.red : color,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: const Color(0xFFD9D9D9)),
+                    border: Border.all(color:  ColorProject.grey),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      label ?? const SizedBox.shrink(),
-                      const Spacer(),
-                      Text(dateTime.day.toString()),
-                    ],
-                  ),
+                  child: const SizedBox.shrink(),
                 ),
               ),
-            if (isExistDate)
-              const Positioned(
-                top: 8,
-                right: 6,
-                child: Icon(
-                  Icons.close,
-                  size: 16,
-                  color: ColorProject.red,
+            ),
+          if (label != null)
+            Positioned.fill(
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                margin: const EdgeInsets.all(3.5),
+                padding: const EdgeInsets.all(4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    label ?? const SizedBox.shrink(),
+                    const Spacer(),
+                    Text(dateTime.day.toString()),
+                  ],
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }

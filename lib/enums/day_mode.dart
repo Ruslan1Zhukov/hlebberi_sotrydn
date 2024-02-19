@@ -10,7 +10,7 @@ enum DayMode {
       case DayMode.current:
         return 1;
       case DayMode.future:
-        return 0.5;
+        return 0.7;
     }
   }
 

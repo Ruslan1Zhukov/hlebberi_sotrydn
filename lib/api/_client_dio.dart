@@ -57,12 +57,8 @@ abstract class ClientDio {
       return ApiResponseError(error: response.error);
     } else if (response is DioResponseData) {
       try {
-        if (response.response.data["status"] == true) {
-          var result = converter(response.response);
-          return ApiResponseData(data: result);
-        }
-        var errors = "Какая-то ошибка";
-        return ApiResponseError(error: errors);
+        var result = converter(response.response);
+        return ApiResponseData(data: result);
       } catch (e) {
         return ApiResponseError(error: "Ошибка получения данных");
       }

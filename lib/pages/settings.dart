@@ -21,54 +21,54 @@ class SettingsPage extends StatelessWidget {
     return ScaffoldProject(
       isQRScan: true,
       child: StoreConnector<AppState, List<EmployeeExternalLink>>(
-        converter: (store) => store.state.account.employeeExternalLinks ?? [],
-        builder: (context, links) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
-                  const BackWidget(title: "Информация"),
-                  const SizedBox(height: 32),
-                  const HeaderWidget(isNeedSettings: false),
-                  const SizedBox(height: 24),
-                  const DividerProject(),
-                  const ChangeImageButton(),
-                  const DividerProject(),
-                  const SizedBox(height: 40),
-                  const DividerProject(),
-                  for (final link in links) ...[
-                    ListTileProject(
-                      title: link.name,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WebViewPage(url: link.url),
-                          ),
-                        );
-                      },
-                    ),
+          converter: (store) => store.state.account.employeeExternalLinks ?? [],
+          builder: (context, links) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    const BackWidget(title: "Информация"),
+                    const SizedBox(height: 32),
+                    const HeaderWidget(isNeedSettings: false),
+                    const SizedBox(height: 24),
                     const DividerProject(),
+                    const ChangeImageButton(),
+                    const DividerProject(),
+                    const SizedBox(height: 40),
+                    const DividerProject(),
+                    for (final link in links) ...[
+                      ListTileProject(
+                        title: link.name,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WebViewPage(url: link.url),
+                            ),
+                          );
+                        },
+                      ),
+                      const DividerProject(),
+                    ],
+                    const SizedBox(height: 20),
+                    const SocialsWidget(),
+                    const SizedBox(height: 26),
+                    const LogoutWidget(),
                   ],
-                  const SizedBox(height: 20),
-                  const SocialsWidget(),
-                  const SizedBox(height: 26),
-                  const LogoutWidget(),
-                ],
+                ),
               ),
-            ),
-          );
-        }
-      ),
+            );
+          }),
     );
   }
 }
 
 class WebViewPage extends StatelessWidget {
   final String url;
+
   const WebViewPage({Key? key, required this.url}) : super(key: key);
 
   @override
@@ -81,11 +81,9 @@ class WebViewPage extends StatelessWidget {
         initialUrl: url,
         javascriptMode: JavascriptMode.unrestricted,
         onWebResourceError: (error) {
+            debugPrint(error.description);
         },
       ),
-
     );
   }
 }
-
-
