@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/model/login_data.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/theme/divider.dart';
+import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/theme/list_tile.dart';
 import 'package:hlebberi_sotrydn/theme/scaffold.dart';
 import 'package:hlebberi_sotrydn/widgets/back.dart';
@@ -72,11 +73,17 @@ class WebViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScaffoldProject(
-      child:  WebView(
-      initialUrl: url,
-      javascriptMode: JavascriptMode.unrestricted,
-    ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ColorProject.orange,
+      ),
+      body: WebView(
+        initialUrl: url,
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebResourceError: (error) {
+        },
+      ),
+
     );
   }
 }
