@@ -31,10 +31,14 @@ class _SmenaWidgetState extends State<SmenaWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (_response is ApiResponseError) {
-      return const SizedBox.shrink();
+    final response = _response;
+    if (response is ApiResponseError) return const SizedBox.shrink();
+    if (response is ApiResponseData) {
+      if ((response as ApiResponseData<Smena>).data.isNotValid) {
+        return const SizedBox.shrink();
+      }
     }
-    final smena = (_response as ApiResponseData<Smena?>?)?.data;
+    final smena = (response as ApiResponseData<Smena?>?)?.data;
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: 20,
@@ -67,32 +71,41 @@ class _SmenaWidgetState extends State<SmenaWidget> {
                 color: ColorProject.grey,
               ),
               const SizedBox(width: 6),
-              Skeletonizer(
-                enabled: _response == null,
-                child: Text(
-                  smena?.timePlan() ?? "-----------------------",
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
+              Expanded(
+                child: Skeletonizer(
+                  enabled: response == null,
+                  child: Text(
+                    smena?.timePlan() ?? "-----------------------",
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
               ),
-              const Spacer(),
+              // const Spacer(),
+              const SizedBox(width: 20),
               const Icon(
                 Icons.access_time_filled,
                 color: ColorProject.orange,
               ),
               const SizedBox(width: 6),
-              Skeletonizer(
-                enabled: _response == null,
-                child: Text(
-                  smena?.timeFact(context) ?? "-----------------------",
+              Expanded(
+                child: Skeletonizer(
+                  enabled: response == null,
+                  child: Text(
+                    smena?.timeFact(context) ?? "-----------------------",
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 14.5),
-          const Text(
+          if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 14.5),
+          if (smena?.users.isNotEmpty ?? true) const Text(
             "В смене",
             style: TextStyle(
               color: Colors.grey,
@@ -100,8 +113,8 @@ class _SmenaWidgetState extends State<SmenaWidget> {
               fontWeight: FontWeight.w300,
             ),
           ),
-          const SizedBox(height: 8),
-          Wrap(
+          if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 8),
+          if (smena?.users.isNotEmpty ?? true) Wrap(
             spacing: 17,
             runSpacing: 4,
             children: [
@@ -111,13 +124,13 @@ class _SmenaWidgetState extends State<SmenaWidget> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AvatarWidget(
-                      isLoading: _response == null,
+                      isLoading: response == null,
                       avatarUrl: user.avatar,
                       fio: user.fio,
                       size: 55,
                     ),
                     const SizedBox(height: 4),
-                    _response == null
+                    response == null
                         ? Skeletonizer(
                             enabled: true,
                             child: Container(

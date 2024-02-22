@@ -30,6 +30,10 @@ class Smena {
     );
   }
 
+  bool get isNotValid => !isValid;
+
+  bool get isValid => userShift != null;
+
   String timePlan() => shiftWorkingTime?.getTimePlan() ?? "Нет данных";
 
   String timeFact(BuildContext context) =>
