@@ -59,9 +59,9 @@ class UserShift {
   }
 
   String time(BuildContext context) {
-    final startTime = start.hhmm(context);
+    final startTime = start.hhmm();
     final end = this.end;
-    final endTime = end != null ? end.hhmm(context) : "открыта";
+    final endTime = end != null ? end.hhmm() : "открыта";
     return "$startTime-$endTime";
   }
 }

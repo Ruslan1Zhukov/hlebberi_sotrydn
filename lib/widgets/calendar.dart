@@ -59,7 +59,7 @@ class CalendarWidget extends StatelessWidget {
   Widget _buildDay(context, DateTime day, focus) {
     var currentDay = DateTime.now();
     DayMode mode = (currentDay.isAfter(day)) ? DayMode.last : DayMode.future;
-    final dateKey = day.yyyy_mm_dd(context);
+    final dateKey = day.yyyy_mm_dd();
     final keyOfLabel = workSchedule?.report[dateKey];
     if (keyOfLabel == null) {
       final label = workSchedule?.labels["not_working_day"];
@@ -103,7 +103,7 @@ class CalendarWidget extends StatelessWidget {
 
   Widget _buildToday(context, DateTime day, focus) {
     DayMode mode = DayMode.current;
-    final dateKey = day.yyyy_mm_dd(context);
+    final dateKey = day.yyyy_mm_dd();
     final keyOfLabel = workSchedule?.report[dateKey];
     if (keyOfLabel == null) {
       return _Day(

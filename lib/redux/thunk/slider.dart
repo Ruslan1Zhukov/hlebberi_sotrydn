@@ -25,7 +25,7 @@ ThunkAction<AppState> setSliderData(int month) {
 /// Установить данные за день детализированные
 ThunkAction<AppState> setDayDetailedData(DateTime date) {
   return (Store<AppState> store) async {
-    final response = await ApiSalary.dayDetail(date: date.toServer);
+    final response = await ApiSalary.dayDetail(date: date.toServerYearMonthDay);
     response.makeResult(
       onData: (data) async {
         await store.dispatch(SetDayDetailedData(

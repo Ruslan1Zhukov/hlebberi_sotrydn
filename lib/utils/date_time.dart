@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 
@@ -20,35 +19,37 @@ extension DateTimeExtension on DateTime {
     return newDatetime;
   }
 
-  String dMMMM(BuildContext context) {
+  String dMMMM() {
     return DateFormat(
       "d MMMM",
       "ru",
     ).format(this);
   }
 
-  String dMMMMDayOfWeek(BuildContext context) {
+  String dMMMMDayOfWeek() {
     return DateFormat(
       "d MMMM (E)",
       "ru",
     ).format(this);
   }
 
-  String hhmm(BuildContext context) {
+  String hhmm() {
     return DateFormat(
       "hh:mm",
       "ru",
     ).format(this);
   }
 
-  String yyyy_mm_dd(BuildContext context) {
+  String yyyy_mm_dd() {
     return DateFormat(
       "yyyy-MM-dd",
       "ru",
     ).format(this);
   }
 
-  String get toServer => DateFormat("yyyy-MM", "ru").format(this);
+  String get toServerYearMonth => DateFormat("yyyy-MM", "ru").format(this);
+
+  String get toServerYearMonthDay => DateFormat("yyyy-MM-dd", "ru").format(this);
 
   bool isCurrent() {
     final now = DateTime.now();

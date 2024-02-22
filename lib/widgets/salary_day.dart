@@ -41,7 +41,7 @@ class SalaryDayWidget extends StatelessWidget {
   }
 
   Widget buildTitle(BuildContext context) {
-    String currentDate = (isCurrentDay) ? "на ${DateTime.now().dMMMM(context)}" : "";
+    String currentDate = (isCurrentDay) ? "на ${DateTime.now().dMMMM()}" : "";
 
     final zpSum = salaryReport.total;
     var formattedSum = zpSum.toPriceString();

@@ -116,7 +116,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
     var isCurrentMonth = current.month == widget.month;
     String formattedDate;
     if (isCurrentMonth) {
-      formattedDate = "на ${current.dMMMM(context)}";
+      formattedDate = "на ${current.dMMMM()}";
     } else {
       formattedDate = "";
     }

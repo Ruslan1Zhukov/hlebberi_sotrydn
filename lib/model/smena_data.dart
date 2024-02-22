@@ -65,8 +65,8 @@ class UserShift {
   }
 
   String getTimeFact(BuildContext context) {
-    final dateStart = start.hhmm(context);
-    final dateEnd = end?.hhmm(context) ?? "открыта";
+    final dateStart = start.hhmm();
+    final dateEnd = end?.hhmm() ?? "открыта";
     return "$dateStart-$dateEnd";
   }
 }

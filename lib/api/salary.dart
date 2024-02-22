@@ -40,7 +40,7 @@ abstract class ApiSalary {
     final response = await ClientDio.get(
       url: "/employee/daily-report",
       parameters: {
-        "date_month": date,
+        "date": date,
       },
     );
     return ClientDio.makeResult(

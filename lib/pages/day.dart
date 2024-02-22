@@ -52,7 +52,7 @@ class DayDetailPage extends StatelessWidget {
                   children: [
                     _DateTime(
                       dayDetail: dayDetail,
-                      dateMonth: date.dMMMMDayOfWeek(context),
+                      dateMonth: date.dMMMMDayOfWeek(),
                     ),
                     const SizedBox(height: 30),
                     if (role != null) _Position(role: role),
