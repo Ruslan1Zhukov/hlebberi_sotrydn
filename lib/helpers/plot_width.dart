@@ -1,4 +1,4 @@
-const defaultWidthMin = 50.0; // минимальная ширина единицы графика
+const defaultWidthMin = 50.0;
 
 double systemPlot({
   double x = defaultWidthMin,

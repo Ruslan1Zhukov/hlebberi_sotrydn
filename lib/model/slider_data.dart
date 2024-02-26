@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hlebberi_sotrydn/helpers/color.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/parser.dart';
@@ -158,8 +159,8 @@ class WorkScheduleLabel {
 
   static WorkScheduleLabel? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;
-    final color = json.getStringOrNull('color');
-    final iconUrl = json.getStringOrNull('iconUrl');
+    final color = json['color'] as String?;
+    final iconUrl = json['iconUrl'] as String?;
     if (color == null) return null;
     return WorkScheduleLabel(
       colorString: color,
@@ -174,7 +175,7 @@ class WorkScheduleLabel {
     if (iconUrl == null) {
       return const SizedBox.shrink();
     }
-    return Image.network(
+    return SvgPicture.network(
       iconUrl,
       width: 20,
       height: 20,
