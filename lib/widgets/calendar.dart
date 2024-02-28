@@ -106,11 +106,12 @@ class CalendarWidget extends StatelessWidget {
     final dateKey = day.yyyy_mm_dd();
     final keyOfLabel = workSchedule?.report[dateKey];
     if (keyOfLabel == null) {
+      final label = workSchedule?.labels["not_working_day"];
       return _Day(
         dateTime: day,
         mode: mode,
-        color: ColorProject.white,
-        label: const SizedBox.shrink(),
+        color: label?.color??ColorProject.white,
+        label: label?.icon?? const SizedBox.shrink(),
         isExistDate: false,
       );
     }

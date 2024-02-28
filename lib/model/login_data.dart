@@ -54,6 +54,7 @@ class LoginData {
         fio: user.fio,
         defaultRole: user.defaultRole,
         avatarUrl: avatarUrl,
+        location: user.location,
       ),
       token: token,
       employeeAppSettings: employeeAppSettings,
@@ -87,12 +88,14 @@ class User {
   final UserFio fio;
   final DefaultRole? defaultRole;
   final String? avatarUrl;
+  final String? location;
 
   User({
     required this.id,
     required this.fio,
     required this.defaultRole,
     required this.avatarUrl,
+    required this.location,
   });
 
   static User? fromJson(Map<String, dynamic>? json) {
@@ -101,12 +104,14 @@ class User {
     final fio = UserFio.fromJson(json);
     final defaultRole = DefaultRole.fromJson(json['default_role']);
     final avatarUrl = json.getStringOrNull('avatar');
+    final location = json['setting']?['location']?.getStringOrNull('address');
     if (id == null || fio == null) return null;
     return User(
       id: id,
       fio: fio,
       defaultRole: defaultRole,
       avatarUrl: avatarUrl,
+      location: location,
     );
   }
 
@@ -124,7 +129,6 @@ class User {
   @override
   String toString() => "User($fio)";
 
-  String? get location => null;
 
   String get jobTitle => defaultRole?.name ?? 'ХЗ';
 }
