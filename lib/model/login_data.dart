@@ -129,7 +129,6 @@ class User {
   @override
   String toString() => "User($fio)";
 
-
   String get jobTitle => defaultRole?.name ?? 'ХЗ';
 }
 
@@ -232,20 +231,24 @@ class EmployeeAppSettings {
 class EmployeeExternalLink {
   final String name;
   final String url;
+  final bool openInBrowser;
 
   EmployeeExternalLink({
     required this.name,
     required this.url,
+    required this.openInBrowser,
   });
 
   static EmployeeExternalLink? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;
     final name = json.getStringOrNull('name');
     final url = json.getStringOrNull('url');
+    final openInBrowser = json.getBoolOrNull('open_in_browser') ?? false;
     if (name == null || url == null) return null;
     return EmployeeExternalLink(
       name: name,
       url: url,
+      openInBrowser: openInBrowser,
     );
   }
 

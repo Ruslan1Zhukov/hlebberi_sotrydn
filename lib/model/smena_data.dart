@@ -4,11 +4,13 @@ import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/parser.dart';
 
 class Smena {
+  final String? location;
   final UserShift? userShift;
   final ShiftWorkingTime? shiftWorkingTime;
   final List<User> users;
 
   Smena({
+    required this.location,
     required this.userShift,
     required this.shiftWorkingTime,
     required this.users,
@@ -16,6 +18,7 @@ class Smena {
 
   static Smena? fromJson(final Map<String, dynamic>? json) {
     if (json == null) return null;
+    final location = json.getStringOrNull('location');
     final userShift = UserShift.fromJson(json['user_shift']);
     final shiftWorkingTime =
         ShiftWorkingTime.fromJson(json['shift_working_time']);
@@ -24,6 +27,7 @@ class Smena {
       converter: (v) => User.fromJson(v)!,
     );
     return Smena(
+      location: location,
       userShift: userShift,
       shiftWorkingTime: shiftWorkingTime,
       users: users,

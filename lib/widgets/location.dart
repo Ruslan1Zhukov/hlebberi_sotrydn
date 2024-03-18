@@ -1,58 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:hlebberi_sotrydn/model/login_data.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:hlebberi_sotrydn/model/smena_data.dart';
+import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
-import 'package:hlebberi_sotrydn/utils/skeleton.dart';
-import 'package:skeletonizer/skeletonizer.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+final radius = BorderRadius.circular(100);
 
 class LocationWidget extends StatelessWidget {
   const LocationWidget({
     Key? key,
-    required this.user,
   }) : super(key: key);
-
-  final User? user;
-
-  void _openMap(BuildContext context) async {
-    final mapUrl = 'https://www.google.com/maps/place/${user?.location}';
-    final uri = Uri.parse(mapUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Невозможно открыть карту"),
-      ));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    var radius = BorderRadius.circular(100);
-    return ClipRRect(
-      borderRadius: radius,
-      child: InkWell(
-        onTap: () => _openMap(context),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: radius,
+    return StoreConnector<AppState, Smena?>(
+      converter: (store) => store.state.smena.smena,
+      builder: (context, smena) {
+        final location = smena?.location;
+        if (location == null) return const SizedBox.shrink();
+        return ClipRRect(
+          borderRadius: radius,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: radius,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.location_on,
+                  size: 20,
+                  color: ColorProject.orange,
+                ),
+                const SizedBox(width: 6),
+                Expanded(child: Text(location)),
+              ],
+            ),
           ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.location_on,
-                size: 20,
-                color: ColorProject.orange,
-              ),
-              const SizedBox(width: 6),
-              Skeletonizer(
-                enabled: user == null,
-                child: Expanded(child: Text(user?.location ?? skeletonText)),
-              ),
-            ],
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

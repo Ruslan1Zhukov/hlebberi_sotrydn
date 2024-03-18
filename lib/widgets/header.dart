@@ -38,11 +38,11 @@ class HeaderWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12),
-            if (user?.location != null) Hero(
+            const Hero(
               tag: "unique-tag",
               child: Material(
                 type: MaterialType.transparency,
-                child: LocationWidget(user: user),
+                child: LocationWidget(),
               ),
             )
           ],
