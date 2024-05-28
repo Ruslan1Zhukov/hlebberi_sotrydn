@@ -134,9 +134,14 @@ class _ItemDetail extends StatelessWidget {
             ],
           ),
           if (comment != null)
-            Text(
-              'Комментарий: $comment',
-              style: const TextStyle(color: ColorProject.grey),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Комментарий: $comment',
+                  style: const TextStyle(color: ColorProject.grey),
+                ),
+              ],
             ),
         ],
       ),

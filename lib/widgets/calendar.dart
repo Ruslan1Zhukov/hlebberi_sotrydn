@@ -66,8 +66,8 @@ class CalendarWidget extends StatelessWidget {
       return _Day(
         dateTime: day,
         mode: mode,
-        color: label?.color??ColorProject.white,
-        label: label?.icon?? const SizedBox.shrink(),
+        color: label?.color ?? ColorProject.white,
+        label: label?.icon ?? const SizedBox.shrink(),
         isExistDate: false,
       );
     }
@@ -110,8 +110,8 @@ class CalendarWidget extends StatelessWidget {
       return _Day(
         dateTime: day,
         mode: mode,
-        color: label?.color??ColorProject.white,
-        label: label?.icon?? const SizedBox.shrink(),
+        color: label?.color ?? ColorProject.white,
+        label: label?.icon ?? const SizedBox.shrink(),
         isExistDate: false,
       );
     }
@@ -221,7 +221,8 @@ class _Day extends StatelessWidget {
       ),
       builder: (BuildContext context) {
         return SingleChildScrollView(
-            child: DayDetailPage(initialDay: dateTime));
+          child: DayDetailPage(initialDay: dateTime),
+        );
       },
     );
   }
@@ -259,7 +260,7 @@ class _Day extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isExistDate ? Colors.red : color,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color:  ColorProject.grey),
+                    border: Border.all(color: ColorProject.grey),
                   ),
                   child: const SizedBox.shrink(),
                 ),
