@@ -107,43 +107,47 @@ class WorkSchedule {
   final Map<String, String> report;
   final Map<String, WorkScheduleLabel> labels;
   final Set<String> existDates;
+  final int count;
 
   WorkSchedule({
     this.isNormal = true,
     required this.report,
     required this.labels,
     required this.existDates,
+    required this.count,
   });
 
   WorkSchedule.empty()
       : isNormal = false,
         report = {},
         labels = {},
+        count = 0,
         existDates = {};
 
   static WorkSchedule? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;
     Map<String, String> report = {};
     Set<String> existDates = {};
-    final jsonReport = json['report'];
-    if (jsonReport is Map<String, dynamic>) {
-      report = jsonReport.getMap(
-        key: 'items',
-        converter: (v) => v.toString(),
-      );
-      existDates = jsonReport.getSet(
-        key: 'shift_user_exist_dates',
-        converter: (v) => v.toString(),
-      );
-    }
-    final Map<String, WorkScheduleLabel> labels = json.getMap(
+    Map<String, dynamic> jsonReport = json['report'];
+    report = jsonReport.getMap(
+      key: 'items',
+      converter: (v) => v.toString(),
+    );
+    existDates = jsonReport.getSet(
+      key: 'shift_user_exist_dates',
+      converter: (v) => v.toString(),
+    );
+      final Map<String, WorkScheduleLabel> labels = json.getMap(
       key: 'labels',
       converter: (v) => WorkScheduleLabel.fromJson(v)!,
     );
+    final count = jsonReport.getInt("count_work_schedules");
+
     return WorkSchedule(
       report: report,
       labels: labels,
       existDates: existDates,
+      count: count,
     );
   }
 }

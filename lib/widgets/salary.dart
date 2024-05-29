@@ -15,10 +15,12 @@ class SalaryWidget extends StatefulWidget {
     super.key,
     required this.month,
     required this.salary,
+    required this.count,
   });
 
   final int? month;
   final Salary? salary;
+  final int? count;
 
   @override
   State<SalaryWidget> createState() => _SalaryWidgetState();
@@ -61,25 +63,25 @@ class _SalaryWidgetState extends State<SalaryWidget> {
   Widget build(BuildContext context) {
     if (widget.salary?.isNormal == false) {
       return Container(
-      margin: _padding,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: ColorProject.grey,
+        margin: _padding,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: ColorProject.grey,
+          ),
+          color: ColorProject.white,
         ),
-        color: ColorProject.white,
-      ),
-      child: const Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 20),
-          Text("Ошибка загрузки данных"),
-          SizedBox(height: 20),
-        ],
-      ),
-    );
+        child: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 20),
+            Text("Ошибка загрузки данных"),
+            SizedBox(height: 20),
+          ],
+        ),
+      );
     }
     return InkWell(
       onTap: widget.month != null ? () => _openMonthDetailed(context) : null,
@@ -116,7 +118,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
     var isCurrentMonth = current.month == widget.month;
     String formattedDate;
     if (isCurrentMonth) {
-      formattedDate = "на ${current.dMMMM()}";
+      formattedDate = "на ${current.dMMMM()} за ${widget.count} смен";
     } else {
       formattedDate = "";
     }

@@ -53,19 +53,19 @@ class _SliderWidgetState extends State<SliderWidget> {
             viewportFraction: 1,
             initialPage: _monthNow,
             onPageChanged: (
-                index,
-                reason,
-                ) {
+              index,
+              reason,
+            ) {
               if (reason == CarouselPageChangedReason.manual) {
                 _changeMonth(index);
               }
             },
           ),
           itemBuilder: (
-              BuildContext context,
-              int index,
-              int realIndex,
-              ) {
+            BuildContext context,
+            int index,
+            int realIndex,
+          ) {
             var monthInt = index + 1;
             return _SlideWidget(month: monthInt);
           },
@@ -73,7 +73,6 @@ class _SliderWidgetState extends State<SliderWidget> {
       ],
     );
   }
-
 }
 
 class _TitleWidget extends StatelessWidget {
@@ -159,6 +158,7 @@ class _SlideWidget extends StatelessWidget {
             SalaryWidget(
               salary: dataMonth?.salary,
               month: (dataMonth == null) ? null : month,
+              count: dataMonth?.workSchedule.count,
             ),
             const SizedBox(height: 15),
             CalendarWidget(
