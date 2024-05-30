@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/helpers/plot_width.dart';
 import 'package:hlebberi_sotrydn/model/slider_data.dart';
-import 'package:hlebberi_sotrydn/utils/price.dart';
 
 const double _radius = 27;
 
@@ -47,7 +46,6 @@ class DiagramWidget extends StatelessWidget {
       list.add(
         _Item(
           label: label,
-          value: value,
           flex: flex,
         ),
       );
@@ -65,12 +63,10 @@ class DiagramWidget extends StatelessWidget {
 class _Item extends StatelessWidget {
   const _Item({
     required this.label,
-    required this.value,
     required this.flex,
   });
 
   final SalaryLabel label;
-  final int value;
   final double flex;
 
   @override
@@ -78,13 +74,9 @@ class _Item extends StatelessWidget {
     return Flexible(
       flex: flex.toInt(),
       child: Container(
-        height: 27,
+        height: 15,
         alignment: Alignment.center,
         color: label.color,
-        child: Text(
-          value.toPriceString(),
-          maxLines: 1,
-        ),
       ),
     );
   }

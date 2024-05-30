@@ -1,14 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/helpers/month.dart';
-import 'package:hlebberi_sotrydn/model/slider_data.dart';
-import 'package:hlebberi_sotrydn/redux/app_state.dart';
-import 'package:hlebberi_sotrydn/redux/thunk/slider.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/month.dart';
-import 'package:hlebberi_sotrydn/widgets/calendar.dart';
-import 'package:hlebberi_sotrydn/widgets/salary.dart';
+import 'package:hlebberi_sotrydn/widgets/slide.dart';
 
 class SliderWidget extends StatefulWidget {
   const SliderWidget({super.key});
@@ -67,7 +62,7 @@ class _SliderWidgetState extends State<SliderWidget> {
             int realIndex,
           ) {
             var monthInt = index + 1;
-            return _SlideWidget(month: monthInt);
+            return SlideWidget(month: monthInt);
           },
         ),
       ],
@@ -132,42 +127,6 @@ class _TitleWidget extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _SlideWidget extends StatelessWidget {
-  const _SlideWidget({
-    required this.month,
-  });
-
-  final int month;
-
-  @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, SliderData?>(
-      converter: (store) => store.state.slider.data[month],
-      builder: (context, dataMonth) {
-        if (dataMonth == null) {
-          store.dispatch(setSliderData(month));
-        }
-        var monthDateTime = month.toDateTime;
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SalaryWidget(
-              salary: dataMonth?.salary,
-              month: (dataMonth == null) ? null : month,
-              count: dataMonth?.workSchedule.count,
-            ),
-            const SizedBox(height: 15),
-            CalendarWidget(
-              month: monthDateTime,
-              workSchedule: dataMonth?.workSchedule,
-            ),
-          ],
-        );
-      },
     );
   }
 }
