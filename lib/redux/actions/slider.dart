@@ -30,3 +30,5 @@ class SetMonthDetailedData {
     required this.data,
   });
 }
+
+class ClearSlider {}

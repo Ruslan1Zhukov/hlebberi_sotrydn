@@ -1,6 +1,7 @@
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/smena.dart';
 import 'package:hlebberi_sotrydn/model/smena_data.dart';
+import 'package:hlebberi_sotrydn/redux/actions/slider.dart';
 import 'package:hlebberi_sotrydn/redux/actions/smena.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:redux/redux.dart';
@@ -14,5 +15,13 @@ ThunkAction<AppState> setSmenaData() {
         ? (response as ApiResponseData<Smena>).data
         : null;
     await store.dispatch(SetSmenaData(response: response, smena: smena));
+  };
+}
+
+/// Пользователь вошёл в смену
+ThunkAction<AppState> loginInSmena() {
+  return (Store<AppState> store) async {
+    await store.dispatch(ClearSlider());
+    await store.dispatch(setSmenaData());
   };
 }

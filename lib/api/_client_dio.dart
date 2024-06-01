@@ -84,6 +84,7 @@ abstract class ClientDio {
     Map<String, String> headers = {};
     if (token != null) {
       headers["Authorization"] = "Bearer $token";
+      headers["Accept"] = "application/json";
     }
     return Options(headers: headers);
   }

@@ -12,6 +12,8 @@ SliderState _sliderReducer(SliderState state, action) {
       return _setDayDetailedData(state, action);
     case SetMonthDetailedData:
       return _setMonthDetailedData(state, action);
+    case ClearSlider:
+      return _clear(state, action);
   }
   return state;
 }
@@ -28,6 +30,13 @@ SliderState _setDayDetailedData(SliderState state, SetDayDetailedData action) {
 
 SliderState _setMonthDetailedData(SliderState state, SetMonthDetailedData action) {
   state.month[action.date] = action.data;
+  return state;
+}
+
+SliderState _clear(SliderState state, ClearSlider action) {
+  state.data = {};
+  state.days = {};
+  state.month = {};
   return state;
 }
 

@@ -4,6 +4,9 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/api/qr.dart';
+import 'package:hlebberi_sotrydn/helpers/toast.dart';
+import 'package:hlebberi_sotrydn/redux/app_state.dart';
+import 'package:hlebberi_sotrydn/redux/thunk/smena.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/theme/scaffold.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -19,17 +22,41 @@ class _QRScannerPageState extends State<QRScannerPage> {
   final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? _scanData;
   QRViewController? _controller;
+  bool _isProcess = false;
 
   /// Обработка распознанного кода
   Future _onQrScan(Barcode scanData) async {
+    if (_isProcess) return;
+    _changeProcess(true);
     final qrCode = scanData.code ?? '';
-    if (qrCode.isEmpty) return debugPrint("Код пустой");
+    if (qrCode.isEmpty) {
+      _changeProcess(false);
+      return debugPrint("Код пустой");
+    }
     final response = await ApiQR.login(code: qrCode);
     response.makeResult(
       onData: (data) async {
-        Navigator.of(context).pop();
+        if (data.status) {
+          toast(context, "Вы вошли в смену", ToastType.success);
+          await store.dispatch(loginInSmena());
+          Navigator.of(context).pop();
+        } else {
+          final error = data.message.isNotEmpty ? data.message : "Ошибка сети";
+          await toast(context, error, ToastType.error);
+          _changeProcess(false);
+        }
+      },
+      onError: () async {
+        await toast(context, "Ошибка сети", ToastType.error);
+        _changeProcess(false);
       },
     );
+  }
+
+  _changeProcess(bool process) {
+    setState(() {
+      _isProcess = process;
+    });
   }
 
   @override
