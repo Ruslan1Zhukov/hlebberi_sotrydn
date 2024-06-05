@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hlebberi_sotrydn/model/login_data.dart';
+import 'package:hlebberi_sotrydn/pages/info.dart';
 import 'package:hlebberi_sotrydn/pages/settings.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/utils/skeleton.dart';
@@ -33,7 +34,7 @@ class HeaderWidget extends StatelessWidget {
                   fio: user?.fio,
                 ),
                 const SizedBox(width: 14),
-                Expanded(child: _buildTitle(user)),
+                Expanded(child: _buildTitle(context, user)),
                 if (isNeedSettings) const _ButtonOut(),
               ],
             ),
@@ -51,26 +52,57 @@ class HeaderWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle(User? user) {
+  Widget _buildTitle(BuildContext context, User? user) {
     return Skeletonizer(
       enabled: user == null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Hero(
-            tag: "Fio",
-            child: Material(
-              type: MaterialType.transparency,
-              child: Text(
-                user?.fio.fullFio() ?? skeletonText,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 18,
+          Row(
+            children: [
+              Hero(
+                tag: "Fio",
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Text(
+                    user?.fio.fullFio() ?? skeletonText,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(width: 4),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const InfoPage()),
+                  );
+                },
+                child: Container(
+                  width: 20,
+                  height: 20,
+                  decoration: const BoxDecoration(
+                    color: Colors.yellow,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'i',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 10),
           Hero(
             tag: "Job",
             child: Material(
