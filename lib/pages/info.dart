@@ -38,14 +38,14 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             color: Colors.black,
             padding: const EdgeInsets.all(10),
             child: SizedBox(
-              width: 285,
-              height: 600,
+              width: 250,
+              height: 500,
               child: VideoPlayer(_controller),
             ),
           )
         : const SizedBox(
-            width: 285,
-            height: 600,
+            width: 250,
+            height: 500,
             child: Center(child: CircularProgressIndicator()),
           );
   }
