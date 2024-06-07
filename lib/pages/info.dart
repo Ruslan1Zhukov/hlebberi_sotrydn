@@ -204,7 +204,7 @@ class InfoPage3 extends StatelessWidget {
                 videoPath: 'assets/videos/info3.mov',
               ),
               const SizedBox(height: 15),
-              const Text('Узнай свой доход за месяц'),
+              const Text('Узнай свой доход за смену'),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
@@ -266,7 +266,7 @@ class InfoPage4 extends StatelessWidget {
                 videoPath: 'assets/videos/info4.mov',
               ),
               const SizedBox(height: 15),
-              const Text('Узнай свой доход за смену'),
+              const Text('Узнай свой доход за месяц'),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
