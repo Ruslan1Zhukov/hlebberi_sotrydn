@@ -229,6 +229,10 @@ class _Day extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isToday = dateTime.day == DateTime.now().day &&
+        dateTime.month == DateTime.now().month &&
+        dateTime.year == DateTime.now().year;
+
     return InkWell(
       onTap: () => _openDay(context),
       child: Stack(
@@ -260,7 +264,10 @@ class _Day extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: isExistDate ? Colors.red : color,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: ColorProject.grey),
+                    border: Border.all(
+                      color: isToday ? Colors.lightGreen : ColorProject.grey,
+                      width: isToday ? 2.0 : 1.0,
+                    ),
                   ),
                   child: const SizedBox.shrink(),
                 ),

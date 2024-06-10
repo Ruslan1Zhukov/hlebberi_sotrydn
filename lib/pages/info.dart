@@ -34,13 +34,16 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   Widget build(BuildContext context) {
     return _controller.value.isInitialized
-        ? Container(
-            color: Colors.black,
-            padding: const EdgeInsets.all(10),
-            child: SizedBox(
-              width: 250,
-              height: 500,
-              child: VideoPlayer(_controller),
+        ? ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Container(
+              color: Colors.black,
+              padding: const EdgeInsets.all(10),
+              child: SizedBox(
+                width: 250,
+                height: 500,
+                child: VideoPlayer(_controller),
+              ),
             ),
           )
         : const SizedBox(
@@ -73,7 +76,8 @@ class InfoPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomePage()),
+                            builder: (context) => const HomePage(),
+                          ),
                         );
                       },
                     ),
@@ -98,7 +102,7 @@ class InfoPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
                 ),
                 child: const Text('Далее'),
               ),
@@ -158,7 +162,7 @@ class InfoPage2 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
                 ),
                 child: const Text('Далее'),
               ),
@@ -220,7 +224,7 @@ class InfoPage3 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
                 ),
                 child: const Text('Далее'),
               ),
@@ -282,7 +286,7 @@ class InfoPage4 extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
                 ),
                 child: const Text('Далее'),
               ),
