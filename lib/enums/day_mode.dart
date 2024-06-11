@@ -13,11 +13,11 @@ enum DayMode {
   double getOpacity() {
     switch (this) {
       case DayMode.last:
-        return 0.3;
+        return 0.8;
       case DayMode.current:
         return 1;
       case DayMode.future:
-        return 0.7;
+        return 1;
     }
   }
 
