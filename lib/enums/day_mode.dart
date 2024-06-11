@@ -1,7 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:hlebberi_sotrydn/theme/fil_color.dart';
+
 enum DayMode {
   last,
   current,
   future;
+
+  Color get colorBorder => _isToday ? Colors.lightGreen : ColorProject.grey;
+
+  double get widthBorder => _isToday ? 2.0 : 1.0;
 
   double getOpacity() {
     switch (this) {
@@ -25,4 +32,6 @@ enum DayMode {
         return "буд";
     }
   }
+
+  bool get _isToday => this == DayMode.current;
 }
