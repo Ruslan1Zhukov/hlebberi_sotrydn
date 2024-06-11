@@ -46,16 +46,17 @@ class Salary {
 
   static Salary? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;
-    final total = json.getIntOrNull('total');
+    final totalDouble = json.getDoubleOrNull('total');
     final Map<String, int> report = json.getMap(
       key: 'report',
-      converter: (v) => (v as int?) ?? 0,
+      converter: (v) => ((v as double?) ?? 0).toInt(),
     );
     final Map<String, SalaryLabel> labels = json.getMap(
       key: 'labels',
       converter: (v) => SalaryLabel.fromJson(v as Map<String, dynamic>)!,
     );
-    if (total == null) return null;
+    if (totalDouble == null) return null;
+    final total = totalDouble.toInt();
     return Salary(
       total: total,
       report: report,
