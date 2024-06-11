@@ -76,26 +76,28 @@ class SalaryReport extends Salary {
     required this.detailList,
   });
 
+  factory SalaryReport.fromSalary({
+    required Salary salary,
+    required List<Detail> detailList,
+  }) {
+    return SalaryReport(
+      total: salary.total,
+      report: salary.report,
+      labels: salary.labels,
+      detailList: detailList,
+    );
+  }
+
   static SalaryReport? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;
-    final total = json.getIntOrNull('total');
-    final Map<String, int> report = json.getMap(
-      key: 'report',
-      converter: (v) => (v as int?) ?? 0,
-    );
-    final Map<String, SalaryLabel> labels = json.getMap(
-      key: 'labels',
-      converter: (v) => SalaryLabel.fromJson(v as Map<String, dynamic>)!,
-    );
+    final salary = Salary.fromJson(json);
     final List<Detail> detailList = json.getList(
       key: 'detail_list',
       converter: (v) => Detail.fromJson(v)!,
     );
-    if (total == null) return null;
-    return SalaryReport(
-      total: total,
-      report: report,
-      labels: labels,
+    if (salary == null) return null;
+    return SalaryReport.fromSalary(
+      salary: salary,
       detailList: detailList,
     );
   }
