@@ -7,6 +7,8 @@ import 'package:hlebberi_sotrydn/helpers/auth.dart';
 import 'package:hlebberi_sotrydn/helpers/toast.dart';
 import 'package:hlebberi_sotrydn/model/login_data.dart';
 import 'package:hlebberi_sotrydn/redux/actions/account.dart';
+import 'package:hlebberi_sotrydn/redux/actions/slider.dart';
+import 'package:hlebberi_sotrydn/redux/actions/smena.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_thunk/redux_thunk.dart';
@@ -52,6 +54,8 @@ ThunkAction<AppState> login({
 ThunkAction<AppState> logout(BuildContext context) {
   return (Store<AppState> store) async {
     await _saveLoginData(null);
+    await store.dispatch(ClearSlider());
+    await store.dispatch(ClearSmena());
     _toSplash(context);
   };
 }

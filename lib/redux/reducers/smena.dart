@@ -8,6 +8,8 @@ SmenaState _smenaReducer(SmenaState state, action) {
   switch (action.runtimeType) {
     case SetSmenaData:
       return _setSmenaData(state, action);
+    case ClearSmena:
+      return _clearSmena(state, action);
   }
   return state;
 }
@@ -18,3 +20,8 @@ SmenaState _setSmenaData(SmenaState state, SetSmenaData action) {
   return state;
 }
 
+SmenaState _clearSmena(SmenaState state, ClearSmena action) {
+  state.response = null;
+  state.smena = null;
+  return state;
+}

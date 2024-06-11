@@ -10,3 +10,5 @@ class SetSmenaData {
     required this.smena,
   });
 }
+
+class ClearSmena {}
