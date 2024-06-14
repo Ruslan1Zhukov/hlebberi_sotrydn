@@ -6,14 +6,14 @@ enum DayMode {
   current,
   future;
 
-  Color get colorBorder => _isToday ? Colors.lightGreen : ColorProject.grey;
+  Color get colorBorder => _isToday ? const Color(0xFFFDD733) : ColorProject.grey;
 
   double get widthBorder => _isToday ? 2.0 : 1.0;
 
   double getOpacity() {
     switch (this) {
       case DayMode.last:
-        return 0.8;
+        return 0.7;
       case DayMode.current:
         return 1;
       case DayMode.future:
