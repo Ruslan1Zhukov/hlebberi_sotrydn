@@ -84,8 +84,19 @@ class _TitleWidget extends StatelessWidget {
     if (selectedMonth != null) onChangeMonth(selectedMonth);
   }
 
+  String _monthToString(int month) {
+    const months = [
+      'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
+      'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь'
+    ];
+    return months[month - 1];
+  }
+
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    int yearCurrent = now.year;
+
     return Row(
       children: [
         const Text(
@@ -110,7 +121,7 @@ class _TitleWidget extends StatelessWidget {
             width: 100,
             alignment: Alignment.center,
             child: Text(
-              monthCurrent.toMonthString,
+              '${_monthToString(monthCurrent)} $yearCurrent',
               style: const TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 16,
