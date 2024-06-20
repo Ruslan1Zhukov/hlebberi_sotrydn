@@ -84,19 +84,8 @@ class _TitleWidget extends StatelessWidget {
     if (selectedMonth != null) onChangeMonth(selectedMonth);
   }
 
-  String _monthToString(int month) {
-    const months = [
-      'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль',
-      'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь', 'Январь'
-    ];
-    return months[month - 1];
-  }
-
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    int yearCurrent = now.year;
-
     return Row(
       children: [
         const Text(
@@ -118,10 +107,10 @@ class _TitleWidget extends StatelessWidget {
         InkWell(
           onTap: () => _selectMonth(context),
           child: Container(
-            width: 100,
+            width: 120,
             alignment: Alignment.center,
             child: Text(
-              '${_monthToString(monthCurrent)} $yearCurrent',
+              monthCurrent.toMonthYearString,
               style: const TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 16,

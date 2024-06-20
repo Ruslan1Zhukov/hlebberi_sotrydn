@@ -21,7 +21,7 @@ Future<int?> showSelectMonth(BuildContext context) async {
               horizontal: 20,
             ),
             child: Text(
-              e.value,
+              e.key.toMonthYearString,
               textAlign: TextAlign.start,
             ),
           ),

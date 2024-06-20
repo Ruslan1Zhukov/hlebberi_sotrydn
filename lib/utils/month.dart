@@ -1,3 +1,5 @@
+import 'package:hlebberi_sotrydn/utils/date_time.dart';
+
 const mapMonths = {
   0: "Январь",
   1: "Февраль",
@@ -23,6 +25,22 @@ extension IntExtension on int {
     return mapMonths[this] ?? "";
   }
 
+  String get toMonthYearString {
+    return "$toMonthString $year";
+  }
+
+  int get year {
+    final now = DateTime.now();
+    final currentYear = now.year;
+    final currentMonth = now.monthFrom0;
+    if (currentMonth == 11) {
+      if (this == 0) return currentYear + 1;
+      return currentYear;
+    }
+    if (this <= (currentMonth + 1)) return currentYear;
+    return currentYear - 1;
+  }
+
   int get moveRightMonth {
     if (this >= 11) {
       return 0;
@@ -40,8 +58,7 @@ extension IntExtension on int {
   }
 
   String toServer([int add = 0]) {
-    final now = DateTime.now();
-    final yearString = now.year.toString();
+    final yearString = year.toString();
     final monthString = (this + add).toString().padLeft(2, "0");
     return "$yearString-$monthString";
   }
