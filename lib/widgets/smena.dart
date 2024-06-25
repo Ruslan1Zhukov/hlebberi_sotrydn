@@ -64,14 +64,12 @@ class _SmenaWidgetState extends State<SmenaWidget> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 12),
               Row(
                 children: [
                   const Icon(
                     Icons.access_time_filled,
                     color: ColorProject.grey,
                   ),
-                  const SizedBox(width: 6),
                   Expanded(
                     child: Skeletonizer(
                       enabled: response == null,
@@ -90,7 +88,6 @@ class _SmenaWidgetState extends State<SmenaWidget> {
                     Icons.access_time_filled,
                     color: ColorProject.orange,
                   ),
-                  const SizedBox(width: 6),
                   Expanded(
                     child: Skeletonizer(
                       enabled: response == null,
@@ -105,7 +102,7 @@ class _SmenaWidgetState extends State<SmenaWidget> {
                   ),
                 ],
               ),
-              if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 14.5),
+              if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 7),
               if (smena?.users.isNotEmpty ?? true)
                 const Text(
                   "В смене",
@@ -115,10 +112,10 @@ class _SmenaWidgetState extends State<SmenaWidget> {
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-              if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 8),
+              if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 7),
               if (smena?.users.isNotEmpty ?? true)
                 Wrap(
-                  spacing: 17,
+                  spacing: 7,
                   runSpacing: 4,
                   children: [
                     for (var user in smena?.users ??
@@ -130,14 +127,14 @@ class _SmenaWidgetState extends State<SmenaWidget> {
                             isLoading: response == null,
                             avatarUrl: user.avatar,
                             fio: user.fio,
-                            size: 55,
+                            size: 46,
                           ),
                           const SizedBox(height: 4),
                           response == null
                               ? Skeletonizer(
                                   enabled: true,
                                   child: Container(
-                                    width: 55,
+                                    width: 46,
                                     height: 12,
                                     color: ColorProject.error,
                                   ),

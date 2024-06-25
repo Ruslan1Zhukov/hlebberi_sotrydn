@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/model/day_detail.dart';
 import 'package:hlebberi_sotrydn/model/slider_data.dart';
@@ -137,9 +138,11 @@ class _ItemDetail extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'Комментарий: $comment',
-                  style: const TextStyle(color: ColorProject.grey),
+                Expanded(
+                  child: Text(
+                    'Комментарий: $comment',
+                    style: const TextStyle(color: ColorProject.grey),
+                  ),
                 ),
               ],
             ),

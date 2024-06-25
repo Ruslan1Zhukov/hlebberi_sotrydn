@@ -74,7 +74,7 @@ class _Item extends StatelessWidget {
     return Flexible(
       flex: flex.toInt(),
       child: Container(
-        height: 15,
+        height: 10,
         alignment: Alignment.center,
         color: label.color,
       ),

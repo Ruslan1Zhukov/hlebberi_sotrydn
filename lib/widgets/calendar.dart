@@ -68,10 +68,8 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label?.color ?? ColorProject.white,
         label: label?.icon ?? const SizedBox.shrink(),
-        isExistDate: false,
       );
     }
-    final isExistDate = workSchedule?.existDates.contains(dateKey) ?? false;
     if (keyOfLabel.length > 2) {
       final label = workSchedule?.labels[keyOfLabel];
       if (label == null) {
@@ -80,7 +78,6 @@ class CalendarWidget extends StatelessWidget {
           mode: mode,
           color: ColorProject.white,
           label: const SizedBox.shrink(),
-          isExistDate: isExistDate,
         );
       }
       return _Day(
@@ -88,7 +85,6 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label.color,
         label: label.icon,
-        isExistDate: isExistDate,
       );
     }
     final color = workSchedule?.labels["default"]?.color;
@@ -97,7 +93,6 @@ class CalendarWidget extends StatelessWidget {
       mode: mode,
       color: color,
       label: Text(keyOfLabel),
-      isExistDate: isExistDate,
     );
   }
 
@@ -112,10 +107,8 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label?.color ?? ColorProject.white,
         label: label?.icon ?? const SizedBox.shrink(),
-        isExistDate: false,
       );
     }
-    final isExistDate = workSchedule?.existDates.contains(dateKey) ?? false;
     if (keyOfLabel.length > 2) {
       final label = workSchedule?.labels[keyOfLabel];
       if (label == null) {
@@ -124,7 +117,6 @@ class CalendarWidget extends StatelessWidget {
           mode: mode,
           color: ColorProject.white,
           label: const SizedBox.shrink(),
-          isExistDate: isExistDate,
         );
       }
       return _Day(
@@ -132,7 +124,6 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label.color,
         label: label.icon,
-        isExistDate: isExistDate,
       );
     }
     final color = workSchedule?.labels["default"]?.color;
@@ -141,7 +132,6 @@ class CalendarWidget extends StatelessWidget {
       mode: mode,
       color: color,
       label: Text(keyOfLabel),
-      isExistDate: isExistDate,
     );
   }
 }
@@ -172,18 +162,12 @@ class _DayOfWeek extends StatelessWidget {
   FontWeight _determineFontWeight(int day) {
     var now = DateTime.now();
     int currentDayOfWeek = now.weekday;
-    if (dateTime.year != now.year || dateTime.month != now.month) {
-      return _fontWeightLight;
-    }
     return day == currentDayOfWeek ? _fontWeightBold : _fontWeightLight;
   }
 
   double _determineOpacity(int day) {
     var now = DateTime.now();
     int currentDayOfWeek = now.weekday;
-    if (dateTime.year != now.year || dateTime.month != now.month) {
-      return 0.5;
-    }
     return day == currentDayOfWeek ? 1 : 0.5;
   }
 }
@@ -194,14 +178,12 @@ class _Day extends StatelessWidget {
     required this.mode,
     required this.color,
     required this.label,
-    required this.isExistDate,
   });
 
   final DateTime dateTime;
   final DayMode mode;
   final Color? color;
   final Widget? label;
-  final bool isExistDate;
 
   _openDay(BuildContext context) {
     var heightScreen = MediaQuery.of(context).size.height;
@@ -253,12 +235,12 @@ class _Day extends StatelessWidget {
               child: Opacity(
                 opacity: mode.getOpacity(),
                 child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  margin: const EdgeInsets.all(3.5),
+                  width: 42,
+                  height: 65,
+                  margin: const EdgeInsets.all(4),
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color: isExistDate ? Colors.red : color,
+                    color:  color,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color: mode.colorBorder,
@@ -272,9 +254,9 @@ class _Day extends StatelessWidget {
           if (label != null)
             Positioned.fill(
               child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                margin: const EdgeInsets.all(3.5),
+                width: 42,
+                height: 65,
+                margin: const EdgeInsets.all(4),
                 padding: const EdgeInsets.all(4),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -5,7 +5,6 @@ import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
-import 'package:hlebberi_sotrydn/widgets/legend.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 const _padding = EdgeInsets.symmetric(horizontal: 20.0);
@@ -102,10 +101,8 @@ class _SalaryWidgetState extends State<SalaryWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               buildTitle(context),
-              const SizedBox(height: 20),
+              const SizedBox(height: 17),
               DiagramWidget(salary: widget.salary),
-              const SizedBox(height: 20),
-              LegendWidget(labels: widget.salary?.labels.values.toList()),
             ],
           ),
         ),
@@ -133,7 +130,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Всего",
+              "Зарплата",
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
             ),
             Text(
@@ -145,7 +142,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
         const Spacer(),
         Text(
           "$formattedSum ₽",
-          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 30),
+          style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 24),
         ),
       ],
     );

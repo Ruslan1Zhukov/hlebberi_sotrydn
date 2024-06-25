@@ -39,7 +39,7 @@ class _SliderWidgetState extends State<SliderWidget> {
             onChangeMonth: _onChangeMonth,
           ),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 12),
         CarouselSlider.builder(
           itemCount: 12,
           carouselController: _controller,
@@ -89,7 +89,7 @@ class _TitleWidget extends StatelessWidget {
     return Row(
       children: [
         const Text(
-          "Зарплата",
+          "График",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 16,

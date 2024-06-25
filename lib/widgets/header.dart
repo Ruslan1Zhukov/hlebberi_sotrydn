@@ -73,7 +73,24 @@ class HeaderWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 4),
+            ],
+          ),
+          Row(
+            children: [
+              Hero(
+                tag: "Job",
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Text(
+                    user?.jobTitle ?? skeletonText,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -102,20 +119,7 @@ class HeaderWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          Hero(
-            tag: "Job",
-            child: Material(
-              type: MaterialType.transparency,
-              child: Text(
-                user?.jobTitle ?? skeletonText,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                ),
-              ),
-            ),
-          ),
+
         ],
       ),
     );
