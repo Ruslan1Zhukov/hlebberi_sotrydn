@@ -71,15 +71,16 @@ class _SalaryWidgetState extends State<SalaryWidget> {
           ),
           color: ColorProject.white,
         ),
-        child: const Column(
+        child:  Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
-            Text("Ошибка загрузки данных"),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+            Image.asset('assets/images/salary.png'),
+            const SizedBox(height: 20),
           ],
-        ),
+        )
+        ,
       );
     }
     return InkWell(

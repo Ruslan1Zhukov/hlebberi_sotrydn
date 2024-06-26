@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/pages/home.dart';
+import 'package:hlebberi_sotrydn/pages/info.dart';
 import 'package:hlebberi_sotrydn/pages/login.dart';
 import 'package:hlebberi_sotrydn/pages/spalsh.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
@@ -28,8 +29,11 @@ class MyApp extends StatelessWidget {
           '/': (_) => const SplashPage(),
           '/login': (_) => const LoginPage(),
           '/home': (_) => const HomePage(),
+          '/info': (_) => const InfoPage(),
         },
+        initialRoute: '/info',
       ),
     );
   }
 }
+
