@@ -60,7 +60,8 @@ class _SalaryWidgetState extends State<SalaryWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.salary?.isNormal == false) {
+    final zpSum = widget.salary?.total ?? 0;
+    if (zpSum == 0 || widget.salary?.isNormal == false) {
       return Container(
         margin: _padding,
         padding: const EdgeInsets.all(20),
@@ -71,18 +72,35 @@ class _SalaryWidgetState extends State<SalaryWidget> {
           ),
           color: ColorProject.white,
         ),
-        child:  Column(
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            Image.asset('assets/images/salary.png'),
+            Center(
+              child: SizedBox(
+                width: 61,
+                height: 67,
+                child: Image.asset('assets/images/salary.png'),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Center(
+              child: Text(
+                'Тут будет ваша зарплата',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: ColorProject.black,
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
           ],
-        )
-        ,
+        ),
       );
     }
+
     return InkWell(
       onTap: widget.month != null ? () => _openMonthDetailed(context) : null,
       child: Skeletonizer(
