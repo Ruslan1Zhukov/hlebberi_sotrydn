@@ -73,12 +73,7 @@ class InfoPage extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                          ),
-                        );
+                        Navigator.pop(context);  // Закрывает текущую страницу
                       },
                     ),
                   ],
@@ -90,6 +85,7 @@ class InfoPage extends StatelessWidget {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const InfoPage2()),
@@ -102,7 +98,7 @@ class InfoPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
+                  const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
                 ),
                 child: const Text('Далее'),
               ),
@@ -114,6 +110,8 @@ class InfoPage extends StatelessWidget {
     );
   }
 }
+
+
 
 class InfoPage2 extends StatelessWidget {
   const InfoPage2({super.key});
@@ -134,6 +132,7 @@ class InfoPage2 extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
+                        Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -150,6 +149,7 @@ class InfoPage2 extends StatelessWidget {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const InfoPage3()),
@@ -194,6 +194,7 @@ class InfoPage3 extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
+                        Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -212,6 +213,7 @@ class InfoPage3 extends StatelessWidget {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const InfoPage4()),
@@ -256,6 +258,7 @@ class InfoPage4 extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
+                        Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -274,6 +277,7 @@ class InfoPage4 extends StatelessWidget {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const HomePage()),

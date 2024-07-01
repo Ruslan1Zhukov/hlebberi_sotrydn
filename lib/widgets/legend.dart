@@ -134,7 +134,7 @@ class _ItemDetail extends StatelessWidget {
                 ),
             ],
           ),
-          if (comment != null)
+          if (comment != null && comment!.isNotEmpty)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

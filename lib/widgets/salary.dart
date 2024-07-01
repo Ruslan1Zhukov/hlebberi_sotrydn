@@ -30,7 +30,10 @@ class _SalaryWidgetState extends State<SalaryWidget> {
 
   void _openMonthDetailed(BuildContext context) {
     if (widget.month == null) return;
-    var heightScreen = MediaQuery.of(context).size.height;
+    var heightScreen = MediaQuery
+        .of(context)
+        .size
+        .height;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -50,7 +53,10 @@ class _SalaryWidgetState extends State<SalaryWidget> {
         if (month == null) {
           return SizedBox(
             height: 500,
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
           );
         }
         return SingleChildScrollView(child: MonthDetailPage(month: month - 1));
@@ -129,14 +135,28 @@ class _SalaryWidgetState extends State<SalaryWidget> {
     );
   }
 
+  String getPluralForm(int count, String singular, String few, String many) {
+    if (count % 10 == 1 && count % 100 != 11) {
+      return singular;
+    } else if (count % 10 >= 2 && count % 10 <= 4 &&
+        (count % 100 < 10 || count % 100 >= 20)) {
+      return few;
+    } else {
+      return many;
+    }
+  }
+
   Widget buildTitle(BuildContext context) {
     var current = DateTime.now();
     var isCurrentMonth = current.month == widget.month;
+    int count = widget.count ?? 0; // Установим значение по умолчанию
+    String pluralForm = getPluralForm(count, "смена", "смены", "смен");
+
     String formattedDate;
     if (isCurrentMonth) {
-      formattedDate = "на ${current.dMMMM()} за ${widget.count} смен";
+      formattedDate = "на ${current.dMMMM()} за $count $pluralForm";
     } else {
-      formattedDate = "${widget.count} смен";
+      formattedDate = "$count $pluralForm";
     }
 
     final zpSum = widget.salary?.total ?? 0;
