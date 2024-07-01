@@ -14,6 +14,9 @@ class _SplashPageState extends State<SplashPage> {
   _checkAuth() async {
     await store.dispatch(init(context));
   }
+  _checkInfo() async {
+  await store.dispatch(init(context));
+  }
 
   @override
   void initState() {

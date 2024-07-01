@@ -149,7 +149,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
   Widget buildTitle(BuildContext context) {
     var current = DateTime.now();
     var isCurrentMonth = current.month == widget.month;
-    int count = widget.count ?? 0; // Установим значение по умолчанию
+    int count = widget.count ?? 0;
     String pluralForm = getPluralForm(count, "смена", "смены", "смен");
 
     String formattedDate;

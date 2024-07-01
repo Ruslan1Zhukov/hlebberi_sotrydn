@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hlebberi_sotrydn/helpers/info.dart';
 import 'package:hlebberi_sotrydn/pages/home.dart';
+import 'package:hlebberi_sotrydn/pages/spalsh.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
@@ -73,7 +75,7 @@ class InfoPage extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () {
-                        Navigator.pop(context);  // Закрывает текущую страницу
+                        Navigator.pop(context);
                       },
                     ),
                   ],
@@ -276,11 +278,12 @@ class InfoPage4 extends StatelessWidget {
               const Text('Узнай свой доход за месяц'),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  await saveInfoData();
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomePage()),
+                    MaterialPageRoute(builder: (context) => const SplashPage()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

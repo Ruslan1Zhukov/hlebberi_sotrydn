@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/api/_api_response.dart';
 import 'package:hlebberi_sotrydn/api/account.dart';
 import 'package:hlebberi_sotrydn/helpers/auth.dart';
+import 'package:hlebberi_sotrydn/helpers/info.dart';
 import 'package:hlebberi_sotrydn/helpers/toast.dart';
 import 'package:hlebberi_sotrydn/model/login_data.dart';
 import 'package:hlebberi_sotrydn/redux/actions/account.dart';
@@ -15,6 +16,11 @@ import 'package:redux_thunk/redux_thunk.dart';
 
 ThunkAction<AppState> init(BuildContext context) {
   return (Store<AppState> store) async {
+    final infoSaved = await getInfoData();
+    if (infoSaved == false){
+      _toInfo(context);
+      return;
+    }
     final loginDataSaved = await getLoginData();
     if (loginDataSaved == null) {
       _toLogin(context);
@@ -70,6 +76,8 @@ _toLogin(BuildContext context) => _toNavigate(context, '/login');
 _toHome(BuildContext context) => _toNavigate(context, '/home');
 
 _toSplash(BuildContext context) => _toNavigate(context, '/');
+
+_toInfo(BuildContext context) => _toNavigate(context, '/info');
 
 _toNavigate(BuildContext context, String key) =>
     Navigator.pushNamedAndRemoveUntil(
