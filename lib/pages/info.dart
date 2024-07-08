@@ -39,7 +39,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         ? ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
             child: Container(
-              color: Colors.black,
               padding: const EdgeInsets.all(10),
               child: SizedBox(
                 width: 250,
@@ -94,7 +93,6 @@ class InfoPage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
                   backgroundColor: Colors.yellow,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -158,7 +156,6 @@ class InfoPage2 extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
                   backgroundColor: Colors.yellow,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -222,7 +219,6 @@ class InfoPage3 extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
                   backgroundColor: Colors.yellow,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -287,7 +283,6 @@ class InfoPage4 extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
                   backgroundColor: Colors.yellow,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),

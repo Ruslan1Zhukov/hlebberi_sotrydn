@@ -5,6 +5,7 @@ import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/utils/date_time.dart';
 import 'package:hlebberi_sotrydn/utils/price.dart';
 import 'package:hlebberi_sotrydn/widgets/diagram.dart';
+import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 const _padding = EdgeInsets.symmetric(horizontal: 20.0);
@@ -30,10 +31,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
 
   void _openMonthDetailed(BuildContext context) {
     if (widget.month == null) return;
-    var heightScreen = MediaQuery
-        .of(context)
-        .size
-        .height;
+    var heightScreen = MediaQuery.of(context).size.height;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -53,10 +51,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
         if (month == null) {
           return SizedBox(
             height: 500,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
           );
         }
         return SingleChildScrollView(child: MonthDetailPage(month: month - 1));
@@ -67,6 +62,8 @@ class _SalaryWidgetState extends State<SalaryWidget> {
   @override
   Widget build(BuildContext context) {
     final zpSum = widget.salary?.total ?? 0;
+    final currentDate = DateFormat('dd.MM').format(DateTime.now());
+
     if (zpSum == 0 || widget.salary?.isNormal == false) {
       return Container(
         margin: _padding,
@@ -79,29 +76,54 @@ class _SalaryWidgetState extends State<SalaryWidget> {
           color: ColorProject.white,
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            Center(
-              child: SizedBox(
-                width: 61,
-                height: 67,
-                child: Image.asset('assets/images/salary.png'),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Center(
-              child: Text(
-                'Тут будет ваша зарплата',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: ColorProject.black,
+            Row(
+              children: [
+                Column(
+                  children: [
+                    const Text(
+                      'Зарплата',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'на $currentDate     ',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 4),
+                const Spacer(),
+                const Text(
+                  '0 ₽',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Container(
+              width: double.infinity,
+              height: 7,
+              decoration: BoxDecoration(
+                color: const Color(0xFFE6E6E6),
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
-            const SizedBox(height: 20),
           ],
         ),
       );
@@ -135,10 +157,12 @@ class _SalaryWidgetState extends State<SalaryWidget> {
     );
   }
 
+
   String getPluralForm(int count, String singular, String few, String many) {
     if (count % 10 == 1 && count % 100 != 11) {
       return singular;
-    } else if (count % 10 >= 2 && count % 10 <= 4 &&
+    } else if (count % 10 >= 2 &&
+        count % 10 <= 4 &&
         (count % 100 < 10 || count % 100 >= 20)) {
       return few;
     } else {
