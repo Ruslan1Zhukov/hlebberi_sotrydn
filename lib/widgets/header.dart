@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hlebberi_sotrydn/model/login_data.dart';
-import 'package:hlebberi_sotrydn/pages/info.dart';
 import 'package:hlebberi_sotrydn/pages/settings.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/utils/skeleton.dart';
@@ -92,35 +91,6 @@ class HeaderWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 10),
-              Hero(
-                tag: "infoIcon",
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const InfoPage()),
-                    );
-                  },
-                  child: Container(
-                    width: 20,
-                    height: 20,
-                    decoration: const BoxDecoration(
-                      color: Colors.yellow,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'i',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
 

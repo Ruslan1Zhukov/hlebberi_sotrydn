@@ -63,6 +63,10 @@ class SettingsPage extends StatelessWidget {
                     const DividerProject(),
                     const ChangeImageButton(),
                     const DividerProject(),
+                     SizedBox(height: 14),
+                     InfoButton(),
+                    SizedBox(height: 7),
+                    const DividerProject(),
                     const SizedBox(height: 40),
                     const DividerProject(),
                     for (final link in links) ...[
