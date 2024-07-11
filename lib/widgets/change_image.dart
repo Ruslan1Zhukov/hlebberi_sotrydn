@@ -49,7 +49,7 @@ class InfoButton extends StatelessWidget {
         );
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
         ),
         child: Row(
           children: [
@@ -57,7 +57,7 @@ class InfoButton extends StatelessWidget {
               width: 20,
               height: 20,
               decoration: const BoxDecoration(
-                color: Colors.yellow,
+                color: ColorProject.orange,
                 shape: BoxShape.circle,
               ),
               child: const Center(
@@ -73,7 +73,7 @@ class InfoButton extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             const Text('Открыть обучение'),
-            Spacer(),
+            const Spacer(),
             const Icon(Icons.chevron_right, color: ColorProject.black,),
           ],
         ),
