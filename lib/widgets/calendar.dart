@@ -60,6 +60,7 @@ class CalendarWidget extends StatelessWidget {
     var currentDay = DateTime.now();
     DayMode mode = (currentDay.isAfter(day)) ? DayMode.last : DayMode.future;
     final dateKey = day.yyyy_mm_dd();
+    final truancies = workSchedule?.truancies.contains(dateKey) ?? false;
     final keyOfLabel = workSchedule?.report[dateKey];
     if (keyOfLabel == null) {
       final label = workSchedule?.labels["not_working_day"];
@@ -68,6 +69,7 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label?.color ?? ColorProject.white,
         label: label?.icon ?? const SizedBox.shrink(),
+        truancies: truancies,
       );
     }
     if (keyOfLabel.length > 2) {
@@ -78,6 +80,7 @@ class CalendarWidget extends StatelessWidget {
           mode: mode,
           color: ColorProject.white,
           label: const SizedBox.shrink(),
+          truancies: truancies,
         );
       }
       return _Day(
@@ -85,6 +88,7 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label.color,
         label: label.icon,
+        truancies: truancies,
       );
     }
     final color = workSchedule?.labels["default"]?.color;
@@ -93,6 +97,7 @@ class CalendarWidget extends StatelessWidget {
       mode: mode,
       color: color,
       label: Text(keyOfLabel),
+      truancies: truancies,
     );
   }
 
@@ -100,6 +105,7 @@ class CalendarWidget extends StatelessWidget {
     DayMode mode = DayMode.current;
     final dateKey = day.yyyy_mm_dd();
     final keyOfLabel = workSchedule?.report[dateKey];
+    final truancies = workSchedule?.truancies.contains(dateKey) ?? false;
     if (keyOfLabel == null) {
       final label = workSchedule?.labels["not_working_day"];
       return _Day(
@@ -107,6 +113,7 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label?.color ?? ColorProject.white,
         label: label?.icon ?? const SizedBox.shrink(),
+        truancies: truancies,
       );
     }
     if (keyOfLabel.length > 2) {
@@ -117,6 +124,7 @@ class CalendarWidget extends StatelessWidget {
           mode: mode,
           color: ColorProject.white,
           label: const SizedBox.shrink(),
+          truancies: truancies,
         );
       }
       return _Day(
@@ -124,6 +132,7 @@ class CalendarWidget extends StatelessWidget {
         mode: mode,
         color: label.color,
         label: label.icon,
+        truancies: truancies,
       );
     }
     final color = workSchedule?.labels["default"]?.color;
@@ -132,6 +141,7 @@ class CalendarWidget extends StatelessWidget {
       mode: mode,
       color: color,
       label: Text(keyOfLabel),
+      truancies: truancies,
     );
   }
 }
@@ -178,12 +188,14 @@ class _Day extends StatelessWidget {
     required this.mode,
     required this.color,
     required this.label,
+    required this.truancies,
   });
 
   final DateTime dateTime;
   final DayMode mode;
   final Color? color;
   final Widget? label;
+  final bool truancies;
 
   _openDay(BuildContext context) {
     var heightScreen = MediaQuery.of(context).size.height;
@@ -240,10 +252,10 @@ class _Day extends StatelessWidget {
                   margin: const EdgeInsets.all(4),
                   padding: const EdgeInsets.all(4),
                   decoration: BoxDecoration(
-                    color:  color,
+                    color: color,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                      color: mode.colorBorder,
+                      color: (truancies) ? ColorProject.red : mode.colorBorder,
                       width: mode.widthBorder,
                     ),
                   ),
