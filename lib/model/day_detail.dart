@@ -6,20 +6,24 @@ import 'package:hlebberi_sotrydn/utils/parser.dart';
 class DayDetail {
   final UserShift? userShift;
   final SalaryReport salary;
+  final WorkScheduleLabel label;
 
   DayDetail({
     required this.userShift,
     required this.salary,
+    required this.label,
   });
 
   static DayDetail? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;
     final userShift = UserShift.fromJson(json['user_shift']);
     final salary = SalaryReport.fromJson(json['salary']);
-    if (salary == null) return null;
+    final label = WorkScheduleLabel.fromJson(json['label']);
+    if (salary == null || label == null) return null;
     return DayDetail(
       userShift: userShift,
       salary: salary,
+      label: label,
     );
   }
 }

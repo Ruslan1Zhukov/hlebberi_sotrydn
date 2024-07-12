@@ -164,20 +164,24 @@ class WorkSchedule {
 class WorkScheduleLabel {
   final String colorString;
   final String? iconUrl;
+  final String? image;
 
   WorkScheduleLabel({
     required this.colorString,
     required this.iconUrl,
+    required this.image,
   });
 
   static WorkScheduleLabel? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;
     final color = json['color'] as String?;
     final iconUrl = json['iconUrl'] as String?;
+    final image = json['image'] as String?;
     if (color == null) return null;
     return WorkScheduleLabel(
       colorString: color,
       iconUrl: iconUrl,
+      image: image,
     );
   }
 
@@ -192,6 +196,18 @@ class WorkScheduleLabel {
       iconUrl,
       width: 20,
       height: 20,
+    );
+  }
+
+  Widget get imagePlaceholder {
+    final image = this.image;
+    if (image == null) {
+      return const SizedBox.shrink();
+    }
+    return SvgPicture.network(
+      image,
+      width: 200,
+      height: 200,
     );
   }
 }

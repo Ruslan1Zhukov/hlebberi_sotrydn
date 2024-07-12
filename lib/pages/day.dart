@@ -43,12 +43,12 @@ class DayDetailPage extends StatelessWidget {
             }
             final role = dayDetail.userShift?.role;
             final location = dayDetail.userShift?.location;
-            final zpSum = dayDetail.salary?.total ?? 0;
+            final zpSum = dayDetail.salary.total;
             return Padding(
               padding: const EdgeInsets.all(20.0),
               child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     _DateTime(
@@ -64,27 +64,7 @@ class DayDetailPage extends StatelessWidget {
                       salaryReport: dayDetail.salary,
                       isCurrentDay: date.isCurrent(),
                     ),
-                    if (zpSum == 0) Column(
-                      children: [
-                        Center(
-                          child: SizedBox(
-                            width: 61,
-                            height: 67,
-                            child: Image.asset('assets/images/salary.png'),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        const Text(
-                          'Тут будет ваша зарплата',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: ColorProject.black,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
+                    if (zpSum == 0) dayDetail.label.imagePlaceholder,
                     if (dayDetail.salary.report.isEmpty && zpSum != 0) const Text("Нет данных"),
                   ],
                 ),
