@@ -66,6 +66,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
 
     if (zpSum == 0 || widget.salary?.isNormal == false) {
       return Container(
+        height: 112,
         margin: _padding,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -85,7 +86,6 @@ class _SalaryWidgetState extends State<SalaryWidget> {
                       'Зарплата',
                       style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
@@ -109,7 +109,6 @@ class _SalaryWidgetState extends State<SalaryWidget> {
                   '0 ₽',
                   style: TextStyle(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
@@ -118,7 +117,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
             const SizedBox(height: 5),
             Container(
               width: double.infinity,
-              height: 7,
+              height: 11,
               decoration: BoxDecoration(
                 color: const Color(0xFFE6E6E6),
                 borderRadius: BorderRadius.circular(10),

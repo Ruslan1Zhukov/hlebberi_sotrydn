@@ -204,10 +204,15 @@ class WorkScheduleLabel {
     if (image == null) {
       return const SizedBox.shrink();
     }
-    return SvgPicture.network(
-      image,
-      width: 200,
-      height: 200,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SvgPicture.network(
+          image,
+          width: constraints.maxWidth,
+          height: 300,
+          fit: BoxFit.contain,
+        );
+      },
     );
   }
 }

@@ -43,9 +43,9 @@ class _SmenaWidgetState extends State<SmenaWidget> {
         return Container(
           margin: const EdgeInsets.symmetric(
             horizontal: 20,
-            vertical: 32,
+            vertical: 25,
           ),
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
           decoration: BoxDecoration(
             color: ColorProject.white,
             border: Border.all(
@@ -102,20 +102,12 @@ class _SmenaWidgetState extends State<SmenaWidget> {
                   ),
                 ],
               ),
-              if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 7),
               if (smena?.users.isNotEmpty ?? true)
-                const Text(
-                  "В смене",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 7),
+              if (smena?.users.isNotEmpty ?? true)
+              if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 4),
               if (smena?.users.isNotEmpty ?? true)
                 Wrap(
-                  spacing: 7,
+                  spacing: 5,
                   runSpacing: 4,
                   children: [
                     for (var user in smena?.users ??

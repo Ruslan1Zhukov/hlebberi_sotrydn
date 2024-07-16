@@ -8,7 +8,7 @@ enum DayMode {
 
   Color get colorBorder => _isToday ? const Color(0xFFFDD733) : ColorProject.grey;
 
-  double get widthBorder => _isToday ? 2.0 : 1.0;
+  double get widthBorder => _isToday ? 4.0 : 1.0;
 
   double getOpacity() {
     switch (this) {
