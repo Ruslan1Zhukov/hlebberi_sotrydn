@@ -173,7 +173,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
     var current = DateTime.now();
     var isCurrentMonth = current.month == widget.month;
     int count = widget.count ?? 0;
-    String pluralForm = getPluralForm(count, "смена", "смены", "смен");
+    String pluralForm = getPluralForm(count, "смену", "смены", "смен");
 
     String formattedDate;
     if (isCurrentMonth) {
