@@ -16,19 +16,19 @@ import 'package:redux_thunk/redux_thunk.dart';
 
 ThunkAction<AppState> init(BuildContext context) {
   return (Store<AppState> store) async {
-    final infoSaved = await getInfoData();
-    if (infoSaved == false){
-      _toInfo(context);
-      return;
-    }
     final loginDataSaved = await getLoginData();
     if (loginDataSaved == null) {
       _toLogin(context);
       return;
     }
-    await _saveLoginData(loginDataSaved); // чтобы записались в redux
+    await _saveLoginData(loginDataSaved);
     final response = await ApiAccount.checkAuth();
     if (response is ApiResponseData) {
+      final infoSaved = await getInfoData();
+      if (infoSaved == false){
+        _toInfo(context);
+        return;
+      }
       await _saveLoginData((response as ApiResponseData<LoginData>).data);
       _toHome(context);
     } else if (response is ApiResponseError) {
@@ -48,7 +48,7 @@ ThunkAction<AppState> login({
     final response = await ApiAccount.login(login: login, password: password);
     if (response is ApiResponseData) {
       await _saveLoginData((response as ApiResponseData<LoginData>).data);
-      _toHome(context);
+      _toSplash(context);
     } else if (response is ApiResponseError) {
       toast(context, (response as ApiResponseError).error);
       await _saveLoginData(null);
