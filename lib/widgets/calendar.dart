@@ -256,7 +256,7 @@ class _Day extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       color: (truancies) ? ColorProject.red : mode.colorBorder,
-                      width: mode.widthBorder,
+                      width: (truancies) ? 3.0 : mode.widthBorder,
                     ),
                   ),
                   child: const SizedBox.shrink(),

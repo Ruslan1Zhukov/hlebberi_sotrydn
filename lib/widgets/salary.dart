@@ -68,7 +68,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
       return Container(
         height: 112,
         margin: _padding,
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
@@ -114,7 +114,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
                 ),
               ],
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 20),
             Container(
               width: double.infinity,
               height: 11,

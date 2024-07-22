@@ -104,7 +104,7 @@ class _SmenaWidgetState extends State<SmenaWidget> {
               ),
               if (smena?.users.isNotEmpty ?? true)
               if (smena?.users.isNotEmpty ?? true)
-              if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 4),
+              if (smena?.users.isNotEmpty ?? true) const SizedBox(height: 10),
               if (smena?.users.isNotEmpty ?? true)
                 Wrap(
                   spacing: 5,
