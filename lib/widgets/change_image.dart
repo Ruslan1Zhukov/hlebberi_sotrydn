@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hlebberi_sotrydn/helpers/dialogs.dart';
-import 'package:hlebberi_sotrydn/pages/info.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/theme/fil_color.dart';
 import 'package:hlebberi_sotrydn/theme/list_tile.dart';
@@ -43,14 +42,14 @@ class InfoButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+        Navigator.pushNamedAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const InfoPage()),
+          "/info",
+          (Route<dynamic> route) => false,
         );
       },
       child: Container(
-        decoration: const BoxDecoration(
-        ),
+        decoration: const BoxDecoration(),
         child: Row(
           children: [
             Container(
@@ -74,7 +73,10 @@ class InfoButton extends StatelessWidget {
             const SizedBox(width: 8),
             const Text('Открыть обучение'),
             const Spacer(),
-            const Icon(Icons.chevron_right, color: ColorProject.black,),
+            const Icon(
+              Icons.chevron_right,
+              color: ColorProject.black,
+            ),
           ],
         ),
       ),

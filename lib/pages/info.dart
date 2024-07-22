@@ -1,302 +1,147 @@
 import 'package:flutter/material.dart';
 import 'package:hlebberi_sotrydn/helpers/info.dart';
-import 'package:hlebberi_sotrydn/pages/home.dart';
-import 'package:hlebberi_sotrydn/pages/spalsh.dart';
-import 'package:video_player/video_player.dart';
+import 'package:hlebberi_sotrydn/widgets/video_player.dart';
 
-class VideoPlayerWidget extends StatefulWidget {
-  final String videoPath;
+class _InfoData {
+  final int id;
+  final String count;
+  final String path;
+  final String title;
 
-  const VideoPlayerWidget({required this.videoPath, super.key});
-
-  @override
-  _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
+  _InfoData({
+    required this.id,
+    required this.count,
+    required this.path,
+    required this.title,
+  });
 }
 
-class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
-  late VideoPlayerController _controller;
+final _list = [
+  _InfoData(
+    id: 0,
+    count: "1",
+    path: 'assets/videos/info1.mov',
+    title: "Отсканируй QR - отметься на работе",
+  ),
+  _InfoData(
+    id: 1,
+    count: "2",
+    path: 'assets/videos/info2.mov',
+    title: "Добавь фото и оставь отзыв в профиле",
+  ),
+  _InfoData(
+    id: 2,
+    count: "3",
+    path: 'assets/videos/info3.mov',
+    title: "Узнай свой доход за смену",
+  ),
+  _InfoData(
+    id: 3,
+    count: "4",
+    path: 'assets/videos/info4.mov',
+    title: "Узнай свой доход за месяц",
+  ),
+];
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.asset(widget.videoPath)
-      ..initialize().then((_) {
-        setState(() {});
-        _controller.play();
-      });
-    _controller.setLooping(true);
-  }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _controller.value.isInitialized
-        ? ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: SizedBox(
-                width: 250,
-                height: 500,
-                child: VideoPlayer(_controller),
-              ),
-            ),
-          )
-        : const SizedBox(
-            width: 250,
-            height: 500,
-            child: Center(child: CircularProgressIndicator()),
-          );
-  }
-}
-
-class InfoPage extends StatelessWidget {
+class InfoPage extends StatefulWidget {
   const InfoPage({super.key});
 
   @override
+  State<InfoPage> createState() => _InfoPageState();
+}
+
+class _InfoPageState extends State<InfoPage> {
+  _InfoData _currentData = _list[0];
+
+  _onNext() async {
+    final currentIndex = _currentData.id;
+    final nextIndex = _nextIndex(currentIndex);
+    if (nextIndex == null) {
+      await saveInfoData();
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/home',
+        (Route<dynamic> route) => false,
+      );
+      return;
+    }
+    setState(() {
+      _currentData = _list[nextIndex];
+    });
+  }
+
+  int? _nextIndex(int currentIndex) {
+    if (currentIndex == 3) return null;
+    return currentIndex + 1;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Шаг 1/4', style: TextStyle(fontSize: 16)),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const VideoPlayerWidget(videoPath: 'assets/videos/info1.mov'),
-              const SizedBox(height: 15),
-              const Text('Отсканируй QR - отметься на работе'),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const InfoPage2()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
-                ),
-                child: const Text('Далее'),
-              ),
-              const SizedBox(height: 16),
-            ],
-          ),
+    return Scaffold(
+      body: SafeArea(
+        child: _InfoWidget(
+          data: _currentData,
+          onNextCallback: _onNext,
         ),
       ),
     );
   }
 }
 
+class _InfoWidget extends StatelessWidget {
+  const _InfoWidget({
+    required this.data,
+    required this.onNextCallback,
+  });
 
-
-class InfoPage2 extends StatelessWidget {
-  const InfoPage2({super.key});
+  final _InfoData data;
+  final Function() onNextCallback;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Column(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Шаг 2/4', style: TextStyle(fontSize: 16)),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+              Text(
+                'Шаг ${data.count}/4',
+                style: const TextStyle(fontSize: 16),
               ),
-              const VideoPlayerWidget(videoPath: 'assets/videos/info2.mov'),
-              const SizedBox(height: 15),
-              const Text('Добавь фото и оставь отзыв в профиле'),
-              const SizedBox(height: 16),
-              ElevatedButton(
+              IconButton(
+                icon: const Icon(Icons.close),
                 onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
+                  Navigator.pushNamedAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => const InfoPage3()),
+                    "/home",
+                        (Route<dynamic> route) => false,
                   );
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
-                ),
-                child: const Text('Далее'),
               ),
-              const SizedBox(height: 16),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class InfoPage3 extends StatelessWidget {
-  const InfoPage3({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Шаг 3/4', style: TextStyle(fontSize: 16)),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const VideoPlayerWidget(
-                videoPath: 'assets/videos/info3.mov',
-              ),
-              const SizedBox(height: 15),
-              const Text('Узнай свой доход за смену'),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const InfoPage4()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
-                ),
-                child: const Text('Далее'),
-              ),
-              const SizedBox(height: 16),
-            ],
+        VideoPlayerWidget(videoPath: data.path),
+        const SizedBox(height: 15),
+        Text(data.title),
+        const SizedBox(height: 16),
+        ElevatedButton(
+          onPressed: onNextCallback,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.yellow,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            padding:
+            const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
           ),
+          child: const Text('Далее'),
         ),
-      ),
-    );
-  }
-}
-
-class InfoPage4 extends StatelessWidget {
-  const InfoPage4({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Шаг 4/4', style: TextStyle(fontSize: 16)),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const VideoPlayerWidget(
-                videoPath: 'assets/videos/info4.mov',
-              ),
-              const SizedBox(height: 15),
-              const Text('Узнай свой доход за месяц'),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () async {
-                  await saveInfoData();
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SplashPage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.yellow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 150, vertical: 20),
-                ),
-                child: const Text('Далее'),
-              ),
-              const SizedBox(height: 16),
-            ],
-          ),
-        ),
-      ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 }
