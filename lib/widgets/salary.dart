@@ -179,7 +179,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
     if (isCurrentMonth) {
       formattedDate = "на ${current.dMMMM()} за $count $pluralForm";
     } else {
-      formattedDate = "$count $pluralForm";
+      formattedDate = "за $count $pluralForm";
     }
 
     final zpSum = widget.salary?.total ?? 0;
