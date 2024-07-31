@@ -12,6 +12,8 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController _controller;
+  double _opacity = 1.0;
+  bool _isSwitching = false;
 
   @override
   void initState() {
@@ -32,9 +34,29 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   void didUpdateWidget(VideoPlayerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.videoPath != widget.videoPath) {
-      _controller.dispose();
-      _initializeVideoPlayer();
+      _fadeOutAndSwitchVideo();
     }
+  }
+
+  void _fadeOutAndSwitchVideo() async {
+    setState(() {
+      _opacity = 0.0;
+      _isSwitching = true;
+    });
+
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    _controller.dispose();
+
+    _controller = VideoPlayerController.asset(widget.videoPath)
+      ..initialize().then((_) {
+        setState(() {
+          _isSwitching = false;
+          _opacity = 1.0;
+        });
+        _controller.play();
+      });
+    _controller.setLooping(true);
   }
 
   @override
@@ -55,10 +77,14 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           child: Stack(
             children: [
               _controller.value.isInitialized
-                  ? VideoPlayer(_controller)
+                  ? AnimatedOpacity(
+                opacity: _opacity,
+                duration: const Duration(milliseconds: 300),
+                child: VideoPlayer(_controller),
+              )
                   : Container(),
               Center(
-                child: _controller.value.isInitialized
+                child: _controller.value.isInitialized || _isSwitching
                     ? Container()
                     : const CircularProgressIndicator(),
               ),
@@ -68,5 +94,4 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       ),
     );
   }
-
 }
