@@ -15,9 +15,9 @@
     </queries>
 
     <application
-        android:label="Хлеббери Сотрудник"
+        android:label="Сотрудник"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher1">
         <activity
             android:name=".MainActivity"
             android:exported="true"

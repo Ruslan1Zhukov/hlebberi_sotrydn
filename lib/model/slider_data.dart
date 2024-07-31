@@ -165,11 +165,13 @@ class WorkScheduleLabel {
   final String colorString;
   final String? iconUrl;
   final String? image;
+  final String name;
 
   WorkScheduleLabel({
     required this.colorString,
     required this.iconUrl,
     required this.image,
+    required this.name,
   });
 
   static WorkScheduleLabel? fromJson(Map<String, dynamic>? json) {
@@ -177,8 +179,10 @@ class WorkScheduleLabel {
     final color = json['color'] as String?;
     final iconUrl = json['iconUrl'] as String?;
     final image = json['image'] as String?;
+    final name = json['name'] as String;
     if (color == null) return null;
     return WorkScheduleLabel(
+      name: name,
       colorString: color,
       iconUrl: iconUrl,
       image: image,
