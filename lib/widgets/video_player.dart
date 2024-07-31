@@ -45,22 +45,28 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return _controller.value.isInitialized
-        ? ClipRRect(
+    return ClipRRect(
       borderRadius: BorderRadius.circular(20.0),
       child: Container(
         padding: const EdgeInsets.all(10),
         child: SizedBox(
           width: 250,
           height: 500,
-          child: VideoPlayer(_controller),
+          child: Stack(
+            children: [
+              _controller.value.isInitialized
+                  ? VideoPlayer(_controller)
+                  : Container(),
+              Center(
+                child: _controller.value.isInitialized
+                    ? Container()
+                    : const CircularProgressIndicator(),
+              ),
+            ],
+          ),
         ),
       ),
-    )
-        : const SizedBox(
-      width: 250,
-      height: 500,
-      child: Center(child: CircularProgressIndicator()),
     );
   }
+
 }
