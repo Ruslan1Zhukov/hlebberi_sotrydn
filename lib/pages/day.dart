@@ -45,7 +45,6 @@ class DayDetailPage extends StatelessWidget {
             final role = dayDetail.userShift?.role;
             final location = dayDetail.userShift?.location;
             final zpSum = dayDetail.salary.total;
-
             final workScheduleLabelName = dayDetail.label.name;
 
             return Padding(
@@ -72,6 +71,8 @@ class DayDetailPage extends StatelessWidget {
                     if (zpSum == 0) ...[
                       Row(
                         children: [
+                          dayDetail.label.icon,
+                          const SizedBox(width: 5),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

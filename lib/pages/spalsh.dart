@@ -32,12 +32,12 @@ class _SplashPageState extends State<SplashPage> {
           color: ColorProject.black,
           child: Center(
             child: Stack(
-              children: <Widget>[
+              children:[
                 Center(
                   child: Image.asset(
-                    "assets/images/sloi.png",
-                    width: 700,
-                    height: 1000,
+                    "assets/images/slou.png",
+                    width: 255,
+                    height: 150,
                   ),
                 ),
               ],
