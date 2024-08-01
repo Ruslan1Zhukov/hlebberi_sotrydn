@@ -41,9 +41,13 @@ class DayDetailPage extends StatelessWidget {
             if (dayDetail == null) {
               return const Center(child: CircularProgressIndicator());
             }
+
             final role = dayDetail.userShift?.role;
             final location = dayDetail.userShift?.location;
             final zpSum = dayDetail.salary.total;
+
+            final workScheduleLabelName = dayDetail.label.name;
+
             return Padding(
               padding: const EdgeInsets.all(20.0),
               child: SingleChildScrollView(
@@ -55,17 +59,40 @@ class DayDetailPage extends StatelessWidget {
                       dayDetail: dayDetail,
                       dateMonth: date.dMMMMDayOfWeek(),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 10),
                     if (role != null) _Position(role: role),
-                    if (role != null) const SizedBox(height: 20),
+                    if (role != null) const SizedBox(height: 10),
                     if (location != null) _Location(location: location),
-                    if (location != null) const SizedBox(height: 32),
-                    if (zpSum > 0) SalaryDayWidget(
-                      salaryReport: dayDetail.salary,
-                      isCurrentDay: date.isCurrent(),
-                    ),
-                    if (zpSum == 0) dayDetail.label.imagePlaceholder,
-                    if (dayDetail.salary.report.isEmpty && zpSum != 0) const Text("Нет данных"),
+                    if (location != null) const SizedBox(height: 20),
+                    if (zpSum > 0)
+                      SalaryDayWidget(
+                        salaryReport: dayDetail.salary,
+                        isCurrentDay: date.isCurrent(),
+                      ),
+                    if (zpSum == 0) ...[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  workScheduleLabelName,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      dayDetail.label.imagePlaceholder,
+                    ],
+                    if (dayDetail.salary.report.isEmpty && zpSum != 0)
+                      const Text("Нет"),
                   ],
                 ),
               ),
@@ -100,21 +127,23 @@ class _DateTime extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        if (userShift != null) ColorFiltered(
-          colorFilter: const ColorFilter.mode(
-            ColorProject.orange,
-            BlendMode.srcIn,
+        if (userShift != null)
+          ColorFiltered(
+            colorFilter: const ColorFilter.mode(
+              ColorProject.orange,
+              BlendMode.srcIn,
+            ),
+            child: SvgPicture.asset("assets/icons/icon_clock.svg"),
           ),
-          child: SvgPicture.asset("assets/icons/icon_clock.svg"),
-        ),
         if (userShift != null) const SizedBox(width: 4),
-        if (userShift != null) Text(
-          userShift.time(context),
-          style: const TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 12,
+        if (userShift != null)
+          Text(
+            userShift.time(context),
+            style: const TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 12,
+            ),
           ),
-        ),
       ],
     );
   }
