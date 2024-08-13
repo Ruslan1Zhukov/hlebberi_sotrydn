@@ -35,7 +35,7 @@ extension DateTimeExtension on DateTime {
 
   String hhmm() {
     return DateFormat(
-      "hh:mm",
+      "HH:mm",
       "ru",
     ).format(this);
   }

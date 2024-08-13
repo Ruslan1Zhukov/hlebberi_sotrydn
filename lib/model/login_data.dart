@@ -119,7 +119,6 @@ class User {
     return {
       'id': id,
       'name': fio.firstName,
-      'surename': fio.secondName,
       'secondname': fio.patronymic,
       'default_role': defaultRole?.toJson(),
       'avatar': avatarUrl,
@@ -134,48 +133,42 @@ class User {
 
 class UserFio {
   final String firstName;
-  final String secondName;
   final String? patronymic;
 
   UserFio({
     required this.firstName,
-    required this.secondName,
     this.patronymic,
   });
 
   static UserFio? fromJson(Map<String, dynamic>? json) {
     if (json == null) return null;
     final name = json.getStringOrNull('name') ?? "";
-    final surename = json.getStringOrNull('surename') ?? "";
     final secondname = json.getStringOrNull('secondname');
     return UserFio(
       firstName: name,
-      secondName: surename,
       patronymic: secondname,
     );
   }
 
   UserFio.empty()
       : firstName = "--------",
-        secondName = "--------",
         patronymic = null;
 
   @override
   String toString() => fullFio();
 
   String fullFio() {
-    return "$firstName $secondName";
+    return firstName;
   }
 
   String fullFio2() {
-    return "$firstName\n$secondName";
+    return firstName;
   }
 
   /// Получить инициалы имени и фамилии
   String initials() {
     var firstLetter = (firstName.isNotEmpty) ? firstName[0] : "-";
-    var secondLetter = (secondName.isNotEmpty) ? secondName[0] : "-";
-    return "$firstLetter$secondLetter";
+    return firstLetter;
   }
 }
 

@@ -16,24 +16,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider(
-      store: store,
-      child: MaterialApp(
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale('ru')],
-        routes: {
-          '/': (_) => const SplashPage(),
-          '/login': (_) => const LoginPage(),
-          '/home': (_) => const HomePage(),
-          '/info': (_) => const InfoPage(),
-        },
-        initialRoute: '/',
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        textScaler: TextScaler.noScaling,
+      ),
+      child: StoreProvider(
+        store: store,
+        child: MaterialApp(
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('ru')],
+          routes: {
+            '/': (_) => const SplashPage(),
+            '/login': (_) => const LoginPage(),
+            '/home': (_) => const HomePage(),
+            '/info': (_) => const InfoPage(),
+          },
+          initialRoute: '/',
+        ),
       ),
     );
   }
 }
-
