@@ -63,6 +63,8 @@ class _SalaryWidgetState extends State<SalaryWidget> {
   Widget build(BuildContext context) {
     final zpSum = widget.salary?.total ?? 0;
     final currentDate = DateFormat('dd.MM').format(DateTime.now());
+    var current = DateTime.now();
+    var isCurrentMonth = current.month == widget.month;
 
     if (zpSum == 0 || widget.salary?.isNormal == false) {
       return Container(
@@ -81,6 +83,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
             Row(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       'Зарплата',
@@ -93,7 +96,7 @@ class _SalaryWidgetState extends State<SalaryWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'на $currentDate     ',
+                          isCurrentMonth ? 'на $currentDate' : "",
                           style: const TextStyle(
                             fontSize: 12,
                             color: Colors.grey,
@@ -127,7 +130,6 @@ class _SalaryWidgetState extends State<SalaryWidget> {
         ),
       );
     }
-
     return InkWell(
       onTap: widget.month != null ? () => _openMonthDetailed(context) : null,
       child: Skeletonizer(
@@ -155,7 +157,6 @@ class _SalaryWidgetState extends State<SalaryWidget> {
       ),
     );
   }
-
 
   String getPluralForm(int count, String singular, String few, String many) {
     if (count % 10 == 1 && count % 100 != 11) {
