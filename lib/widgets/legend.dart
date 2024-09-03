@@ -141,7 +141,7 @@ class _ItemDetail extends StatelessWidget {
                 Expanded(
                   child: Text(
                     'Комментарий: $comment',
-                    style: const TextStyle(color: ColorProject.grey),
+                    style: const TextStyle(color: Color.fromRGBO(0, 0, 0, 0.5)),
                   ),
                 ),
               ],

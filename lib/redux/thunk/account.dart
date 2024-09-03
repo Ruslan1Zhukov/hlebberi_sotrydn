@@ -25,7 +25,7 @@ ThunkAction<AppState> init(BuildContext context) {
     final response = await ApiAccount.checkAuth();
     if (response is ApiResponseData) {
       final infoSaved = await getInfoData();
-      if (infoSaved == false){
+      if (infoSaved == false) {
         _toInfo(context);
         return;
       }
@@ -52,7 +52,6 @@ ThunkAction<AppState> login({
     } else if (response is ApiResponseError) {
       toast(context, (response as ApiResponseError).error);
       await _saveLoginData(null);
-      _toLogin(context);
     }
   };
 }
