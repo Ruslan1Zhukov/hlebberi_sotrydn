@@ -24,6 +24,10 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Камера используется для сканирования QR-кодов и загрузки аватарки профиля</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Фотографии используются для загрузки аватарки профиля</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
