@@ -13,7 +13,7 @@ class SliderWidget extends StatefulWidget {
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
   final int _monthNow = DateTime.now().firstDayOfMonth().monthFrom0;
   int _monthCurrent = DateTime.now().monthFrom0;
 

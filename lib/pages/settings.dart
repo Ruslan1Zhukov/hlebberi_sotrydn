@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:hlebberi_sotrydn/model/login_data.dart';
-import 'package:hlebberi_sotrydn/pages/webView.dart';
+import 'package:hlebberi_sotrydn/pages/web_view.dart';
 import 'package:hlebberi_sotrydn/redux/app_state.dart';
 import 'package:hlebberi_sotrydn/theme/divider.dart';
 import 'package:hlebberi_sotrydn/theme/list_tile.dart';

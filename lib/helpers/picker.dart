@@ -26,7 +26,7 @@ Future<CroppedFile?> _crop(XFile image) async {
   return await ImageCropper().cropImage(
     sourcePath: image.path,
     aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-    cropStyle: CropStyle.circle,
+    // cropStyle: CropStyle.circle,
     compressFormat: ImageCompressFormat.jpg,
     uiSettings: [
       AndroidUiSettings(
