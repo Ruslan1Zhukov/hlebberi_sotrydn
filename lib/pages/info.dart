@@ -124,7 +124,12 @@ class _InfoWidget extends StatelessWidget {
             ],
           ),
         ),
-        VideoPlayerWidget(videoPath: data.path),
+        Expanded(
+          child: AspectRatio(
+            aspectRatio: 616 / 1248,
+            child: VideoPlayerWidget(videoPath: data.path),
+          ),
+        ),
         const SizedBox(height: 15),
         Text(data.title),
         const SizedBox(height: 16),

@@ -107,7 +107,7 @@ class _TitleWidget extends StatelessWidget {
         InkWell(
           onTap: () => _selectMonth(context),
           child: Container(
-            width: 120,
+            width: 125,
             alignment: Alignment.center,
             child: Text(
               monthCurrent.toMonthYearString,
