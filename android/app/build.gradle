@@ -21,7 +21,6 @@ if (keystorePropertiesFile.exists()) {
     throw new FileNotFoundException('key.properties file not found. Please create it in the root directory.')
 }
 
-
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
@@ -35,15 +34,15 @@ if (flutterVersionName == null) {
 android {
     namespace "com.example.ruslan.hlebberi_sotrydn"
     compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
-
+    ndkVersion "26.1.10909125"
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+        coreLibraryDesugaringEnabled true
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 
     sourceSets {
@@ -52,8 +51,6 @@ android {
 
     defaultConfig {
         applicationId "com.example.ruslan.hlebberi_sotrydn"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion 21
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
@@ -78,8 +75,16 @@ android {
     }
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+}
